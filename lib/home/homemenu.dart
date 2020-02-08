@@ -1,33 +1,18 @@
 import 'package:flutter/material.dart';
 
-class HomeMenu extends StatelessWidget {
+class HomeMenu extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _HomeMenu();
+  }
+}
+
+class _HomeMenu extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              height: 50,
-              child: TextFormField(
-                style: TextStyle(fontSize: 15),
-                autovalidate: true,
-                decoration: InputDecoration(
-                  focusColor: Colors.blue[500],
-                  fillColor: Colors.blue[800],
-                  prefixIcon: Icon(Icons.search),
-                  hintStyle: TextStyle(fontSize: 15),
-                  hintText: 'Search',
-                  border: OutlineInputBorder(),
-                  contentPadding:
-                      EdgeInsets.only(top: 0, bottom: 10, left: 10, right: 10),
-                ),
-              ),
-            ),
-          ],
-        ),
         CustomScrollView(
           shrinkWrap: true,
           primary: false,
@@ -164,27 +149,6 @@ class HomeMenu extends StatelessWidget {
             ),
           ],
         ),
-        CustomScrollView(
-          shrinkWrap: true,
-          primary: false,
-          slivers: <Widget>[
-            SliverPadding(
-              padding: EdgeInsets.all(20.0),
-              sliver: SliverGrid.count(
-                crossAxisSpacing: 10.0,
-                crossAxisCount: 3,
-                children: <Widget>[
-                  Text('He\'d have you all unravel at the'),
-                  Text('Heed not the rabble'),
-                  Text('Sound of screams but the'),
-                  Text('Who scream'),
-                  Text('Revolution is coming...'),
-                  Text('Revolution, they...'),
-                ],
-              ),
-            ),
-          ],
-        )
       ],
     );
   }

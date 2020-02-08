@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:travel_sl/homemenu.dart';
-import 'package:travel_sl/homephoto.dart';
+import 'package:travel_sl/home/homemenu.dart';
+import 'package:travel_sl/home/homepagephoto.dart';
+import 'package:travel_sl/home/homesearchbar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,8 +15,8 @@ class _Home extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
     _scrollController = ScrollController();
+    super.initState();
   }
 
   @override
@@ -27,26 +28,44 @@ class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white54,
-        elevation: 0,
-        title: Container(
-          alignment: Alignment.center,
-          child: Text(
-            'travelSL',
-            style: TextStyle(color: Colors.black),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
       body: Container(
-        child: ListView(
-          physics: AlwaysScrollableScrollPhysics(),
-          controller: _scrollController,
-          children: <Widget>[
-            HomePagePhoto(),
-            HomeMenu(),
-          ],
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                child: SliverSafeArea(
+                  top: false,
+                  sliver: SliverAppBar(
+                    title: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'travelSL',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    bottom: HomeSearchBar(),
+                    backgroundColor: Colors.white,
+                    floating: true,
+                    pinned: true,
+                    snap: false,
+                    primary: true,
+                    forceElevated: innerBoxIsScrolled,
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: <Widget>[
+                HomePagePhoto(),
+                HomeMenu(),
+              ],
+            ),
+          ),
         ),
       ),
     );
