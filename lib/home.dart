@@ -15,7 +15,7 @@ class _Home extends State<Home> {
 
   @override
   void initState() {
-    _scrollController = ScrollController();
+    _scrollController = ScrollController(initialScrollOffset: 5);
     super.initState();
   }
 
@@ -57,17 +57,27 @@ class _Home extends State<Home> {
               ),
             ];
           },
-          body: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: <Widget>[
-                HomePagePhoto(),
-                HomeMenu(),
-              ],
+          body: SafeArea(
+            top: false,
+            bottom: false,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: <Widget>[
+                  HomePagePhoto(),
+                  HomeMenu(),
+                  HomePagePhoto(),
+                  HomeMenu()
+                ],
+              ),
             ),
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        _scrollController.animateTo(100 + _scrollController.offset,
+            duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+      }),
     );
   }
 }
