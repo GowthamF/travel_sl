@@ -12,10 +12,12 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   ScrollController _scrollController;
+  FocusNode _focusNode;
 
   @override
   void initState() {
-    _scrollController = ScrollController(initialScrollOffset: 5);
+    _scrollController = ScrollController();
+    _focusNode = FocusNode();
     super.initState();
   }
 
@@ -27,57 +29,59 @@ class _Home extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverOverlapAbsorber(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                child: SliverSafeArea(
-                  top: false,
-                  sliver: SliverAppBar(
-                    title: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'travelSL',
-                        style: TextStyle(color: Colors.black),
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          body: Container(
+            child: NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverOverlapAbsorber(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                    child: SliverSafeArea(
+                      top: false,
+                      sliver: SliverAppBar(
+                        title: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'travelSL',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        bottom: HomeSearchBar(
+                          focusNode: _focusNode,
+                        ),
+                        backgroundColor: Colors.white,
+                        floating: true,
+                        pinned: true,
+                        snap: false,
+                        primary: true,
+                        forceElevated: innerBoxIsScrolled,
                       ),
                     ),
-                    bottom: HomeSearchBar(),
-                    backgroundColor: Colors.white,
-                    floating: true,
-                    pinned: true,
-                    snap: false,
-                    primary: true,
-                    forceElevated: innerBoxIsScrolled,
+                  ),
+                ];
+              },
+              body: SafeArea(
+                top: false,
+                bottom: false,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: <Widget>[
+                      HomePagePhoto(),
+                      HomeMenu(),
+                    ],
                   ),
                 ),
               ),
-            ];
-          },
-          body: SafeArea(
-            top: false,
-            bottom: false,
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: <Widget>[
-                  HomePagePhoto(),
-                  HomeMenu(),
-                  HomePagePhoto(),
-                  HomeMenu()
-                ],
-              ),
             ),
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        _scrollController.animateTo(100 + _scrollController.offset,
-            duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-      }),
-    );
+        ));
   }
 }

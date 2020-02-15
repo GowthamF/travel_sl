@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomeSearchBar extends StatelessWidget implements PreferredSizeWidget {
+  final FocusNode focusNode;
+
+  HomeSearchBar({this.focusNode});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -10,6 +14,7 @@ class HomeSearchBar extends StatelessWidget implements PreferredSizeWidget {
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           height: 50,
           child: TextFormField(
+            focusNode: focusNode,
             style: TextStyle(fontSize: 15),
             autovalidate: true,
             decoration: InputDecoration(
