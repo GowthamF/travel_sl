@@ -1,8 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:travel_sl/bloc/api_provider/route_api_provider.dart';
+import 'package:travel_sl/bloc/bloc.dart';
+import 'package:travel_sl/bloc/blocs/route_bloc.dart';
 
 class GoggleMap extends StatefulWidget {
   @override
@@ -14,23 +19,20 @@ class GoggleMap extends StatefulWidget {
 
 class _GMap extends State<GoggleMap> {
   Completer<GoogleMapController> _controller = Completer();
-  final Set<Polyline> _polyline = {};
   List<LatLng> latlng = List();
-  List<PointLatLng> result;
-  List<LatLng> polylineCoordinates = [];
-  PolylinePoints polylinePoints = PolylinePoints();
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final Set<Marker> _markers = {};
+  bool isOriginAdded = true;
+  final Set<Polyline> _polylines = {};
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(6.9345573, 79.8512368),
-    zoom: 15.75,
+    zoom: 15,
   );
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCoordinates();
   }
 
   @override
@@ -38,10 +40,18 @@ class _GMap extends State<GoggleMap> {
     // _polyline.add(Polyline(polylineId: PolylineId('1'), points: latlng));
     // TODO: implement build
     return GoogleMap(
+      trafficEnabled: true,
       onTap: (latlng) {
-        print(latlng);
+        if (isOriginAdded) {
+          addLocationMarker(latlng, 'origin');
+          isOriginAdded = false;
+        } else {
+          addLocationMarker(latlng, 'destination');
+          isOriginAdded = true;
+        }
       },
-      polylines: _polyline,
+      markers: _markers,
+      polylines: _polylines,
       initialCameraPosition: _kGooglePlex,
       mapType: MapType.normal,
       onMapCreated: (GoogleMapController controller) {
@@ -50,68 +60,115 @@ class _GMap extends State<GoggleMap> {
     );
   }
 
-  void getCoordinates() async {
-    PolylinePoints polylinePoints = PolylinePoints();
-    var results =
-        polylinePoints.decodePolyline('kjii@i}jfNDNJb@Jb@Jj@@L@RBT?V?`@');
+  void addLocationMarker(LatLng selectedPosition, String location) async {
+    var results = await Geocoder.local.findAddressesFromCoordinates(
+        new Coordinates(selectedPosition.latitude, selectedPosition.longitude));
 
-    List<LatLng> _ppp = [];
-
-    // polylineCoordinates.add(LatLng(6.934054100000001, 79.8500248));
-
-    // results.addAll(polylinePoints.decodePolyline('exci@elkfNl@^'));
-    // results.addAll(polylinePoints.decodePolyline(
-    //     '{whi@_fifNBDDBBD@Dp@Af@CPAXGXIJCbASp@Ov@Oz@Up@Or@W^Op@g@RQFILMFILOPSDEFGLMBCJGNMPMJGHEJG@AFIDCFCFCXINGPEb@K`@Kb@Kb@KPGbAStDy@n@Oj@OTGxBs@XIFCXIDC`@K`@K`@KXIFA`@MLCVI`@K`@K`@M`@K@?^KLE`@KFC?A?A?A@A?A@A?A@ABCBABAB?BA@@B?@@@@B@h@MvAWr@Of@KNCv@SbAUl@Qf@MnBg@PEp@SbBa@HCnBg@z@SpAYjBa@@?`@KfCk@n@O`AUFA`@I^GLCb@K`@K@?`@K`@KNCt@Q~Bg@RGFEFEBG@E@G?CCOSo@?SCEk@eCCIEO'));
-    // results.addAll(polylinePoints.decodePolyline(
-    //     'o_ei@_|jfNBa@@G@KDIDGDGDEFCFCr@SvD_ApAc@tBm@v@UrCk@xEiAB?BAzCg@LCx@UHClCk@'));
-
-    // var rrrs = polylinePoints.decodePolyline(
-    //     'ggii@kujfNBaBQeAQk@a@q@Id@ETJb@Lx@Dh@A`BQ~FDpAXxCLn@\\l@hA`A`BhA`Af@bAb@lAn@|@z@N\\@|CLxHBv@BNBDHH@Dp@Ax@Er@QxDw@lBe@rAg@dAy@TWl@s@d@a@v@i@LILMx@YzBi@nHaBzA_@nC{@`A[~Bm@vEoApA]FGBIHGLAJD|EaAxD_AzEoAxGaB`FgA`GsArBa@`IiBNKDM@KW_ACYo@oCEOBa@BSV_@NGjFsAfEqAjEaA|EiA~Ci@~EiA');
-
-    // rrrs.forEach((PointLatLng point) {
-    //   polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-    // });
-
-    // Polyline polyline1 = Polyline(
-    //     consumeTapEvents: true,
-    //     onTap: () {
-    //       setState(() {});
-    //     },
-    //     polylineId: PolylineId("poly"),
-    //     color: Colors.blue,
-    //     points: polylineCoordinates);
-
-    result = await polylinePoints.getRouteBetweenCoordinates(
-        'AIzaSyB-ZaS-W7kKVaDRu61Oqm7lTaOUTjd8T3o',
-        6.933631546201688,
-        79.84993167221546,
-        6.9111014766863885,
-        79.84824791550636);
-
-    if (result.isNotEmpty) {
-      results.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
+    if (location == 'origin') {
+      _markers.clear();
+      _polylines.clear();
     }
 
-    PolylineId id = PolylineId("poly");
-    Polyline polyline = Polyline(
-        consumeTapEvents: true,
-        onTap: () {
-          setState(() {
-            print(id);
+    setState(
+      () {
+        _markers.add(
+          Marker(
+            markerId: MarkerId(location),
+            position: selectedPosition,
+            infoWindow: InfoWindow(
+              title: results.first.addressLine,
+            ),
+            icon: isOriginAdded
+                ? BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueBlue)
+                : BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueViolet),
+          ),
+        );
+      },
+    );
 
-            print(results);
-          });
+    if (location == 'destination') {
+      dynamic startLocation =
+          '${_markers.first.position.latitude},${_markers.first.position.longitude}';
+      dynamic endLocation =
+          '${selectedPosition.latitude},${selectedPosition.longitude}';
+
+      // dynamic startLocation = '6.9125703,79.8523593';
+      // dynamic endLocation = '6.8841101,79.8584285';
+      await routeBloc.getRoute(startLocation, endLocation);
+
+      routeBloc.getRoutes.listen((onData) {
+        getPolyLines(onData);
+      });
+    }
+  }
+
+  List<LatLng> polylineCoordinates = [];
+  void getPolyLines(List<Routes> routes) {
+    PolylinePoints polylinePoints = PolylinePoints();
+
+    List<PointLatLng> results = [];
+
+    for (var i = 0; i < routes.length; i++) {
+      Color _color = i == 0 ? Colors.blue : Colors.red;
+      results = polylinePoints.decodePolyline(routes[i].getPolyLines.points);
+      PolylineId _polyLineId = PolylineId('route_$i');
+      Polyline polyline = Polyline(
+          consumeTapEvents: true,
+          onTap: () {
+            removeSelectedPolyline(_polyLineId);
+          },
+          zIndex: i == 0 ? 5 : 0,
+          polylineId: _polyLineId,
+          color: _color,
+          points: _convertToLatLng(results));
+      setState(
+        () {
+          _polylines.add(polyline);
         },
-        polylineId: id,
-        color: Colors.red,
-        points: polylineCoordinates);
-    _polyline.add(polyline);
+      );
+    }
+  }
 
-    _polyline.add(Polyline(polylineId: PolylineId('Poly1'), points: _ppp));
-    // _polyline.add(polyline1);
-    setState(() {});
-    print(result);
+  List<LatLng> _convertToLatLng(List<PointLatLng> points) {
+    List<LatLng> polylineCoordinates = <LatLng>[];
+    for (int i = 0; i < points.length; i++) {
+      polylineCoordinates.add(LatLng(points[i].latitude, points[i].longitude));
+    }
+
+    return polylineCoordinates;
+  }
+
+  void removeSelectedPolyline(PolylineId polyLineId) {
+    var selectedPolyline =
+        _polylines.firstWhere((f) => f.polylineId == polyLineId);
+    var notSelectedPolyline =
+        _polylines.where((f) => f.polylineId != polyLineId).toList();
+
+    var newNotSelectedPolylines = notSelectedPolyline
+        .map((f) => Polyline(
+            polylineId: f.polylineId,
+            consumeTapEvents: true,
+            color: Colors.red,
+            points: f.points,
+            onTap: f.onTap,
+            zIndex: 0))
+        .toList();
+
+    var newPolyline = Polyline(
+        consumeTapEvents: true,
+        polylineId: selectedPolyline.polylineId,
+        color: Colors.blue,
+        points: selectedPolyline.points,
+        onTap: selectedPolyline.onTap,
+        zIndex: 5);
+    _polylines.removeWhere((f) => f.polylineId == selectedPolyline.polylineId);
+    _polylines.removeAll(notSelectedPolyline);
+
+    setState(() {
+      _polylines.add(newPolyline);
+      _polylines.addAll(newNotSelectedPolylines);
+    });
   }
 }
