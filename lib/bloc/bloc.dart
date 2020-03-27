@@ -6,3 +6,6 @@ export 'models/directions/legs.dart';
 export 'models/directions/polyline.dart';
 export 'models/directions/routes.dart';
 export 'models/directions/steps.dart';
+export 'models/places/busstations.dart';
+export 'models/places/trainstations.dart';
+export 'blocs/place_bloc.dart';

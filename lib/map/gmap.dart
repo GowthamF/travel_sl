@@ -7,6 +7,7 @@ import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_sl/bloc/api_provider/route_api_provider.dart';
 import 'package:travel_sl/bloc/bloc.dart';
+import 'package:travel_sl/bloc/blocs/place_bloc.dart';
 import 'package:travel_sl/bloc/blocs/route_bloc.dart';
 import 'package:travel_sl/navigation_routes.dart';
 
@@ -29,6 +30,9 @@ class _GMap extends State<GMap> {
   bool isOriginAdded = true;
   final Set<Polyline> _polylines = {};
   final RouteBloc routeBloc = RouteBloc();
+  final PlaceBloc placeBloc = PlaceBloc();
+
+  // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
 
   static CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(6.9345573, 79.8512368),
@@ -44,7 +48,7 @@ class _GMap extends State<GMap> {
   @override
   void dispose() {
     // TODO: implement dispose
-    routeBloc.dispose();
+    // routeBloc.dispose();
     super.dispose();
   }
 
@@ -57,19 +61,28 @@ class _GMap extends State<GMap> {
       onCameraMove: (CameraPosition cameraPosition) {
         _kGooglePlex = cameraPosition;
       },
-      onCameraIdle: () {
-        print(_kGooglePlex);
+      onCameraIdle: () async {
+        String location =
+            '${_kGooglePlex.target.latitude},${_kGooglePlex.target.longitude}';
+        await placeBloc.getBusStations(location);
+        await placeBloc.getTrainStations(location);
+        placeBloc.getBusStationsList.listen((onData) {
+          addBusStations(onData);
+        });
+        placeBloc.getTrainStationsList.listen((onData) {
+          addTrainStations(onData);
+        });
       },
       onTap: (latlng) {
-        // if (NavigationRoutes.home != widget.route) {
-        if (isOriginAdded) {
-          addLocationMarker(latlng, 'origin');
-          isOriginAdded = false;
-        } else {
-          addLocationMarker(latlng, 'destination');
-          isOriginAdded = true;
+        if (NavigationRoutes.home != widget.route) {
+          if (isOriginAdded) {
+            addLocationMarker(latlng, 'origin');
+            isOriginAdded = false;
+          } else {
+            addLocationMarker(latlng, 'destination');
+            isOriginAdded = true;
+          }
         }
-        // }
       },
       markers: _markers,
       polylines: _polylines,
@@ -191,5 +204,41 @@ class _GMap extends State<GMap> {
       _polylines.add(newPolyline);
       _polylines.addAll(newNotSelectedPolylines);
     });
+  }
+
+  void addBusStations(List<BusStations> busStationsList) {
+    setState(
+      () {
+        busStationsList.forEach((f) => {
+              _markers.add(
+                Marker(
+                    markerId: MarkerId(f.getPlaceId),
+                    position: LatLng(f.getGeometry.location.getLat,
+                        f.getGeometry.location.getLng),
+                    infoWindow: InfoWindow(title: f.getPlaceName),
+                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                        BitmapDescriptor.hueGreen)),
+              )
+            });
+      },
+    );
+  }
+
+  void addTrainStations(List<TrainStations> trainStationsList) {
+    setState(
+      () {
+        trainStationsList.forEach((f) => {
+              _markers.add(
+                Marker(
+                    markerId: MarkerId(f.getPlaceId),
+                    position: LatLng(f.getGeometry.location.getLat,
+                        f.getGeometry.location.getLng),
+                    infoWindow: InfoWindow(title: f.getPlaceName),
+                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                        BitmapDescriptor.hueOrange)),
+              )
+            });
+      },
+    );
   }
 }
