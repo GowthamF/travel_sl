@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_sl/buses.dart';
 import 'package:travel_sl/directions.dart';
 import 'package:travel_sl/gmap.dart';
+import 'package:travel_sl/navigation_routes.dart';
 import 'package:travel_sl/places.dart';
 import 'package:travel_sl/trains.dart';
 import 'package:travel_sl/translator.dart';
@@ -37,8 +38,11 @@ class _HomeMenu extends State<HomeMenu> {
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => GMap()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      GMap(NavigationRoutes.home)));
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,

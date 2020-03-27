@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:travel_sl/bloc/models/route/routes.dart';
+import 'package:travel_sl/bloc/models/directions/routes.dart';
 import 'package:travel_sl/bloc/resources/repository.dart';
 
 class RouteBloc {
@@ -19,5 +19,3 @@ class RouteBloc {
     _routesFetcher.close();
   }
 }
-
-final RouteBloc routeBloc = RouteBloc();

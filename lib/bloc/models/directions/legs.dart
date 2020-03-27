@@ -1,17 +1,16 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:travel_sl/bloc/models/route/distance.dart';
-import 'package:travel_sl/bloc/models/route/durations.dart';
-import 'package:travel_sl/bloc/models/route/endlocation.dart';
-import 'package:travel_sl/bloc/models/route/startlocation.dart';
-import 'package:travel_sl/bloc/models/route/steps.dart';
+import 'package:travel_sl/bloc/models/directions/distance.dart';
+import 'package:travel_sl/bloc/models/directions/durations.dart';
+import 'package:travel_sl/bloc/models/directions/location.dart';
+import 'package:travel_sl/bloc/models/directions/steps.dart';
 
 class Legs {
   final Distance distance;
   final Durations durations;
   final String endaddress;
-  final EndLocation endlocation;
+  final Location endlocation;
   final String startaddress;
-  final StartLocation startlocation;
+  final Location startlocation;
   final List<Steps> steps;
 
   Legs(
@@ -26,9 +25,9 @@ class Legs {
   Distance get getDistance => distance;
   Durations get getDurations => durations;
   String get getEndAddress => endaddress;
-  EndLocation get getEndLocation => endlocation;
+  Location get getEndLocation => endlocation;
   String get getStartAddress => startaddress;
-  StartLocation get getStartLocation => startlocation;
+  Location get getStartLocation => startlocation;
   List<Steps> get getSteps => steps;
 
   factory Legs.fromJson(Map<String, dynamic> json) {
@@ -45,8 +44,8 @@ class Legs {
         durations: Durations.fromJson(json['duration']),
         endaddress: json['end_address'],
         startaddress: json['start_address'],
-        endlocation: EndLocation.fromJson(json['end_location']),
-        startlocation: StartLocation.fromJson(json['start_location']),
+        endlocation: Location.fromJson(json['end_location']),
+        startlocation: Location.fromJson(json['start_location']),
         steps: _steps);
   }
 }

@@ -8,8 +8,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_sl/bloc/api_provider/route_api_provider.dart';
 import 'package:travel_sl/bloc/bloc.dart';
 import 'package:travel_sl/bloc/blocs/route_bloc.dart';
+import 'package:travel_sl/navigation_routes.dart';
 
-class GoggleMap extends StatefulWidget {
+class GMap extends StatefulWidget {
+  final String route;
+
+  GMap(this.route);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -17,14 +22,15 @@ class GoggleMap extends StatefulWidget {
   }
 }
 
-class _GMap extends State<GoggleMap> {
+class _GMap extends State<GMap> {
   Completer<GoogleMapController> _controller = Completer();
   List<LatLng> latlng = List();
   final Set<Marker> _markers = {};
   bool isOriginAdded = true;
   final Set<Polyline> _polylines = {};
+  final RouteBloc routeBloc = RouteBloc();
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
+  static CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(6.9345573, 79.8512368),
     zoom: 15,
   );
@@ -36,12 +42,26 @@ class _GMap extends State<GoggleMap> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    routeBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // _polyline.add(Polyline(polylineId: PolylineId('1'), points: latlng));
     // TODO: implement build
     return GoogleMap(
       trafficEnabled: true,
+      onCameraMove: (CameraPosition cameraPosition) {
+        _kGooglePlex = cameraPosition;
+      },
+      onCameraIdle: () {
+        print(_kGooglePlex);
+      },
       onTap: (latlng) {
+        // if (NavigationRoutes.home != widget.route) {
         if (isOriginAdded) {
           addLocationMarker(latlng, 'origin');
           isOriginAdded = false;
@@ -49,6 +69,7 @@ class _GMap extends State<GoggleMap> {
           addLocationMarker(latlng, 'destination');
           isOriginAdded = true;
         }
+        // }
       },
       markers: _markers,
       polylines: _polylines,
@@ -69,6 +90,21 @@ class _GMap extends State<GoggleMap> {
       _polylines.clear();
     }
 
+    if (location == 'destination') {
+      dynamic startLocation =
+          '${_markers.first.position.latitude},${_markers.first.position.longitude}';
+      dynamic endLocation =
+          '${selectedPosition.latitude},${selectedPosition.longitude}';
+
+      // dynamic startLocation = '6.9125703,79.8523593';
+      // dynamic endLocation = '6.8841101,79.8584285';
+      await routeBloc.getRoute(startLocation, endLocation);
+
+      routeBloc.getRoutes.listen((onData) {
+        getPolyLines(onData);
+      });
+    }
+
     setState(
       () {
         _markers.add(
@@ -87,21 +123,6 @@ class _GMap extends State<GoggleMap> {
         );
       },
     );
-
-    if (location == 'destination') {
-      dynamic startLocation =
-          '${_markers.first.position.latitude},${_markers.first.position.longitude}';
-      dynamic endLocation =
-          '${selectedPosition.latitude},${selectedPosition.longitude}';
-
-      // dynamic startLocation = '6.9125703,79.8523593';
-      // dynamic endLocation = '6.8841101,79.8584285';
-      await routeBloc.getRoute(startLocation, endLocation);
-
-      routeBloc.getRoutes.listen((onData) {
-        getPolyLines(onData);
-      });
-    }
   }
 
   List<LatLng> polylineCoordinates = [];
