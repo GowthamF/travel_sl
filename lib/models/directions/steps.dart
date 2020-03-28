@@ -1,6 +1,4 @@
-import 'package:travel_sl/bloc/models/directions/distance.dart';
-import 'package:travel_sl/bloc/models/directions/durations.dart';
-import 'package:travel_sl/bloc/models/directions/location.dart';
+import 'package:travel_sl/models/models.dart';
 
 class Steps {
   final Distance distance;

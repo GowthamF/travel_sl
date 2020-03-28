@@ -1,4 +1,4 @@
-import 'package:travel_sl/bloc/models/places/geometry.dart';
+import 'package:travel_sl/models/models.dart';
 
 class Place {
   final Geometry geometry;

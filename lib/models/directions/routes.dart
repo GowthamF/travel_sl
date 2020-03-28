@@ -1,5 +1,4 @@
-import 'package:travel_sl/bloc/models/directions/legs.dart';
-import 'package:travel_sl/bloc/models/directions/polyline.dart';
+import 'package:travel_sl/models/models.dart';
 
 class Routes {
   final List<Legs> legs;

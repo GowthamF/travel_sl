@@ -1,4 +1,4 @@
-import 'package:travel_sl/bloc/models/directions/location.dart';
+import 'package:travel_sl/models/models.dart';
 
 class Geometry {
   final Location location;

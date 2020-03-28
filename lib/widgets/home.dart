@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:travel_sl/home/homemenu.dart';
-import 'package:travel_sl/home/homepagephoto.dart';
-import 'package:travel_sl/home/homesearchbar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_sl/blocs/blocs.dart';
+import 'package:travel_sl/repositories/repositories.dart';
+import 'package:travel_sl/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
+  final RouteRepository routeRepository;
+
+  Home({this.routeRepository});
+
   @override
   State<StatefulWidget> createState() {
     return _Home();

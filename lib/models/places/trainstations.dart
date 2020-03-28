@@ -1,13 +1,13 @@
-import 'package:travel_sl/bloc/models/places/place.dart';
+import 'package:travel_sl/models/models.dart';
 
-class BusStations extends Place {
-  BusStations({geometry, placeid, placename})
+class TrainStations extends Place {
+  TrainStations({geometry, placeid, placename})
       : super(geometry: geometry, placeid: placeid, placename: placename);
 
-  factory BusStations.fromJson(Map<String, dynamic> json) {
+  factory TrainStations.fromJson(Map<String, dynamic> json) {
     final Place place = Place.fromJson(json);
 
-    return (BusStations(
+    return (TrainStations(
         geometry: place.getGeometry,
         placeid: place.getPlaceId,
         placename: place.getPlaceName));

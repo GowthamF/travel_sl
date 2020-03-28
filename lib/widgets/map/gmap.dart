@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:travel_sl/bloc/api_provider/route_api_provider.dart';
-import 'package:travel_sl/bloc/bloc.dart';
-import 'package:travel_sl/bloc/blocs/place_bloc.dart';
-import 'package:travel_sl/bloc/blocs/route_bloc.dart';
-import 'package:travel_sl/navigation_routes.dart';
+import 'package:travel_sl/blocs/blocs.dart';
+import 'package:travel_sl/models/models.dart';
+import 'package:travel_sl/widgets/widgets.dart';
 
 class GMap extends StatefulWidget {
   final String route;
@@ -29,8 +28,7 @@ class _GMap extends State<GMap> {
   final Set<Marker> _markers = {};
   bool isOriginAdded = true;
   final Set<Polyline> _polylines = {};
-  final RouteBloc routeBloc = RouteBloc();
-  final PlaceBloc placeBloc = PlaceBloc();
+  RouteBloc routeBloc;
 
   // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
 
@@ -54,27 +52,11 @@ class _GMap extends State<GMap> {
 
   @override
   Widget build(BuildContext context) {
-    // _polyline.add(Polyline(polylineId: PolylineId('1'), points: latlng));
-    // TODO: implement build
-    return GoogleMap(
-      trafficEnabled: true,
-      onCameraMove: (CameraPosition cameraPosition) {
-        _kGooglePlex = cameraPosition;
-      },
-      onCameraIdle: () async {
-        String location =
-            '${_kGooglePlex.target.latitude},${_kGooglePlex.target.longitude}';
-        await placeBloc.getBusStations(location);
-        await placeBloc.getTrainStations(location);
-        placeBloc.getBusStationsList.listen((onData) {
-          addBusStations(onData);
-        });
-        placeBloc.getTrainStationsList.listen((onData) {
-          addTrainStations(onData);
-        });
-      },
-      onTap: (latlng) {
-        if (NavigationRoutes.home != widget.route) {
+    routeBloc = BlocProvider.of<RouteBloc>(context);
+    return BlocConsumer<RouteBloc, RouteState>(builder: (context, state) {
+      return GoogleMap(
+        trafficEnabled: true,
+        onTap: (latlng) {
           if (isOriginAdded) {
             addLocationMarker(latlng, 'origin');
             isOriginAdded = false;
@@ -82,16 +64,23 @@ class _GMap extends State<GMap> {
             addLocationMarker(latlng, 'destination');
             isOriginAdded = true;
           }
-        }
-      },
-      markers: _markers,
-      polylines: _polylines,
-      initialCameraPosition: _kGooglePlex,
-      mapType: MapType.normal,
-      onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
-      },
-    );
+        },
+        markers: _markers,
+        polylines: _polylines,
+        initialCameraPosition: _kGooglePlex,
+        mapType: MapType.normal,
+        onMapCreated: (GoogleMapController controller) {
+          if (!_controller.isCompleted) {
+            _controller.complete(controller);
+          }
+          //
+        },
+      );
+    }, listener: (context, state) {
+      if (state is RouteLoaded) {
+        getPolyLines(state.routes);
+      }
+    });
   }
 
   void addLocationMarker(LatLng selectedPosition, String location) async {
@@ -111,11 +100,8 @@ class _GMap extends State<GMap> {
 
       // dynamic startLocation = '6.9125703,79.8523593';
       // dynamic endLocation = '6.8841101,79.8584285';
-      await routeBloc.getRoute(startLocation, endLocation);
 
-      routeBloc.getRoutes.listen((onData) {
-        getPolyLines(onData);
-      });
+      routeBloc.add(GetRoute(origin: startLocation, destination: endLocation));
     }
 
     setState(

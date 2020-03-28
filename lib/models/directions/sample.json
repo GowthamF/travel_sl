@@ -1,0 +1,563 @@
+{
+    "geocoded_waypoints": [
+        {
+            "geocoder_status": "OK",
+            "place_id": "ChIJ3TuZKWFZ4joRteiPfzFD2HM",
+            "types": [
+                "neighborhood",
+                "political"
+            ]
+        },
+        {
+            "geocoder_status": "OK",
+            "place_id": "ChIJw3z9fUJZ4joRI7yPkqahskU",
+            "types": [
+                "bus_station",
+                "establishment",
+                "point_of_interest",
+                "transit_station"
+            ]
+        }
+    ],
+    "routes": [
+        {
+            "bounds": {
+                "northeast": {
+                    "lat": 6.912078699999999,
+                    "lng": 79.85404799999999
+                },
+                "southwest": {
+                    "lat": 6.903703399999999,
+                    "lng": 79.8497553
+                }
+            },
+            "copyrights": "Map data ©2020",
+            "legs": [
+                {
+                    "distance": {
+                        "text": "1.6 km",
+                        "value": 1577
+                    },
+                    "duration": {
+                        "text": "5 mins",
+                        "value": 301
+                    },
+                    "end_address": "Liberty Bus Stop, R. A. De Mel Mawatha, Colombo, Sri Lanka",
+                    "end_location": {
+                        "lat": 6.909912100000001,
+                        "lng": 79.85224439999999
+                    },
+                    "start_address": "Bambalapitiya, Colombo, Sri Lanka",
+                    "start_location": {
+                        "lat": 6.9043347,
+                        "lng": 79.85404799999999
+                    },
+                    "steps": [
+                        {
+                            "distance": {
+                                "text": "0.2 km",
+                                "value": 219
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 53
+                            },
+                            "end_location": {
+                                "lat": 6.903703399999999,
+                                "lng": 79.85216489999999
+                            },
+                            "html_instructions": "Head <b>west</b> on <b>5th Ln</b> toward <b>Colombo Rd</b>/<wbr/><b>Colombo - Galle - Hambantota - Wellawaya Hwy</b>/<wbr/><b>Colombo - Galle Main Rd</b>/<wbr/><b>Galle Rd</b>/<wbr/><b>A2</b><div style=\"font-size:0.9em\">Pass by A-Networks (Pvt) Ltd, (on the left)</div>",
+                            "polyline": {
+                                "points": "aoci@ynkfNDVJb@Jb@J`@H^@BJ`@Jb@J`@@DH\\Jb@Jb@"
+                            },
+                            "start_location": {
+                                "lat": 6.9043347,
+                                "lng": 79.85404799999999
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.8 km",
+                                "value": 847
+                            },
+                            "duration": {
+                                "text": "3 mins",
+                                "value": 155
+                            },
+                            "end_location": {
+                                "lat": 6.9109531,
+                                "lng": 79.8498359
+                            },
+                            "html_instructions": "Turn <b>right</b> at Chevron House onto <b>Colombo Rd</b>/<wbr/><b>Colombo - Galle - Hambantota - Wellawaya Hwy</b>/<wbr/><b>Colombo - Galle Main Rd</b>/<wbr/><b>Galle Rd</b>/<wbr/><b>A2</b><div style=\"font-size:0.9em\">Pass by Tecnnovates (Pvt) Ltd (on the right)</div>",
+                            "maneuver": "turn-right",
+                            "polyline": {
+                                "points": "ckci@_ckfNI@I@a@Ja@JC?]JMBa@JG@]JODe@Jm@JSDMDWFA?c@H{@RSFG@iAXUFu@JWF}@R_@Ja@He@Jg@Jy@XgAVKBQB[Jq@PE@_ALc@J[Fy@TwB\\QDI@"
+                            },
+                            "start_location": {
+                                "lat": 6.903703399999999,
+                                "lng": 79.85216489999999
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.2 km",
+                                "value": 219
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 39
+                            },
+                            "end_location": {
+                                "lat": 6.912078699999999,
+                                "lng": 79.8510381
+                            },
+                            "html_instructions": "Slight <b>right</b> at Tang noodles(唐人面馆) onto <b>Colombo Rd</b>/<wbr/><b>Colombo - Galle - Hambantota - Wellawaya Hwy</b>/<wbr/><b>Colombo - Galle Main Rd</b>/<wbr/><b>Galle Rd</b>/<wbr/><b>Srimath Anagarika Dharmapala Mawatha</b>/<wbr/><b>A2</b><div style=\"font-size:0.9em\">Pass by TaxiGo Cab Van and Nano Hire Center (on the right)</div>",
+                            "maneuver": "turn-slight-right",
+                            "polyline": {
+                                "points": "mxdi@otjfN_@?o@LE@E?G?E?ECGCEGCEY{@KGCEk@eCCIEO"
+                            },
+                            "start_location": {
+                                "lat": 6.9109531,
+                                "lng": 79.8498359
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.3 km",
+                                "value": 292
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 54
+                            },
+                            "end_location": {
+                                "lat": 6.909912100000001,
+                                "lng": 79.85224439999999
+                            },
+                            "html_instructions": "Slight <b>right</b> at DSI Premier Showroom Liberty Plaza onto <b>R. A. De Mel Mawatha</b><div style=\"font-size:0.9em\">Pass by International Marketing Services (Pvt) Ltd (on the left)</div><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+                            "maneuver": "turn-slight-right",
+                            "polyline": {
+                                "points": "o_ei@_|jfNBa@@G@KDIDGDGDEFCFCr@SvD_ApAc@bAY"
+                            },
+                            "start_location": {
+                                "lat": 6.912078699999999,
+                                "lng": 79.8510381
+                            },
+                            "travel_mode": "DRIVING"
+                        }
+                    ],
+                    "traffic_speed_entry": [],
+                    "via_waypoint": []
+                }
+            ],
+            "overview_polyline": {
+                "points": "aoci@ynkfN`AfEb@hBVfASBeBb@uA\\cEz@aDv@kARuAZoCl@y@XgAV]FmA\\eAN_ARy@TwB\\[F_@?o@LK@M?MGIMY{@KGy@eDDi@FUJOLIz@WvD_ApAc@bAY"
+            },
+            "summary": "Colombo Rd/Colombo - Galle - Hambantota - Wellawaya Hwy/Colombo - Galle Main Rd/Galle Rd/A2",
+            "warnings": [],
+            "waypoint_order": []
+        },
+        {
+            "bounds": {
+                "northeast": {
+                    "lat": 6.912039399999999,
+                    "lng": 79.8589923
+                },
+                "southwest": {
+                    "lat": 6.904342199999999,
+                    "lng": 79.85161339999999
+                }
+            },
+            "copyrights": "Map data ©2020",
+            "legs": [
+                {
+                    "distance": {
+                        "text": "2.1 km",
+                        "value": 2062
+                    },
+                    "duration": {
+                        "text": "5 mins",
+                        "value": 329
+                    },
+                    "end_address": "Liberty Bus Stop, R. A. De Mel Mawatha, Colombo, Sri Lanka",
+                    "end_location": {
+                        "lat": 6.909912100000001,
+                        "lng": 79.85224439999999
+                    },
+                    "start_address": "Bambalapitiya, Colombo, Sri Lanka",
+                    "start_location": {
+                        "lat": 6.904342199999999,
+                        "lng": 79.8540723
+                    },
+                    "steps": [
+                        {
+                            "distance": {
+                                "text": "0.5 km",
+                                "value": 531
+                            },
+                            "duration": {
+                                "text": "2 mins",
+                                "value": 99
+                            },
+                            "end_location": {
+                                "lat": 6.905612000000001,
+                                "lng": 79.8585937
+                            },
+                            "html_instructions": "Head <b>east</b> on <b>5th Ln</b> toward <b>Charles Way</b><div style=\"font-size:0.9em\">Pass by Hotel Signature 5th Ln (on the left)</div>",
+                            "polyline": {
+                                "points": "coci@}nkfNc@_BmAoE[eAc@oBGUE]K]Si@Mc@Mm@COAKAI@G@EFSHWHU@ICYAEAIIYCEEI"
+                            },
+                            "start_location": {
+                                "lat": 6.904342199999999,
+                                "lng": 79.8540723
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "59 m",
+                                "value": 59
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 12
+                            },
+                            "end_location": {
+                                "lat": 6.905968499999999,
+                                "lng": 79.8589923
+                            },
+                            "html_instructions": "Continue straight past Ideo Build Engineering Services onto <b>Colombo - Batticaloa Hwy</b>/<wbr/><b>Colombo - Ratnapura - Wellawaya - Batticaloa Rd</b>/<wbr/><b>Kumaratunga Munidasa Mawatha</b>/<wbr/><b>Thurstan Rd</b>/<wbr/><b>A4</b>",
+                            "maneuver": "straight",
+                            "polyline": {
+                                "points": "awci@eklfNg@g@_@g@"
+                            },
+                            "start_location": {
+                                "lat": 6.905612000000001,
+                                "lng": 79.8585937
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.7 km",
+                                "value": 730
+                            },
+                            "duration": {
+                                "text": "2 mins",
+                                "value": 104
+                            },
+                            "end_location": {
+                                "lat": 6.911876899999999,
+                                "lng": 79.8561091
+                            },
+                            "html_instructions": "Turn <b>left</b> at Royal College Jr Playround Pavilion onto <b>Colombo - Batticaloa Hwy</b>/<wbr/><b>Colombo - Ratnapura - Wellawaya - Batticaloa Rd</b>/<wbr/><b>Flower Rd</b>/<wbr/><b>Sir Ernest de Silva Mawatha</b>/<wbr/><b>A4</b><div style=\"font-size:0.9em\">Pass by Embassy of the United Arab Emirates (on the left)</div>",
+                            "maneuver": "turn-left",
+                            "polyline": {
+                                "points": "iyci@umlfNaDtA{@^_E|A}Br@aA\\UHe@Pg@Rc@Pk@RUHmB|@o@TE@QHwBx@gA^"
+                            },
+                            "start_location": {
+                                "lat": 6.905968499999999,
+                                "lng": 79.8589923
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.5 km",
+                                "value": 490
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 68
+                            },
+                            "end_location": {
+                                "lat": 6.912046399999999,
+                                "lng": 79.85167880000002
+                            },
+                            "html_instructions": "At Sarasi Technologies (Pvt) Ltd, <b>Colombo - Batticaloa Hwy</b>/<wbr/><b>Colombo - Ratnapura - Wellawaya - Batticaloa Rd</b>/<wbr/><b>Flower Rd</b>/<wbr/><b>Sir Ernest de Silva Mawatha</b>/<wbr/><b>A4</b> turns <b>left</b> and becomes <b>A0</b>/<wbr/><b>Ananda Coomaraswamy Mawatha</b><div style=\"font-size:0.9em\">Pass by N American Aviation Group (on the right)</div>",
+                            "polyline": {
+                                "points": "g~di@u{kfN?n@EtAA|@?^?RAd@?f@Ad@?f@Ad@?f@?nB?B?`@Ab@?n@C|@Al@EVALCV"
+                            },
+                            "start_location": {
+                                "lat": 6.911876899999999,
+                                "lng": 79.8561091
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "54 m",
+                                "value": 54
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 10
+                            },
+                            "end_location": {
+                                "lat": 6.911576999999999,
+                                "lng": 79.85161339999999
+                            },
+                            "html_instructions": "At the roundabout, take the <b>1st</b> exit onto <b>Colombo Rd</b>/<wbr/><b>Colombo - Galle - Hambantota - Wellawaya Hwy</b>/<wbr/><b>Colombo - Galle Main Rd</b>/<wbr/><b>Duplication Rd</b>/<wbr/><b>A2</b>",
+                            "maneuver": "roundabout-left",
+                            "polyline": {
+                                "points": "i_ei@_`kfN@@@@\\DN@j@@"
+                            },
+                            "start_location": {
+                                "lat": 6.912046399999999,
+                                "lng": 79.85167880000002
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.2 km",
+                                "value": 198
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 36
+                            },
+                            "end_location": {
+                                "lat": 6.909912100000001,
+                                "lng": 79.85224439999999
+                            },
+                            "html_instructions": "Slight <b>left</b> at B C Commiunication onto <b>Colombo Rd</b>/<wbr/><b>Colombo - Galle - Hambantota - Wellawaya Hwy</b>/<wbr/><b>Colombo - Galle Main Rd</b>/<wbr/><b>Duplication Rd</b>/<wbr/><b>R. A. De Mel Mawatha</b>/<wbr/><b>A2</b><div style=\"font-size:0.9em\">Pass by Liberty Arcade (on the right)</div><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+                            "maneuver": "turn-slight-left",
+                            "polyline": {
+                                "points": "k|di@q_kfNvD_ApAc@bAY"
+                            },
+                            "start_location": {
+                                "lat": 6.911576999999999,
+                                "lng": 79.85161339999999
+                            },
+                            "travel_mode": "DRIVING"
+                        }
+                    ],
+                    "traffic_speed_entry": [],
+                    "via_waypoint": []
+                }
+            ],
+            "overview_polyline": {
+                "points": "coci@}nkfNqBoH[eAc@oBMs@_@gA[qAE[?QHYRm@Ac@Qo@m@q@_@g@aDtA{F|B_EpAgC`AaA\\}CrAwEdBGbFElJAxBEjBGd@AXn@Hj@@vD_AtC}@"
+            },
+            "summary": "5th Ln and Colombo - Batticaloa Hwy/Colombo - Ratnapura - Wellawaya - Batticaloa Rd/A4",
+            "warnings": [],
+            "waypoint_order": []
+        },
+        {
+            "bounds": {
+                "northeast": {
+                    "lat": 6.9111492,
+                    "lng": 79.85675860000001
+                },
+                "southwest": {
+                    "lat": 6.904342199999999,
+                    "lng": 79.8521109
+                }
+            },
+            "copyrights": "Map data ©2020",
+            "legs": [
+                {
+                    "distance": {
+                        "text": "1.4 km",
+                        "value": 1353
+                    },
+                    "duration": {
+                        "text": "6 mins",
+                        "value": 331
+                    },
+                    "end_address": "Liberty Bus Stop, R. A. De Mel Mawatha, Colombo, Sri Lanka",
+                    "end_location": {
+                        "lat": 6.909912100000001,
+                        "lng": 79.85224439999999
+                    },
+                    "start_address": "Bambalapitiya, Colombo, Sri Lanka",
+                    "start_location": {
+                        "lat": 6.904342199999999,
+                        "lng": 79.8540723
+                    },
+                    "steps": [
+                        {
+                            "distance": {
+                                "text": "0.3 km",
+                                "value": 315
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 59
+                            },
+                            "end_location": {
+                                "lat": 6.9052997,
+                                "lng": 79.85675860000001
+                            },
+                            "html_instructions": "Head <b>east</b> on <b>5th Ln</b> toward <b>Charles Way</b><div style=\"font-size:0.9em\">Pass by Hotel Signature 5th Ln (on the left)</div>",
+                            "polyline": {
+                                "points": "coci@}nkfNc@_BmAoE[eAc@oBGUE]"
+                            },
+                            "start_location": {
+                                "lat": 6.904342199999999,
+                                "lng": 79.8540723
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.4 km",
+                                "value": 361
+                            },
+                            "duration": {
+                                "text": "2 mins",
+                                "value": 92
+                            },
+                            "end_location": {
+                                "lat": 6.908321,
+                                "lng": 79.855566
+                            },
+                            "html_instructions": "Turn <b>left</b> at HnA Consulting &amp; Events onto <b>27th Ln</b><div style=\"font-size:0.9em\">Pass by 黄氏旅馆 (on the left)</div>",
+                            "maneuver": "turn-left",
+                            "polyline": {
+                                "points": "cuci@w_lfNeBd@oA\\_@J{CfAaD|@gAV"
+                            },
+                            "start_location": {
+                                "lat": 6.9052997,
+                                "lng": 79.85675860000001
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.2 km",
+                                "value": 194
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 46
+                            },
+                            "end_location": {
+                                "lat": 6.9099647,
+                                "lng": 79.8549651
+                            },
+                            "html_instructions": "At Star Garments (Pvt) LTD, continue onto <b>Unity Pl Rd</b><div style=\"font-size:0.9em\">Pass by Strive (on the right)</div>",
+                            "polyline": {
+                                "points": "_hdi@ixkfNgAXy@TKDgAVc@LmAZ"
+                            },
+                            "start_location": {
+                                "lat": 6.908321,
+                                "lng": 79.855566
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "55 m",
+                                "value": 55
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 14
+                            },
+                            "end_location": {
+                                "lat": 6.9098199,
+                                "lng": 79.8544857
+                            },
+                            "html_instructions": "Turn <b>left</b> at CeeBees Pre School &amp; Day Care onto <b>Flower Terrace Rd</b>",
+                            "maneuver": "turn-left",
+                            "polyline": {
+                                "points": "grdi@qtkfNZ~A"
+                            },
+                            "start_location": {
+                                "lat": 6.9099647,
+                                "lng": 79.8549651
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.2 km",
+                                "value": 158
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 36
+                            },
+                            "end_location": {
+                                "lat": 6.9111492,
+                                "lng": 79.8539729
+                            },
+                            "html_instructions": "Turn <b>right</b> at Lincon's Law Office onto <b>Col TG Jayawardena Mawatha</b><div style=\"font-size:0.9em\">Pass by DMSGT Finance (on the right)</div>",
+                            "maneuver": "turn-right",
+                            "polyline": {
+                                "points": "kqdi@qqkfNkCt@SHc@Ja@Lc@L"
+                            },
+                            "start_location": {
+                                "lat": 6.9098199,
+                                "lng": 79.8544857
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "0.2 km",
+                                "value": 229
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 70
+                            },
+                            "end_location": {
+                                "lat": 6.9102535,
+                                "lng": 79.8521109
+                            },
+                            "html_instructions": "Turn <b>left</b> at Holybelly onto <b>Clifford Avenue</b><div style=\"font-size:0.9em\">Pass by Classic Sri Lanka (on the left)</div>",
+                            "maneuver": "turn-left",
+                            "polyline": {
+                                "points": "uydi@inkfNJ\\J`@J`@L^L`@L\\LZP^NXt@zA"
+                            },
+                            "start_location": {
+                                "lat": 6.9111492,
+                                "lng": 79.8539729
+                            },
+                            "travel_mode": "DRIVING"
+                        },
+                        {
+                            "distance": {
+                                "text": "41 m",
+                                "value": 41
+                            },
+                            "duration": {
+                                "text": "1 min",
+                                "value": 14
+                            },
+                            "end_location": {
+                                "lat": 6.909912100000001,
+                                "lng": 79.85224439999999
+                            },
+                            "html_instructions": "Turn <b>left</b> at Gulf International Maritime (Pvt) Ltd onto <b>Colombo Rd</b>/<wbr/><b>Colombo - Galle - Hambantota - Wellawaya Hwy</b>/<wbr/><b>Colombo - Galle Main Rd</b>/<wbr/><b>Duplication Rd</b>/<wbr/><b>R. A. De Mel Mawatha</b>/<wbr/><b>A2</b><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+                            "maneuver": "turn-left",
+                            "polyline": {
+                                "points": "atdi@ubkfNbAY"
+                            },
+                            "start_location": {
+                                "lat": 6.9102535,
+                                "lng": 79.8521109
+                            },
+                            "travel_mode": "DRIVING"
+                        }
+                    ],
+                    "traffic_speed_entry": [],
+                    "via_waypoint": []
+                }
+            ],
+            "overview_polyline": {
+                "points": "coci@}nkfNqBoH[eAc@oBMs@uDbA{DrAiFtAuElAqBh@Z~AkCt@w@TeAZp@`Ch@zA`@x@t@zAbAY"
+            },
+            "summary": "27th Ln",
+            "warnings": [],
+            "waypoint_order": []
+        }
+    ],
+    "status": "OK"
+}
