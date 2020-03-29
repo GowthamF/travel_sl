@@ -1,34 +1,38 @@
 import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_sl/blocs/blocs.dart';
+import 'package:travel_sl/controllers/controllers.dart';
 import 'package:travel_sl/models/models.dart';
 import 'package:travel_sl/widgets/widgets.dart';
 
 class GMap extends StatefulWidget {
   final String route;
+  final MapController controller;
 
-  GMap(this.route);
+  GMap(this.route, this.controller);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _GMap();
+    return _GMap(controller);
   }
 }
 
-class _GMap extends State<GMap> {
+class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
   Completer<GoogleMapController> _controller = Completer();
   List<LatLng> latlng = List();
   final Set<Marker> _markers = {};
   bool isOriginAdded = true;
   final Set<Polyline> _polylines = {};
   RouteBloc routeBloc;
+  // static Position _currentPosition;
+
+  StreamSubscription<Position> positionStream;
 
   // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
 
@@ -37,16 +41,18 @@ class _GMap extends State<GMap> {
     zoom: 15,
   );
 
+  _GMap(MapController controller) {
+    controller.addLocation = addDirection;
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _initCurrentLocation();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    // routeBloc.dispose();
     super.dispose();
   }
 
@@ -55,14 +61,17 @@ class _GMap extends State<GMap> {
     routeBloc = BlocProvider.of<RouteBloc>(context);
     return BlocConsumer<RouteBloc, RouteState>(builder: (context, state) {
       return GoogleMap(
+        myLocationEnabled: true,
         trafficEnabled: true,
         onTap: (latlng) {
-          if (isOriginAdded) {
-            addLocationMarker(latlng, 'origin');
-            isOriginAdded = false;
-          } else {
-            addLocationMarker(latlng, 'destination');
-            isOriginAdded = true;
+          if (widget.route != NavigationRoutes.home) {
+            if (isOriginAdded) {
+              addLocationMarker(latlng, 'origin');
+              isOriginAdded = false;
+            } else {
+              addLocationMarker(latlng, 'destination');
+              isOriginAdded = true;
+            }
           }
         },
         markers: _markers,
@@ -72,6 +81,8 @@ class _GMap extends State<GMap> {
         onMapCreated: (GoogleMapController controller) {
           if (!_controller.isCompleted) {
             _controller.complete(controller);
+            controller
+                .animateCamera(CameraUpdate.newCameraPosition(_kGooglePlex));
           }
           //
         },
@@ -227,4 +238,38 @@ class _GMap extends State<GMap> {
       },
     );
   }
+
+  _initCurrentLocation() {
+    Geolocator()
+      ..getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium,
+      ).then((position) {
+        if (mounted) {
+          setState(
+            () {
+              _kGooglePlex = CameraPosition(
+                  target: LatLng(position.latitude, position.longitude),
+                  zoom: 15);
+
+              _controller.future.then(
+                (onValue) {
+                  onValue
+                      .moveCamera(CameraUpdate.newCameraPosition(_kGooglePlex));
+                },
+              );
+            },
+          );
+        }
+      }).catchError((e) {
+        //
+      });
+  }
+
+  addDirection() {
+    print('Directions');
+  }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

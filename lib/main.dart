@@ -9,21 +9,33 @@ import 'package:http/http.dart' as http;
 import 'widgets/widgets.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
+  final RouteRepository routeRepository = RouteRepository();
 
-  runApp(Main());
+  runApp(Main(
+    routeRepository: routeRepository,
+  ));
 }
 
 class Main extends StatelessWidget {
-  Main({Key key}) : super(key: key);
+  final RouteRepository routeRepository;
+  Main({Key key, this.routeRepository}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      onGenerateRoute: NavigationRoutes.generateRoute,
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: BlocProvider(
+        create: (context) => RouteBloc(),
+        child: Home(
+          routeRepository: routeRepository,
         ),
-        home: Home());
+      ),
+    );
   }
 }

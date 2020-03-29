@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:travel_sl/repositories/repositories.dart';
 import 'package:travel_sl/widgets/widgets.dart';
 
 class HomeMenu extends StatefulWidget {
+  final RouteRepository routeRepository;
+
+  HomeMenu({this.routeRepository});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -32,11 +36,8 @@ class _HomeMenu extends State<HomeMenu> {
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      GMap(NavigationRoutes.home)));
+                          Navigator.pushNamed(context, NavigationRoutes.map,
+                              arguments: NavigationRoutes.home);
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -58,10 +59,8 @@ class _HomeMenu extends State<HomeMenu> {
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Directions()));
+                          Navigator.pushNamed(
+                              context, NavigationRoutes.directions);
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -83,8 +82,7 @@ class _HomeMenu extends State<HomeMenu> {
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Buses()));
+                          Navigator.pushNamed(context, NavigationRoutes.buses);
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -106,10 +104,7 @@ class _HomeMenu extends State<HomeMenu> {
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Places()));
+                          Navigator.pushNamed(context, NavigationRoutes.places);
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -131,10 +126,7 @@ class _HomeMenu extends State<HomeMenu> {
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Trains()));
+                          Navigator.pushNamed(context, NavigationRoutes.trains);
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -156,10 +148,8 @@ class _HomeMenu extends State<HomeMenu> {
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Translator()));
+                          Navigator.pushNamed(
+                              context, NavigationRoutes.translator);
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,

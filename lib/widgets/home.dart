@@ -80,7 +80,9 @@ class _Home extends State<Home> {
                   child: Column(
                     children: <Widget>[
                       HomePagePhoto(),
-                      HomeMenu(),
+                      HomeMenu(
+                        routeRepository: widget.routeRepository,
+                      ),
                     ],
                   ),
                 ),

@@ -5,9 +5,7 @@ import 'package:travel_sl/repositories/repositories.dart';
 import 'package:meta/meta.dart';
 
 class RouteBloc extends Bloc<RouteEvent, RouteState> {
-  final RouteRepository routeRepository;
-
-  RouteBloc({@required this.routeRepository}) : assert(routeRepository != null);
+  final RouteRepository routeRepository = RouteRepository();
 
   @override
   // TODO: implement initialState
