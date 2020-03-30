@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:travel_sl/models/models.dart';
 
 abstract class RouteState extends Equatable {

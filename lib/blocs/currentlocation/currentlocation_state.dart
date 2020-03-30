@@ -19,7 +19,6 @@ class CurrentLocationLoaded extends CurrentLocationState {
   const CurrentLocationLoaded({this.position}) : assert(position != null);
 
   @override
-  // TODO: implement props
   List<Object> get props => [position];
 }
 

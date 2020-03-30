@@ -35,8 +35,15 @@ class _GMap extends State<GMap> {
         appBar: AppBar(
           title: Text('Map'),
         ),
-        body: BlocProvider(
-          create: (context) => RouteBloc(),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => RouteBloc(),
+            ),
+            BlocProvider(
+              create: (context) => CurrentAddressBloc(),
+            ),
+          ],
           child: common.GMap(widget.route, controller),
         ),
         floatingActionButton: FloatingActionButton(

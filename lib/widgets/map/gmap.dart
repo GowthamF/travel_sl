@@ -30,8 +30,9 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
   bool isOriginAdded = true;
   final Set<Polyline> _polylines = {};
   RouteBloc routeBloc;
+  CurrentAddressBloc currentAddressBloc;
   // static Position _currentPosition;
-
+  static String address = 'adadadas';
   StreamSubscription<Position> positionStream;
 
   // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
@@ -48,6 +49,7 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
+    _markers.add(Marker(markerId: MarkerId('SelectedLocation')));
     _initCurrentLocation();
   }
 
@@ -59,20 +61,35 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     routeBloc = BlocProvider.of<RouteBloc>(context);
-    return BlocConsumer<RouteBloc, RouteState>(builder: (context, state) {
-      return GoogleMap(
+    currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
+
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<RouteBloc, RouteState>(
+          listener: (context, state) {
+            if (state is RouteLoaded) {
+              getPolyLines(state.routes);
+            }
+          },
+        ),
+        BlocListener<CurrentAddressBloc, CurrentAddressState>(
+          listener: (context, state) {
+            if (state is CurrentAddressLoaded) {
+              addLocationMarker(state.props.first.locationLatLng,
+                  state.props.first.addressLine);
+            }
+          },
+        ),
+      ],
+      child: GoogleMap(
         myLocationEnabled: true,
         trafficEnabled: true,
         onTap: (latlng) {
-          if (widget.route != NavigationRoutes.home) {
-            if (isOriginAdded) {
-              addLocationMarker(latlng, 'origin');
-              isOriginAdded = false;
-            } else {
-              addLocationMarker(latlng, 'destination');
-              isOriginAdded = true;
-            }
-          }
+          currentAddressBloc.add(
+            GetAddressInfo(
+              coordinates: Coordinates(latlng.latitude, latlng.longitude),
+            ),
+          );
         },
         markers: _markers,
         polylines: _polylines,
@@ -81,58 +98,41 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
         onMapCreated: (GoogleMapController controller) {
           if (!_controller.isCompleted) {
             _controller.complete(controller);
-            controller
-                .animateCamera(CameraUpdate.newCameraPosition(_kGooglePlex));
+            controller.animateCamera(
+              CameraUpdate.newCameraPosition(_kGooglePlex),
+            );
           }
-          //
         },
-      );
-    }, listener: (context, state) {
-      if (state is RouteLoaded) {
-        getPolyLines(state.routes);
-      }
-    });
+      ),
+    );
   }
 
-  void addLocationMarker(LatLng selectedPosition, String location) async {
-    var results = await Geocoder.local.findAddressesFromCoordinates(
-        new Coordinates(selectedPosition.latitude, selectedPosition.longitude));
-
-    if (location == 'origin') {
+  void addLocationMarker(LatLng selectedPosition, String address) {
+    setState(() {
+      var marker = _markers.first;
       _markers.clear();
-      _polylines.clear();
-    }
-
-    if (location == 'destination') {
-      dynamic startLocation =
-          '${_markers.first.position.latitude},${_markers.first.position.longitude}';
-      dynamic endLocation =
-          '${selectedPosition.latitude},${selectedPosition.longitude}';
-
-      // dynamic startLocation = '6.9125703,79.8523593';
-      // dynamic endLocation = '6.8841101,79.8584285';
-
-      routeBloc.add(GetRoute(origin: startLocation, destination: endLocation));
-    }
-
-    setState(
-      () {
-        _markers.add(
-          Marker(
-            markerId: MarkerId(location),
-            position: selectedPosition,
-            infoWindow: InfoWindow(
-              title: results.first.addressLine,
-            ),
-            icon: isOriginAdded
-                ? BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueBlue)
-                : BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueViolet),
-          ),
-        );
-      },
-    );
+      _markers.add(Marker(
+        markerId: marker.markerId,
+        position: selectedPosition,
+        infoWindow: InfoWindow(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Directions(
+                  route: NavigationRoutes.map,
+                  selectedLocation: selectedPosition,
+                ),
+              ),
+            );
+          },
+          title: address,
+        ),
+        icon: isOriginAdded
+            ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue)
+            : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
+      ));
+    });
   }
 
   List<LatLng> polylineCoordinates = [];
