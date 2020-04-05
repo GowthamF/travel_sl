@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_sl/blocs/blocs.dart';
 import 'package:travel_sl/controllers/controllers.dart';
 import 'package:travel_sl/models/models.dart';
+import 'package:travel_sl/widgets/places/placesview.dart';
 import 'package:travel_sl/widgets/widgets.dart';
 
 class GMap extends StatefulWidget {
@@ -119,8 +120,7 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Directions(
-                  route: NavigationRoutes.map,
+                builder: (context) => PlacesView(
                   selectedLocation: selectedPosition,
                 ),
               ),

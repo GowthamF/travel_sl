@@ -34,6 +34,14 @@ class _GMap extends State<GMap> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Map'),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                    (Route<dynamic> route) => false);
+              }),
         ),
         body: MultiBlocProvider(
           providers: [
