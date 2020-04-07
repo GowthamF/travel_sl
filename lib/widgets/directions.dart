@@ -28,7 +28,8 @@ class Directions extends StatelessWidget {
         body: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => CurrentLocationBloc()),
-            BlocProvider(create: (context) => PlaceAutoSuggestBloc())
+            BlocProvider(create: (context) => PlaceAutoSuggestBloc()),
+            BlocProvider(create: (context) => RouteBloc()),
           ],
           child: DirectionView(
             selectedLocation: selectedLocation,

@@ -175,14 +175,18 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       textInputAction: textInputAction,
       onChanged: (newText) {
         currentText = newText;
-        updateOverlay(newText);
+        if (mounted) {
+          updateOverlay(newText);
+        }
 
         if (textChanged != null) {
           textChanged(newText);
         }
       },
       onTap: () {
-        updateOverlay(currentText);
+        if (mounted) {
+          updateOverlay(currentText);
+        }
       },
       onSubmitted: (submittedText) =>
           triggerSubmitted(submittedText: submittedText),
@@ -199,9 +203,13 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
       if (!textField.focusNode.hasFocus) {
         filteredSuggestions = [];
-        updateOverlay();
+        if (mounted) {
+          updateOverlay();
+        }
       } else if (!(currentText == "" || currentText == null)) {
-        updateOverlay(currentText);
+        if (mounted) {
+          updateOverlay(currentText);
+        }
       }
     });
   }
@@ -249,14 +257,18 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
         textInputAction: this.textInputAction,
         onChanged: (newText) {
           currentText = newText;
-          updateOverlay(newText);
+          if (mounted) {
+            updateOverlay(newText);
+          }
 
           if (textChanged != null) {
             textChanged(newText);
           }
         },
         onTap: () {
-          updateOverlay(currentText);
+          if (mounted) {
+            updateOverlay(currentText);
+          }
         },
         onSubmitted: (submittedText) =>
             triggerSubmitted(submittedText: submittedText),
@@ -277,12 +289,16 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   void clear() {
     textField.controller.clear();
     currentText = "";
-    updateOverlay();
+    if (mounted) {
+      updateOverlay();
+    }
   }
 
   void addSuggestion(T suggestion) {
     suggestions.add(suggestion);
-    updateOverlay(currentText);
+    if (mounted) {
+      updateOverlay(currentText);
+    }
   }
 
   void removeSuggestion(T suggestion) {
@@ -298,7 +314,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   }
 
   void updateOverlay([String query]) {
-    if (listSuggestionsEntry == null) {
+    if (listSuggestionsEntry == null && mounted) {
       final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
       final width = textFieldSize.width;
       final height = textFieldSize.height;

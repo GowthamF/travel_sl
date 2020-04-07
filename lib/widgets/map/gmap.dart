@@ -6,25 +6,24 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_sl/blocs/blocs.dart';
-import 'package:travel_sl/controllers/controllers.dart';
 import 'package:travel_sl/models/models.dart';
+import 'package:travel_sl/singletons/singletons.dart';
 import 'package:travel_sl/widgets/places/placesview.dart';
 import 'package:travel_sl/widgets/widgets.dart';
 
 class GMap extends StatefulWidget {
   final String route;
-  final MapController controller;
 
-  GMap(this.route, this.controller);
+  GMap(this.route);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _GMap(controller);
+    return _GMap();
   }
 }
 
-class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
+class _GMap extends State<GMap> {
   Completer<GoogleMapController> _controller = Completer();
   List<LatLng> latlng = List();
   final Set<Marker> _markers = {};
@@ -35,6 +34,7 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
   // static Position _currentPosition;
   static String address = 'adadadas';
   StreamSubscription<Position> positionStream;
+  RoutesSingleTon _routesSingleTon = RoutesSingleTon.getInstance();
 
   // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
 
@@ -43,8 +43,14 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
     zoom: 15,
   );
 
-  _GMap(MapController controller) {
-    controller.addLocation = addDirection;
+  _GMap() {
+    _routesSingleTon.addLocation = addDirection;
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 
   @override
@@ -52,6 +58,8 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
     super.initState();
     _markers.add(Marker(markerId: MarkerId('SelectedLocation')));
     _initCurrentLocation();
+    routeBloc = BlocProvider.of<RouteBloc>(context);
+    currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
   }
 
   @override
@@ -61,9 +69,15 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    routeBloc = BlocProvider.of<RouteBloc>(context);
-    currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
-
+    if (_routesSingleTon.routes.isNotEmpty) {
+      getPolyLines(_routesSingleTon.routes);
+    }
+    if (_routesSingleTon.routes.isEmpty) {
+      setState(() {
+        _polylines.clear();
+        _initCurrentLocation();
+      });
+    }
     return MultiBlocListener(
       listeners: [
         BlocListener<RouteBloc, RouteState>(
@@ -160,6 +174,17 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
         },
       );
     }
+
+    _kGooglePlex = CameraPosition(
+        target: LatLng(routes.first.legs.first.getStartLocation.lat,
+            routes.first.legs.first.getStartLocation.lng),
+        zoom: 10);
+
+    _controller.future.then(
+      (onValue) {
+        onValue.moveCamera(CameraUpdate.newCameraPosition(_kGooglePlex));
+      },
+    );
   }
 
   List<LatLng> _convertToLatLng(List<PointLatLng> points) {
@@ -268,8 +293,4 @@ class _GMap extends State<GMap> with AutomaticKeepAliveClientMixin {
   addDirection() {
     print('Directions');
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }
