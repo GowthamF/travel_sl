@@ -17,10 +17,15 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
       yield RouteLoading();
 
       try {
-        final List<Routes> routes =
-            await routeRepository.getRoutes(event.origin, event.destination);
-        yield RouteLoaded(routes: routes);
-      } catch (_) {
+        final List<Routes> drivingRoutes = await routeRepository.getRoutes(
+            event.origin, event.destination, '');
+        final List<Routes> transitRoute = await routeRepository.getRoutes(
+            event.origin, event.destination, event.mode);
+
+        yield RouteLoaded(
+            drivingRoutes: drivingRoutes, transitRoutes: transitRoute);
+      } catch (ex) {
+        print(ex);
         yield RouteError();
       }
     }

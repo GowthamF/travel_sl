@@ -58,10 +58,10 @@ class _GMap extends State<GMap> {
           child: Icon(Icons.directions),
           tooltip: 'Directions',
           onPressed: () async {
-            _routeSingleTon.routes.clear();
+            _routeSingleTon.drivingRoutes.clear();
+            _routeSingleTon.transitRoutes.clear();
             await Navigator.pushNamed(context, NavigationRoutes.directions,
                 arguments: NavigationRoutes.map);
-            print('${_location.currentLocation}');
             _routeSingleTon.addLocation();
           },
         ),

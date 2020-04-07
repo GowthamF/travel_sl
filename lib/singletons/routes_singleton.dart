@@ -7,7 +7,8 @@ class RoutesSingleTon {
 
   static RoutesSingleTon getInstance() => _location;
 
-  List<Routes> routes = [];
+  List<Routes> drivingRoutes = [];
+  List<Routes> transitRoutes = [];
 
   void Function() addLocation;
 }

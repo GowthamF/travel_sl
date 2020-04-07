@@ -5,6 +5,7 @@ export 'directions/location.dart';
 export 'directions/polyline.dart';
 export 'directions/routes.dart';
 export 'directions/steps.dart';
+export 'directions/transit_details.dart';
 
 export 'places/busstations.dart';
 export 'places/geometry.dart';

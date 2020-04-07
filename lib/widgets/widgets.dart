@@ -14,4 +14,6 @@ export 'home/homesearchbar.dart';
 export 'navigation_routes.dart';
 
 export 'directions/direction_view.dart';
+export 'directions/directions_menu.dart';
+
 export 'autocompletetextfield.dart';

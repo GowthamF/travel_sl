@@ -10,11 +10,12 @@ abstract class RouteEvent extends Equatable {
 class GetRoute extends RouteEvent {
   final String origin;
   final String destination;
+  final String mode;
 
-  const GetRoute({@required this.origin, this.destination})
+  const GetRoute({@required this.origin, this.destination, this.mode})
       : assert(origin != null && destination != null);
 
   @override
   // TODO: implement props
-  List<Object> get props => [origin, destination];
+  List<Object> get props => [origin, destination, mode];
 }

@@ -8,9 +8,10 @@ import 'package:travel_sl/repositories/repositories.dart';
 class RouteApiClient {
   final http.Client httpClient = http.Client();
 
-  Future<List<Routes>> getRoute(dynamic origin, dynamic destination) async {
+  Future<List<Routes>> getRoute(
+      dynamic origin, dynamic destination, dynamic mode) async {
     final response = await httpClient.get(
-        '${Constants.baseUrl}/api/directions/json?origin=$origin&destination=$destination&alternatives=true&key=${Constants.apiKey}');
+        '${Constants.baseUrl}/api/directions/json?origin=$origin&destination=$destination&mode=$mode&alternatives=true&key=${Constants.apiKey}');
 
     List<Routes> _routes = [];
 

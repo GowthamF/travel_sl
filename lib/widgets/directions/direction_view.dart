@@ -33,9 +33,9 @@ class _DirectionView extends State<DirectionView> {
       GlobalKey();
   GlobalKey<AutoCompleteTextFieldState<AutoSuggestPlace>> destinationKey =
       GlobalKey();
-  static bool isEnabled = false;
   String originPlaceId = '';
   String destinationPlaceId = '';
+  bool isCurrentLocationAvailable = false;
 
   @override
   void initState() {
@@ -55,13 +55,29 @@ class _DirectionView extends State<DirectionView> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<CurrentLocationBloc, CurrentLocationState>(
       listener: (context, state) {
         if (state is CurrentLocationLoaded) {
           _location.currentLocation = state.position;
           currentLocationController.text = 'Current Location';
-          isEnabled = true;
+          isCurrentLocationAvailable = true;
+          autoSuggestPlaces.add(
+            AutoSuggestPlace(
+                placeFormatting: PlaceFormatting(
+                  mainText: 'Current Location',
+                ),
+                placeId:
+                    '${_location.currentLocation.latitude},${_location.currentLocation.longitude}'),
+          );
+
+          originPlaceId =
+              '${_location.currentLocation.latitude},${_location.currentLocation.longitude}';
         }
       },
       child: BlocBuilder<CurrentLocationBloc, CurrentLocationState>(
@@ -126,8 +142,15 @@ class _DirectionView extends State<DirectionView> {
                                         () => {
                                           currentLocationController.text =
                                               item.placeFormatting.mainText,
-                                          originPlaceId =
-                                              'place_id:${item.placeId}',
+                                          if (isCurrentLocationAvailable)
+                                            {
+                                              originPlaceId = item.placeId,
+                                            }
+                                          else
+                                            {
+                                              originPlaceId =
+                                                  'place_id:${item.placeId}',
+                                            }
                                         },
                                       );
                                       if (originPlaceId.isNotEmpty &&
@@ -159,6 +182,9 @@ class _DirectionView extends State<DirectionView> {
                                   child: IconButton(
                                     icon: Icon(Icons.clear),
                                     onPressed: () {
+                                      if (isCurrentLocationAvailable) {
+                                        isCurrentLocationAvailable = false;
+                                      }
                                       originKey.currentState.clear();
                                       originPlaceId = '';
                                     },
@@ -267,6 +293,24 @@ class _DirectionView extends State<DirectionView> {
                     ),
                   ),
                 ),
+                Expanded(
+                  child: BlocBuilder<RouteBloc, RouteState>(
+                    builder: (context, state) {
+                      if (state is RouteLoaded) {
+                        return DirectionsMenu(
+                          drivingRoutes: state.drivingRoutes,
+                          transitRoutes: state.transitRoutes,
+                        );
+                      }
+                      if (state is RouteLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
+                )
               ],
             ),
           );
@@ -276,13 +320,7 @@ class _DirectionView extends State<DirectionView> {
   }
 
   void getDirections(String origin, String destination) {
-    routeBloc.add(GetRoute(origin: origin, destination: destination));
-
-    routeBloc.listen((state) => {
-          if (state is RouteLoaded)
-            {
-              _routesSingleTon.routes = state.routes,
-            }
-        });
+    routeBloc.add(
+        GetRoute(origin: origin, destination: destination, mode: 'transit'));
   }
 }

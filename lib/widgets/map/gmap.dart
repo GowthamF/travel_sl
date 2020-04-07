@@ -69,21 +69,12 @@ class _GMap extends State<GMap> {
 
   @override
   Widget build(BuildContext context) {
-    if (_routesSingleTon.routes.isNotEmpty) {
-      getPolyLines(_routesSingleTon.routes);
-    }
-    if (_routesSingleTon.routes.isEmpty) {
-      setState(() {
-        _polylines.clear();
-        _initCurrentLocation();
-      });
-    }
     return MultiBlocListener(
       listeners: [
         BlocListener<RouteBloc, RouteState>(
           listener: (context, state) {
             if (state is RouteLoaded) {
-              getPolyLines(state.routes);
+              getPolyLines(state.drivingRoutes);
             }
           },
         ),
@@ -110,7 +101,7 @@ class _GMap extends State<GMap> {
         polylines: _polylines,
         initialCameraPosition: _kGooglePlex,
         mapType: MapType.normal,
-        onMapCreated: (GoogleMapController controller) {
+        onMapCreated: (GoogleMapController controller) async {
           if (!_controller.isCompleted) {
             _controller.complete(controller);
             controller.animateCamera(
@@ -291,6 +282,14 @@ class _GMap extends State<GMap> {
   }
 
   addDirection() {
-    print('Directions');
+    if (_routesSingleTon.drivingRoutes.isNotEmpty) {
+      getPolyLines(_routesSingleTon.drivingRoutes);
+    }
+    if (_routesSingleTon.drivingRoutes.isEmpty) {
+      setState(() {
+        _polylines.clear();
+        _initCurrentLocation();
+      });
+    }
   }
 }

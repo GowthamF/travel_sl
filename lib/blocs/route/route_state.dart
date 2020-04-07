@@ -13,13 +13,15 @@ class RouteEmpty extends RouteState {}
 class RouteLoading extends RouteState {}
 
 class RouteLoaded extends RouteState {
-  final List<Routes> routes;
+  final List<Routes> drivingRoutes;
+  final List<Routes> transitRoutes;
 
-  const RouteLoaded({this.routes}) : assert(routes != null);
+  const RouteLoaded({this.drivingRoutes, this.transitRoutes})
+      : assert(drivingRoutes != null);
 
   @override
   // TODO: implement props
-  List<Object> get props => [routes];
+  List<Object> get props => [drivingRoutes];
 }
 
 class RouteError extends RouteState {}

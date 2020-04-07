@@ -7,8 +7,9 @@ import 'package:travel_sl/repositories/repositories.dart';
 class RouteRepository {
   final RouteApiClient routeApiClient = RouteApiClient();
 
-  Future<List<Routes>> getRoutes(dynamic origin, dynamic destination) async {
-    return await routeApiClient.getRoute(origin, destination);
+  Future<List<Routes>> getRoutes(
+      dynamic origin, dynamic destination, dynamic mode) async {
+    return await routeApiClient.getRoute(origin, destination, mode);
   }
 
   Future<Position> getCurrentLocation() async {
