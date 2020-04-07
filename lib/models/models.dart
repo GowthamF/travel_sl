@@ -11,3 +11,5 @@ export 'places/geometry.dart';
 export 'places/trainstations.dart';
 export 'places/place.dart';
 export 'places/markeraddress.dart';
+
+export 'autosuggestplace/autosuggestplace.dart';

@@ -9,3 +9,7 @@ export 'currentlocation/currentlocation_state.dart';
 export 'currentaddress/currentaddress_bloc.dart';
 export 'currentaddress/currentaddress_event.dart';
 export 'currentaddress/currentaddress_state.dart';
+
+export 'placesautosuggest/place_autosuggest_bloc.dart';
+export 'placesautosuggest/place_autosuggest_event.dart';
+export 'placesautosuggest/place_autosuggest_state.dart';
