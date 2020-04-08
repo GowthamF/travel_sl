@@ -60,6 +60,7 @@ class _GMap extends State<GMap> {
     _initCurrentLocation();
     routeBloc = BlocProvider.of<RouteBloc>(context);
     currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
+    addDirection();
   }
 
   @override
@@ -169,7 +170,7 @@ class _GMap extends State<GMap> {
     _kGooglePlex = CameraPosition(
         target: LatLng(routes.first.legs.first.getStartLocation.lat,
             routes.first.legs.first.getStartLocation.lng),
-        zoom: 10);
+        zoom: 15);
 
     _controller.future.then(
       (onValue) {

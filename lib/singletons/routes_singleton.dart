@@ -11,4 +11,5 @@ class RoutesSingleTon {
   List<Routes> transitRoutes = [];
 
   void Function() addLocation;
+  void Function() addCurrentLocation;
 }

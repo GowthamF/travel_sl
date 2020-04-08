@@ -28,6 +28,12 @@ class _GMap extends State<GMap> {
   final singleton.RoutesSingleTon _routeSingleTon =
       singleton.RoutesSingleTon.getInstance();
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // RouteBloc routeBloc = BlocProvider.of<RouteBloc>(context);
     return SafeArea(
@@ -58,8 +64,6 @@ class _GMap extends State<GMap> {
           child: Icon(Icons.directions),
           tooltip: 'Directions',
           onPressed: () async {
-            _routeSingleTon.drivingRoutes.clear();
-            _routeSingleTon.transitRoutes.clear();
             await Navigator.pushNamed(context, NavigationRoutes.directions,
                 arguments: NavigationRoutes.map);
             _routeSingleTon.addLocation();

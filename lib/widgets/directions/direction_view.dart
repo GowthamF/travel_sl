@@ -35,23 +35,27 @@ class _DirectionView extends State<DirectionView> {
       GlobalKey();
   String originPlaceId = '';
   String destinationPlaceId = '';
-  bool isCurrentLocationAvailable = false;
+  static bool isCurrentLocationAvailable = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     currentLocationController = TextEditingController();
     destinationController = TextEditingController();
     placeAutoSuggestBloc = BlocProvider.of<PlaceAutoSuggestBloc>(context);
     routeBloc = BlocProvider.of<RouteBloc>(context);
-
     if (widget.selectedLocation == null) {
       currentLocationBloc = BlocProvider.of<CurrentLocationBloc>(context);
       currentLocationBloc.add(GetCurrentLocation());
     } else {
       currentLocationController.text = '${widget.selectedLocation}';
     }
+
+    _routesSingleTon.transitRoutes.clear();
+    _routesSingleTon.drivingRoutes.clear();
+    _routesSingleTon.addCurrentLocation = addCurrentLocation;
   }
 
   @override
@@ -66,16 +70,6 @@ class _DirectionView extends State<DirectionView> {
         if (state is CurrentLocationLoaded) {
           _location.currentLocation = state.position;
           currentLocationController.text = 'Current Location';
-          isCurrentLocationAvailable = true;
-          autoSuggestPlaces.add(
-            AutoSuggestPlace(
-                placeFormatting: PlaceFormatting(
-                  mainText: 'Current Location',
-                ),
-                placeId:
-                    '${_location.currentLocation.latitude},${_location.currentLocation.longitude}'),
-          );
-
           originPlaceId =
               '${_location.currentLocation.latitude},${_location.currentLocation.longitude}';
         }
@@ -142,15 +136,6 @@ class _DirectionView extends State<DirectionView> {
                                         () => {
                                           currentLocationController.text =
                                               item.placeFormatting.mainText,
-                                          if (isCurrentLocationAvailable)
-                                            {
-                                              originPlaceId = item.placeId,
-                                            }
-                                          else
-                                            {
-                                              originPlaceId =
-                                                  'place_id:${item.placeId}',
-                                            }
                                         },
                                       );
                                       if (originPlaceId.isNotEmpty &&
@@ -182,11 +167,9 @@ class _DirectionView extends State<DirectionView> {
                                   child: IconButton(
                                     icon: Icon(Icons.clear),
                                     onPressed: () {
-                                      if (isCurrentLocationAvailable) {
-                                        isCurrentLocationAvailable = false;
-                                      }
                                       originKey.currentState.clear();
                                       originPlaceId = '';
+                                      clearRoutes();
                                     },
                                   ),
                                 ),
@@ -282,6 +265,7 @@ class _DirectionView extends State<DirectionView> {
                                     onPressed: () {
                                       destinationController.clear();
                                       destinationPlaceId = '';
+                                      clearRoutes();
                                     },
                                   ),
                                 ),
@@ -297,6 +281,8 @@ class _DirectionView extends State<DirectionView> {
                   child: BlocBuilder<RouteBloc, RouteState>(
                     builder: (context, state) {
                       if (state is RouteLoaded) {
+                        _routesSingleTon.drivingRoutes = state.drivingRoutes;
+                        _routesSingleTon.transitRoutes = state.transitRoutes;
                         return DirectionsMenu(
                           drivingRoutes: state.drivingRoutes,
                           transitRoutes: state.transitRoutes,
@@ -322,5 +308,16 @@ class _DirectionView extends State<DirectionView> {
   void getDirections(String origin, String destination) {
     routeBloc.add(
         GetRoute(origin: origin, destination: destination, mode: 'transit'));
+  }
+
+  void clearRoutes() {
+    _routesSingleTon.drivingRoutes.clear();
+    _routesSingleTon.transitRoutes.clear();
+  }
+
+  addCurrentLocation() {
+    if (mounted) {
+      currentLocationBloc.add(GetCurrentLocation());
+    }
   }
 }
