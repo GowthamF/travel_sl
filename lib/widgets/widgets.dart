@@ -15,5 +15,7 @@ export 'navigation_routes.dart';
 
 export 'directions/direction_view.dart';
 export 'directions/directions_menu.dart';
+export 'directions/directions_to.dart';
+export 'directions/directions_from.dart';
 
 export 'autocompletetextfield.dart';

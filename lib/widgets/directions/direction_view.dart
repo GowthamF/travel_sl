@@ -20,13 +20,11 @@ class DirectionView extends StatefulWidget {
 }
 
 class _DirectionView extends State<DirectionView> {
-  CurrentLocationBloc currentLocationBloc;
   singleton.Location _location = singleton.Location.getInstance();
   singleton.RoutesSingleTon _routesSingleTon =
       singleton.RoutesSingleTon.getInstance();
   TextEditingController currentLocationController;
   TextEditingController destinationController;
-  PlaceAutoSuggestBloc placeAutoSuggestBloc;
   RouteBloc routeBloc;
   List<AutoSuggestPlace> autoSuggestPlaces = [];
   GlobalKey<AutoCompleteTextFieldState<AutoSuggestPlace>> originKey =
@@ -44,11 +42,8 @@ class _DirectionView extends State<DirectionView> {
 
     currentLocationController = TextEditingController();
     destinationController = TextEditingController();
-    placeAutoSuggestBloc = BlocProvider.of<PlaceAutoSuggestBloc>(context);
     routeBloc = BlocProvider.of<RouteBloc>(context);
     if (widget.selectedLocation == null) {
-      currentLocationBloc = BlocProvider.of<CurrentLocationBloc>(context);
-      currentLocationBloc.add(GetCurrentLocation());
     } else {
       currentLocationController.text = '${widget.selectedLocation}';
     }
@@ -65,243 +60,81 @@ class _DirectionView extends State<DirectionView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CurrentLocationBloc, CurrentLocationState>(
-      listener: (context, state) {
-        if (state is CurrentLocationLoaded) {
-          _location.currentLocation = state.position;
-          currentLocationController.text = 'Current Location';
-          originPlaceId =
-              '${_location.currentLocation.latitude},${_location.currentLocation.longitude}';
-        }
-      },
-      child: BlocBuilder<CurrentLocationBloc, CurrentLocationState>(
-        builder: (context, state) {
-          if (state is CurrentLocationLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Directions'),
+          ),
+          body: Container(
+            padding: EdgeInsets.only(top: 15, left: 15, right: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Form(
-                  child:
-                      BlocListener<PlaceAutoSuggestBloc, PlaceAutoSuggestState>(
-                    listener: (context, state) {
-                      if (state is PlaceAutoSuggestLoaded) {
-                        setState(
-                          () {
-                            originKey.currentState
-                                .updateSuggestions(state.autoSuggestions);
-                          },
-                        );
-                      }
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Wrap(
-                          children: <Widget>[
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                    child: Container(
-                                  padding: EdgeInsets.only(left: 15, top: 15),
-                                  child:
-                                      AutoCompleteTextField<AutoSuggestPlace>(
-                                    clearOnSubmit: false,
-                                    submitOnSuggestionTap: true,
-                                    controller: currentLocationController,
-                                    textChanged: (value) {
-                                      if (value.isNotEmpty) {
-                                        placeAutoSuggestBloc.add(
-                                          GetAutoSuggestions(
-                                              input: value,
-                                              location:
-                                                  '${_location.currentLocation.latitude},${_location.currentLocation.longitude}',
-                                              isOrigin: true),
-                                        );
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      hintText: "Choose Starting Place",
-                                    ),
-                                    itemSubmitted: (item) {
-                                      setState(
-                                        () => {
-                                          currentLocationController.text =
-                                              item.placeFormatting.mainText,
-                                        },
-                                      );
-                                      if (originPlaceId.isNotEmpty &&
-                                          destinationPlaceId.isNotEmpty) {
-                                        getDirections(
-                                            originPlaceId, destinationPlaceId);
-                                      }
-                                    },
-                                    key: originKey,
-                                    suggestions: autoSuggestPlaces,
-                                    itemBuilder: (context, suggestion) =>
-                                        Padding(
-                                            child: ListTile(
-                                              title: Text(suggestion
-                                                  .placeFormatting.mainText),
-                                            ),
-                                            padding: EdgeInsets.all(8.0)),
-                                    itemSorter: (a, b) => (a
-                                        .placeFormatting.mainText
-                                        .compareTo(b.placeFormatting.mainText)),
-                                    itemFilter: (suggestion, input) =>
-                                        suggestion.placeFormatting.mainText
-                                            .toLowerCase()
-                                            .startsWith(input.toLowerCase()),
-                                  ),
-                                )),
-                                Container(
-                                  padding: EdgeInsets.only(top: 15),
-                                  child: IconButton(
-                                    icon: Icon(Icons.clear),
-                                    onPressed: () {
-                                      originKey.currentState.clear();
-                                      originPlaceId = '';
-                                      clearRoutes();
-                                    },
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: Colors.blue)),
+                  child: Wrap(
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 20, left: 25, bottom: 20),
+                                  child: Text(
+                                    'Current Location',
+                                    style: TextStyle(fontSize: 20),
+                                  ))),
+                          IconButton(
+                            tooltip: 'Edit',
+                            icon: Icon(Icons.edit),
+                            onPressed: () {},
+                            padding: EdgeInsets.only(top: 20),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 50,
                 ),
-                Form(
-                  child:
-                      BlocListener<PlaceAutoSuggestBloc, PlaceAutoSuggestState>(
-                    listener: (context, state) {
-                      if (state is PlaceAutoSuggestLoaded) {
-                        setState(() {
-                          destinationKey.currentState
-                              .updateSuggestions(state.autoSuggestions);
-                        });
-                      }
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Wrap(
-                          children: <Widget>[
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                    child: Container(
-                                  padding: EdgeInsets.only(left: 15),
-                                  child:
-                                      AutoCompleteTextField<AutoSuggestPlace>(
-                                    clearOnSubmit: false,
-                                    submitOnSuggestionTap: true,
-                                    controller: destinationController,
-                                    textChanged: (value) {
-                                      if (value.isNotEmpty) {
-                                        placeAutoSuggestBloc.add(
-                                          GetAutoSuggestions(
-                                              input: value,
-                                              location:
-                                                  '${_location.currentLocation.latitude},${_location.currentLocation.longitude}',
-                                              isOrigin: false),
-                                        );
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      hintText: "Choose Destination Place",
-                                    ),
-                                    itemSubmitted: (item) {
-                                      setState(
-                                        () => {
-                                          destinationController.text =
-                                              item.placeFormatting.mainText,
-                                          destinationPlaceId =
-                                              'place_id:${item.placeId}',
-                                        },
-                                      );
-                                      if (originPlaceId.isNotEmpty &&
-                                          destinationPlaceId.isNotEmpty) {
-                                        getDirections(
-                                            originPlaceId, destinationPlaceId);
-                                      }
-                                    },
-                                    key: destinationKey,
-                                    suggestions: autoSuggestPlaces,
-                                    itemBuilder: (context, suggestion) =>
-                                        Padding(
-                                            child: ListTile(
-                                              title: Text(suggestion
-                                                  .placeFormatting.mainText),
-                                            ),
-                                            padding: EdgeInsets.all(8.0)),
-                                    itemSorter: (a, b) => (a
-                                        .placeFormatting.mainText
-                                        .compareTo(b.placeFormatting.mainText)),
-                                    itemFilter: (suggestion, input) =>
-                                        suggestion.placeFormatting.mainText
-                                            .toLowerCase()
-                                            .startsWith(input.toLowerCase()),
-                                  ),
-                                )),
-                                Container(
-                                  padding: EdgeInsets.only(top: 5),
-                                  child: IconButton(
-                                    icon: Icon(Icons.clear),
-                                    onPressed: () {
-                                      destinationController.clear();
-                                      destinationPlaceId = '';
-                                      clearRoutes();
-                                    },
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: BlocBuilder<RouteBloc, RouteState>(
-                    builder: (context, state) {
-                      if (state is RouteLoaded) {
-                        _routesSingleTon.drivingRoutes = state.drivingRoutes;
-                        _routesSingleTon.transitRoutes = state.transitRoutes;
-                        return DirectionsMenu(
-                          drivingRoutes: state.drivingRoutes,
-                          transitRoutes: state.transitRoutes,
-                        );
-                      }
-                      if (state is RouteLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return Container();
-                    },
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: Colors.blue)),
+                  child: Wrap(
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 20, left: 25, bottom: 20),
+                                  child: Text(
+                                    'Current Location',
+                                    style: TextStyle(fontSize: 20),
+                                  ))),
+                          IconButton(
+                            tooltip: 'Edit',
+                            icon: Icon(Icons.edit),
+                            onPressed: () {},
+                            padding: EdgeInsets.only(top: 20),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 )
               ],
             ),
-          );
-        },
-      ),
+          )),
     );
   }
 
@@ -317,7 +150,7 @@ class _DirectionView extends State<DirectionView> {
 
   addCurrentLocation() {
     if (mounted) {
-      currentLocationBloc.add(GetCurrentLocation());
+      // currentLocationBloc.add(GetCurrentLocation());
     }
   }
 }
