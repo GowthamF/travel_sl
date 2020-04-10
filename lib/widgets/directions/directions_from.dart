@@ -6,6 +6,10 @@ import 'package:travel_sl/singletons/singletons.dart' as singleton;
 import 'package:travel_sl/widgets/widgets.dart';
 
 class DirectionsFrom extends StatefulWidget {
+  final bool isEditMode;
+
+  DirectionsFrom({this.isEditMode});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -25,6 +29,8 @@ class _DirectionsFrom extends State<DirectionsFrom> {
 
   PlaceAutoSuggestBloc placeAutoSuggestBloc;
   singleton.Location _location = singleton.Location.getInstance();
+  singleton.PlacesSingleTon _placeSingleton =
+      singleton.PlacesSingleTon.getInstance();
   CurrentLocationBloc currentLocationBloc;
 
   @override
@@ -34,16 +40,18 @@ class _DirectionsFrom extends State<DirectionsFrom> {
     placeAutoSuggestBloc = PlaceAutoSuggestBloc();
     currentLocationBloc = BlocProvider.of<CurrentLocationBloc>(context);
     currentLocationBloc.add(GetCurrentLocation());
-    placeAutoSuggestBloc.listen((state) {
-      if (state is PlaceAutoSuggestLoaded) {
-        setState(
-          () {
-            list.removeWhere((t) => t.isCurrentLocation != true);
-            list.addAll(state.autoSuggestions);
-          },
-        );
-      }
-    });
+    placeAutoSuggestBloc.listen(
+      (state) {
+        if (state is PlaceAutoSuggestLoaded) {
+          setState(
+            () {
+              list.removeWhere((t) => t.isCurrentLocation != true);
+              list.addAll(state.autoSuggestions);
+            },
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -141,10 +149,40 @@ class _DirectionsFrom extends State<DirectionsFrom> {
                                       child: Text(list[index].description),
                                     ),
                               onTap: () {
-                                Navigator.push(
+                                if (list[index].isCurrentLocation) {
+                                  _placeSingleton.selectedOrigin = DirectionPlace(
+                                      location:
+                                          '${_location.currentLocation.latitude},${_location.currentLocation.longitude}',
+                                      showName: 'Current Location');
+                                } else {
+                                  _placeSingleton.selectedOrigin =
+                                      DirectionPlace(
+                                          location:
+                                              'place_id:${list[index].placeId}',
+                                          showName: list[index]
+                                              .placeFormatting
+                                              .mainText);
+                                }
+
+                                if (widget.isEditMode) {
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => DirectionsTo()));
+                                      builder: (context) =>
+                                          BlocProvider<RouteBloc>(
+                                        create: (context) => RouteBloc(),
+                                        child: DirectionView(),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DirectionsTo(),
+                                    ),
+                                  );
+                                }
                               },
                             ),
                           ],

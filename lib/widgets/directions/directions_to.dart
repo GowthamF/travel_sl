@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_sl/blocs/blocs.dart';
@@ -6,6 +8,8 @@ import 'package:travel_sl/singletons/singletons.dart' as singleton;
 import 'package:travel_sl/widgets/widgets.dart';
 
 class DirectionsTo extends StatefulWidget {
+  DirectionsTo();
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -18,6 +22,8 @@ class _DirectionsTo extends State<DirectionsTo> {
 
   PlaceAutoSuggestBloc placeAutoSuggestBloc;
   singleton.Location _location = singleton.Location.getInstance();
+  singleton.PlacesSingleTon _placeSingleton =
+      singleton.PlacesSingleTon.getInstance();
 
   @override
   void initState() {
@@ -101,6 +107,9 @@ class _DirectionsTo extends State<DirectionsTo> {
                                 child: Text(list[index].description),
                               ),
                         onTap: () {
+                          _placeSingleton.selectedDestination = DirectionPlace(
+                              location: 'place_id:${list[index].placeId}',
+                              showName: list[index].placeFormatting.mainText);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

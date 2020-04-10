@@ -7,6 +7,7 @@ export 'directions/routes.dart';
 export 'directions/steps.dart';
 export 'directions/transit_details.dart';
 
+export 'places/directionPlace.dart';
 export 'places/busstations.dart';
 export 'places/geometry.dart';
 export 'places/trainstations.dart';

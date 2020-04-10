@@ -15,11 +15,15 @@ class Directions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: MultiBlocProvider(providers: [
-          BlocProvider(create: (context) => CurrentLocationBloc()),
-          BlocProvider(create: (context) => PlaceAutoSuggestBloc()),
-          BlocProvider(create: (context) => RouteBloc()),
-        ], child: DirectionsFrom()),
+        body: MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => CurrentLocationBloc()),
+              BlocProvider(create: (context) => PlaceAutoSuggestBloc()),
+              BlocProvider(create: (context) => RouteBloc()),
+            ],
+            child: DirectionsFrom(
+              isEditMode: false,
+            )),
       ),
     );
   }

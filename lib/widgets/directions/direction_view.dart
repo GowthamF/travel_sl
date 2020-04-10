@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_sl/blocs/blocs.dart';
 import 'package:travel_sl/models/models.dart';
-import 'package:travel_sl/repositories/autosuggest_api_client.dart';
 import 'package:travel_sl/singletons/singletons.dart' as singleton;
 import 'package:travel_sl/widgets/widgets.dart';
 
 class DirectionView extends StatefulWidget {
-  final LatLng selectedLocation;
-
-  DirectionView({this.selectedLocation});
+  DirectionView();
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _DirectionView();
   }
 }
@@ -23,8 +18,8 @@ class _DirectionView extends State<DirectionView> {
   singleton.Location _location = singleton.Location.getInstance();
   singleton.RoutesSingleTon _routesSingleTon =
       singleton.RoutesSingleTon.getInstance();
-  TextEditingController currentLocationController;
-  TextEditingController destinationController;
+  singleton.PlacesSingleTon _placesSingleTon =
+      singleton.PlacesSingleTon.getInstance();
   RouteBloc routeBloc;
   List<AutoSuggestPlace> autoSuggestPlaces = [];
   GlobalKey<AutoCompleteTextFieldState<AutoSuggestPlace>> originKey =
@@ -39,18 +34,13 @@ class _DirectionView extends State<DirectionView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    currentLocationController = TextEditingController();
-    destinationController = TextEditingController();
     routeBloc = BlocProvider.of<RouteBloc>(context);
-    if (widget.selectedLocation == null) {
-    } else {
-      currentLocationController.text = '${widget.selectedLocation}';
-    }
 
     _routesSingleTon.transitRoutes.clear();
     _routesSingleTon.drivingRoutes.clear();
     _routesSingleTon.addCurrentLocation = addCurrentLocation;
+    getDirections(_placesSingleTon.selectedOrigin.location,
+        _placesSingleTon.selectedDestination.location);
   }
 
   @override
@@ -86,13 +76,34 @@ class _DirectionView extends State<DirectionView> {
                                   padding: EdgeInsets.only(
                                       top: 20, left: 25, bottom: 20),
                                   child: Text(
-                                    'Current Location',
+                                    _placesSingleTon.selectedOrigin.showName,
                                     style: TextStyle(fontSize: 20),
                                   ))),
                           IconButton(
                             tooltip: 'Edit',
                             icon: Icon(Icons.edit),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider(
+                                          create: (context) =>
+                                              CurrentLocationBloc()),
+                                      BlocProvider(
+                                          create: (context) =>
+                                              PlaceAutoSuggestBloc()),
+                                      BlocProvider(
+                                          create: (context) => RouteBloc()),
+                                    ],
+                                    child: DirectionsFrom(
+                                      isEditMode: true,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                             padding: EdgeInsets.only(top: 20),
                           )
                         ],
@@ -101,7 +112,7 @@ class _DirectionView extends State<DirectionView> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -118,20 +129,44 @@ class _DirectionView extends State<DirectionView> {
                                   padding: EdgeInsets.only(
                                       top: 20, left: 25, bottom: 20),
                                   child: Text(
-                                    'Current Location',
+                                    _placesSingleTon
+                                        .selectedDestination.showName,
                                     style: TextStyle(fontSize: 20),
                                   ))),
                           IconButton(
                             tooltip: 'Edit',
                             icon: Icon(Icons.edit),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DirectionsTo()));
+                            },
                             padding: EdgeInsets.only(top: 20),
                           )
                         ],
                       )
                     ],
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Expanded(
+                  child: BlocBuilder<RouteBloc, RouteState>(
+                    builder: (context, state) {
+                      if (state is RouteLoaded) {
+                        return DirectionsMenu(
+                          drivingRoutes: state.drivingRoutes,
+                          transitRoutes: state.transitRoutes,
+                        );
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           )),
