@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_sl/blocs/blocs.dart';
+import 'package:travel_sl/models/models.dart';
 import 'package:travel_sl/singletons/singletons.dart' as singleton;
 import 'package:travel_sl/widgets/map/gmap.dart' as common;
 import 'package:travel_sl/widgets/widgets.dart';
 
 class GMap extends StatefulWidget {
   final String route;
+  final TravelMode routeMode;
   // final
   //  = RouteRepository(
   //   routeApiClient: RouteApiClient(
@@ -14,7 +16,7 @@ class GMap extends StatefulWidget {
   //   ),
   // );
 
-  GMap({this.route});
+  GMap({this.route, this.routeMode});
 
   @override
   State<StatefulWidget> createState() {
@@ -58,7 +60,10 @@ class _GMap extends State<GMap> {
               create: (context) => CurrentAddressBloc(),
             ),
           ],
-          child: common.GMap(widget.route),
+          child: common.GMap(
+            widget.route,
+            routeMode: widget.routeMode,
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.directions),

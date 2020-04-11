@@ -17,12 +17,40 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
       yield RouteLoading();
 
       try {
+        final List<Routes> busRoute = [];
+        final List<Routes> trainRoutes = [];
         final List<Routes> drivingRoutes = await routeRepository.getRoutes(
             event.origin, event.destination, '', TravelMode.Driving);
-        final List<Routes> busRoute = await routeRepository.getRoutes(
+        var _busRoutes = await routeRepository.getRoutes(
             event.origin, event.destination, event.mode, TravelMode.Bus);
-        final List<Routes> trainRoutes = await routeRepository.getRoutes(
+        var _trainRoutes = await routeRepository.getRoutes(
             event.origin, event.destination, event.mode, TravelMode.Train);
+
+        _busRoutes.forEach(
+          (r) => r.getLegs.forEach(
+            (l) => l.getSteps.forEach(
+              (s) => {
+                if (s.transitDetails.vehicleType == VehicleType.Bus)
+                  {
+                    busRoute.addAll(_busRoutes),
+                  }
+              },
+            ),
+          ),
+        );
+
+        _trainRoutes.forEach(
+          (r) => r.getLegs.forEach(
+            (l) => l.getSteps.forEach(
+              (s) => {
+                if (s.transitDetails.vehicleType == VehicleType.Train)
+                  {
+                    trainRoutes.addAll(_trainRoutes),
+                  }
+              },
+            ),
+          ),
+        );
 
         yield RouteLoaded(
             drivingRoutes: drivingRoutes,

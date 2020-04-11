@@ -8,6 +8,7 @@ class Steps {
   final TransitDetails transitDetails;
   final List<Steps> steps;
   final TravelMode travelMode;
+  final String instruction;
 
   Steps(
       {this.distance,
@@ -16,7 +17,8 @@ class Steps {
       this.endLocation,
       this.transitDetails,
       this.steps,
-      this.travelMode});
+      this.travelMode,
+      this.instruction});
 
   factory Steps.fromJson(Map<String, dynamic> json, TravelMode travelMode) {
     List<Steps> _steps = [];
@@ -33,14 +35,16 @@ class Steps {
     }
 
     return Steps(
-        distance: Distance.fromJson(json['distance']),
-        durations: Durations.fromJson(json['duration']),
-        endLocation: Location.fromJson(json['end_location']),
-        startlocation: Location.fromJson(json['start_location']),
-        transitDetails: json['transit_details'] != null
-            ? TransitDetails.fromJson(json['transit_details'])
-            : TransitDetails(vehicleType: VehicleType.Driving),
-        steps: _steps,
-        travelMode: travelMode);
+      distance: Distance.fromJson(json['distance']),
+      durations: Durations.fromJson(json['duration']),
+      endLocation: Location.fromJson(json['end_location']),
+      startlocation: Location.fromJson(json['start_location']),
+      transitDetails: json['transit_details'] != null
+          ? TransitDetails.fromJson(json['transit_details'])
+          : TransitDetails(vehicleType: VehicleType.Driving),
+      steps: _steps,
+      travelMode: travelMode,
+      instruction: json['html_instructions'],
+    );
   }
 }

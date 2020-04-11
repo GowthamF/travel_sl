@@ -13,8 +13,9 @@ import 'package:travel_sl/widgets/widgets.dart';
 
 class GMap extends StatefulWidget {
   final String route;
+  final TravelMode routeMode;
 
-  GMap(this.route);
+  GMap(this.route, {this.routeMode});
 
   @override
   State<StatefulWidget> createState() {
@@ -283,9 +284,32 @@ class _GMap extends State<GMap> {
   }
 
   addDirection() {
-    if (_routesSingleTon.drivingRoutes.isNotEmpty) {
-      getPolyLines(_routesSingleTon.drivingRoutes);
+    if (widget.routeMode == TravelMode.Driving) {
+      if (_routesSingleTon.drivingRoutes.isNotEmpty) {
+        getPolyLines(_routesSingleTon.drivingRoutes);
+      }
+    } else if (widget.routeMode == TravelMode.Bus) {
+      if (_routesSingleTon.busRoutes.isNotEmpty) {
+        _routesSingleTon.busRoutes
+            .forEach((b) => b.getLegs.forEach((l) => l.getSteps.forEach((s) => {
+                  if (s.transitDetails.vehicleType == VehicleType.Bus)
+                    {
+                      getPolyLines(_routesSingleTon.busRoutes),
+                    }
+                })));
+      } else if (widget.routeMode == TravelMode.Train) {
+        if (_routesSingleTon.trainRoutes.isNotEmpty) {
+          _routesSingleTon.trainRoutes.forEach(
+              (b) => b.getLegs.forEach((l) => l.getSteps.forEach((s) => {
+                    if (s.transitDetails.vehicleType == VehicleType.Train)
+                      {
+                        getPolyLines(_routesSingleTon.trainRoutes),
+                      }
+                  })));
+        }
+      }
     }
+
     if (_routesSingleTon.drivingRoutes.isEmpty) {
       setState(() {
         _polylines.clear();

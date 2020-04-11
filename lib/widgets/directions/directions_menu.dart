@@ -29,39 +29,21 @@ class _DirectionsMenu extends State<DirectionsMenu> {
     super.initState();
 
     if (widget.busRoutes.isNotEmpty) {
-      widget.busRoutes.forEach(
-        (r) => r.getLegs.forEach(
-          (l) => l.getSteps.forEach(
-            (s) => {
-              if (s.transitDetails.vehicleType == VehicleType.Bus &&
-                  busDistance.isEmpty &&
-                  busDuration.isEmpty)
-                {
-                  busDistance = '${l.getDistance.getText}',
-                  busDuration = '${l.getDurations.getText}',
-                }
-            },
-          ),
-        ),
-      );
+      if (busDistance.isEmpty && busDuration.isEmpty) {
+        busDistance =
+            '${widget.busRoutes.first.getLegs.first.getDistance.getText}';
+        busDuration =
+            '${widget.busRoutes.first.getLegs.first.getDurations.getText}';
+      }
     }
 
     if (widget.trainRoutes.isNotEmpty) {
-      widget.trainRoutes.forEach(
-        (r) => r.getLegs.forEach(
-          (l) => l.getSteps.forEach(
-            (s) => {
-              if (s.transitDetails.vehicleType == VehicleType.Train &&
-                  trainDistance.isEmpty &&
-                  trainDuration.isEmpty)
-                {
-                  trainDistance = '${l.getDistance.getText}',
-                  trainDuration = '${l.getDurations.getText}',
-                }
-            },
-          ),
-        ),
-      );
+      if (trainDuration.isEmpty && trainDistance.isEmpty) {
+        trainDistance =
+            '${widget.trainRoutes.first.getLegs.first.getDistance.getText}';
+        trainDuration =
+            '${widget.trainRoutes.first.getLegs.first.getDurations.getText}';
+      }
     }
 
     if (widget.drivingRoutes.isNotEmpty) {

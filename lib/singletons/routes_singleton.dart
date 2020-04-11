@@ -8,7 +8,8 @@ class RoutesSingleTon {
   static RoutesSingleTon getInstance() => _location;
 
   List<Routes> drivingRoutes = [];
-  List<Routes> transitRoutes = [];
+  List<Routes> busRoutes = [];
+  List<Routes> trainRoutes = [];
 
   void Function() addLocation;
   void Function() addCurrentLocation;

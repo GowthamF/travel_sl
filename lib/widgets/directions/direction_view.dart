@@ -36,7 +36,8 @@ class _DirectionView extends State<DirectionView> {
     super.initState();
     routeBloc = BlocProvider.of<RouteBloc>(context);
 
-    _routesSingleTon.transitRoutes.clear();
+    _routesSingleTon.busRoutes.clear();
+    _routesSingleTon.trainRoutes.clear();
     _routesSingleTon.drivingRoutes.clear();
     _routesSingleTon.addCurrentLocation = addCurrentLocation;
     getDirections(_placesSingleTon.selectedOrigin.location,
@@ -149,7 +150,10 @@ class _DirectionView extends State<DirectionView> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DirectionsTo(),
+                                  builder: (context) => BlocProvider(
+                                    create: (context) => PlaceAutoSuggestBloc(),
+                                    child: DirectionsTo(),
+                                  ),
                                 ),
                               );
                             },
@@ -192,7 +196,8 @@ class _DirectionView extends State<DirectionView> {
 
   void clearRoutes() {
     _routesSingleTon.drivingRoutes.clear();
-    _routesSingleTon.transitRoutes.clear();
+    _routesSingleTon.busRoutes.clear();
+    _routesSingleTon.trainRoutes.clear();
   }
 
   addCurrentLocation() {
