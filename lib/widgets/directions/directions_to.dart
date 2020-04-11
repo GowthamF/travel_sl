@@ -29,19 +29,7 @@ class _DirectionsTo extends State<DirectionsTo> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    placeAutoSuggestBloc = PlaceAutoSuggestBloc();
-    if (mounted) {
-      placeAutoSuggestBloc.listen((state) {
-        if (state is PlaceAutoSuggestLoaded) {
-          setState(
-            () {
-              list.clear();
-              list.addAll(state.autoSuggestions);
-            },
-          );
-        }
-      });
-    }
+    placeAutoSuggestBloc = BlocProvider.of<PlaceAutoSuggestBloc>(context);
   }
 
   @override
@@ -84,51 +72,71 @@ class _DirectionsTo extends State<DirectionsTo> {
               ),
             ),
             Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return Divider();
-                },
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Wrap(
-                          spacing: 10,
-                          children: <Widget>[
-                            list[index].placeIcon,
-                            Text(
-                              list[index].placeFormatting.mainText,
-                              style: TextStyle(fontSize: 18),
-                            )
-                          ],
+                child:
+                    BlocConsumer<PlaceAutoSuggestBloc, PlaceAutoSuggestState>(
+                        builder: (c, s) {
+              if (s is PlaceAutoSuggestEmpty) {
+                return Container();
+              }
+
+              if (s is PlaceAutoSuggestLoaded) {
+                return ListView.separated(
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: Wrap(
+                            spacing: 10,
+                            children: <Widget>[
+                              list[index].placeIcon,
+                              Text(
+                                list[index].placeFormatting.mainText,
+                                style: TextStyle(fontSize: 18),
+                              )
+                            ],
+                          ),
+                          subtitle: index == 0
+                              ? Container()
+                              : Container(
+                                  padding: EdgeInsets.only(left: 35),
+                                  child: Text(list[index].description),
+                                ),
+                          onTap: () {
+                            _placeSingleton.selectedDestination =
+                                DirectionPlace(
+                                    location: 'place_id:${list[index].placeId}',
+                                    showName:
+                                        list[index].placeFormatting.mainText);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider<RouteBloc>(
+                                  create: (context) => RouteBloc(),
+                                  child: DirectionView(),
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                        subtitle: index == 0
-                            ? Container()
-                            : Container(
-                                padding: EdgeInsets.only(left: 35),
-                                child: Text(list[index].description),
-                              ),
-                        onTap: () {
-                          _placeSingleton.selectedDestination = DirectionPlace(
-                              location: 'place_id:${list[index].placeId}',
-                              showName: list[index].placeFormatting.mainText);
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BlocProvider<RouteBloc>(
-                                create: (context) => RouteBloc(),
-                                child: DirectionView(),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider();
+                  },
+                  itemCount: list.length,
+                );
+              }
+              return Align(
+                alignment: Alignment.topCenter,
+                child: CircularProgressIndicator(),
+              );
+            }, listener: (c, s) {
+              if (s is PlaceAutoSuggestLoaded) {
+                list.clear();
+                list.addAll(s.autoSuggestions);
+              }
+            })),
           ],
         ),
       ),

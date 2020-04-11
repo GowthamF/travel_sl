@@ -39,21 +39,9 @@ class _DirectionsFrom extends State<DirectionsFrom> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    placeAutoSuggestBloc = PlaceAutoSuggestBloc();
+    placeAutoSuggestBloc = BlocProvider.of<PlaceAutoSuggestBloc>(context);
     currentLocationBloc = BlocProvider.of<CurrentLocationBloc>(context);
     currentLocationBloc.add(GetCurrentLocation());
-    placeAutoSuggestBloc.listen(
-      (state) {
-        if (state is PlaceAutoSuggestLoaded) {
-          setState(
-            () {
-              list.removeWhere((t) => t.isCurrentLocation != true);
-              list.addAll(state.autoSuggestions);
-            },
-          );
-        }
-      },
-    );
   }
 
   @override
@@ -108,7 +96,16 @@ class _DirectionsFrom extends State<DirectionsFrom> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.separated(
+                      child: BlocConsumer<PlaceAutoSuggestBloc,
+                          PlaceAutoSuggestState>(builder: (c, s) {
+                    if (s is PlaceAutoSuggestLoading) {
+                      return Align(
+                        child: CircularProgressIndicator(),
+                        alignment: Alignment.topCenter,
+                      );
+                    }
+
+                    return ListView.separated(
                       separatorBuilder: (context, index) {
                         if (index == 0) {
                           return Column(
@@ -181,7 +178,12 @@ class _DirectionsFrom extends State<DirectionsFrom> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => DirectionsTo(),
+                                      builder: (context) =>
+                                          BlocProvider<PlaceAutoSuggestBloc>(
+                                        create: (context) =>
+                                            PlaceAutoSuggestBloc(),
+                                        child: DirectionsTo(),
+                                      ),
                                     ),
                                   );
                                 }
@@ -190,8 +192,13 @@ class _DirectionsFrom extends State<DirectionsFrom> {
                           ],
                         );
                       },
-                    ),
-                  ),
+                    );
+                  }, listener: (c, s) {
+                    if (s is PlaceAutoSuggestLoaded) {
+                      list.removeWhere((t) => t.isCurrentLocation != true);
+                      list.addAll(s.autoSuggestions);
+                    }
+                  })),
                 ],
               ),
             );

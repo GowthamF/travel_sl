@@ -6,15 +6,32 @@ class Steps {
   final Location startlocation;
   final Location endLocation;
   final TransitDetails transitDetails;
+  final List<Steps> steps;
+  final TravelMode travelMode;
 
   Steps(
       {this.distance,
       this.durations,
       this.startlocation,
       this.endLocation,
-      this.transitDetails});
+      this.transitDetails,
+      this.steps,
+      this.travelMode});
 
-  factory Steps.fromJson(Map<String, dynamic> json) {
+  factory Steps.fromJson(Map<String, dynamic> json, TravelMode travelMode) {
+    List<Steps> _steps = [];
+
+    if (json.containsKey('steps')) {
+      for (var i = 0; i < json['steps'].length; i++) {
+        if (json['steps'][i]['travel_mode'] == 'WALKING') {
+          travelMode = TravelMode.Walking;
+        }
+        _steps.add(
+          Steps.fromJson(json['steps'][i], travelMode),
+        );
+      }
+    }
+
     return Steps(
         distance: Distance.fromJson(json['distance']),
         durations: Durations.fromJson(json['duration']),
@@ -22,6 +39,8 @@ class Steps {
         startlocation: Location.fromJson(json['start_location']),
         transitDetails: json['transit_details'] != null
             ? TransitDetails.fromJson(json['transit_details'])
-            : TransitDetails(vehicleType: VehicleType.Driving));
+            : TransitDetails(vehicleType: VehicleType.Driving),
+        steps: _steps,
+        travelMode: travelMode);
   }
 }

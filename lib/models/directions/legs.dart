@@ -28,11 +28,16 @@ class Legs {
 
   factory Legs.fromJson(Map<String, dynamic> json) {
     var steps = json['steps'];
-
+    TravelMode travelMode = TravelMode.Driving;
     List<Steps> _steps = [];
 
     for (var i = 0; i < steps.length; i++) {
-      _steps.add(Steps.fromJson(steps[i]));
+      if (steps[i]['travel_mode'] == 'DRIVING') {
+        travelMode = TravelMode.Driving;
+      } else if (steps[i]['travel_mode'] == 'TRANSIT') {
+        travelMode = TravelMode.Transit;
+      }
+      _steps.add(Steps.fromJson(steps[i], travelMode));
     }
 
     return Legs(

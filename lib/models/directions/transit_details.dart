@@ -39,4 +39,4 @@ class TransitDetails {
 }
 
 enum VehicleType { Train, Bus, Driving }
-enum TravelMode { Bus, Train, Driving }
+enum TravelMode { Bus, Train, Driving, Walking, Transit }
