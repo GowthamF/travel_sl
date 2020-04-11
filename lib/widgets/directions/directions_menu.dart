@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_sl/models/models.dart';
+import 'package:travel_sl/widgets/widgets.dart';
 
 class DirectionsMenu extends StatefulWidget {
   final List<Routes> drivingRoutes;
@@ -22,6 +23,9 @@ class _DirectionsMenu extends State<DirectionsMenu> {
   String trainDuration = '';
   String driveDistance = '';
   String driveDuration = '';
+  bool hasBusRoute = false;
+  bool hasTrainRoute = false;
+  bool hasDrivingRoute = false;
 
   @override
   void initState() {
@@ -34,6 +38,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
             '${widget.busRoutes.first.getLegs.first.getDistance.getText}';
         busDuration =
             '${widget.busRoutes.first.getLegs.first.getDurations.getText}';
+        hasBusRoute = true;
       }
     }
 
@@ -43,6 +48,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
             '${widget.trainRoutes.first.getLegs.first.getDistance.getText}';
         trainDuration =
             '${widget.trainRoutes.first.getLegs.first.getDurations.getText}';
+        hasTrainRoute = true;
       }
     }
 
@@ -51,6 +57,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
           '${widget.drivingRoutes.first.getLegs.first.getDistance.getText}';
       driveDuration =
           '${widget.drivingRoutes.first.getLegs.first.getDurations.getText}';
+      hasDrivingRoute = true;
     }
   }
 
@@ -70,7 +77,12 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                 color: Color(0xFFe0f2f1),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
-              onPressed: () {},
+              onPressed: hasBusRoute
+                  ? () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => BusView()));
+                    }
+                  : null,
               child: Wrap(
                 children: <Widget>[
                   Column(
@@ -123,7 +135,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                 color: Color(0xFFe0f2f1),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
-              onPressed: () {},
+              onPressed: hasTrainRoute ? () {} : null,
               child: Wrap(
                 children: <Widget>[
                   Column(
@@ -176,7 +188,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                 color: Color(0xFFe0f2f1),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
-              onPressed: () {},
+              onPressed: null,
               child: Wrap(
                 children: <Widget>[
                   Column(
@@ -203,7 +215,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         padding: EdgeInsets.only(
                             left: 5, right: 10, top: 20, bottom: 10),
                         child: Text(
-                          driveDuration,
+                          '0 Mins',
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -212,7 +224,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                           horizontal: 5,
                         ),
                         child: Text(
-                          driveDistance,
+                          '0 Km',
                           style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
@@ -229,7 +241,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                 color: Color(0xFFe0f2f1),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
-              onPressed: () {},
+              onPressed: hasDrivingRoute ? () {} : null,
               child: Wrap(
                 children: <Widget>[
                   Column(

@@ -19,3 +19,5 @@ export 'directions/directions_to.dart';
 export 'directions/directions_from.dart';
 
 export 'autocompletetextfield.dart';
+
+export 'buses/bus_view.dart';
