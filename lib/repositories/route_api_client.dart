@@ -8,10 +8,19 @@ import 'package:travel_sl/repositories/repositories.dart';
 class RouteApiClient {
   final http.Client httpClient = http.Client();
 
-  Future<List<Routes>> getRoute(
-      dynamic origin, dynamic destination, dynamic mode) async {
+  Future<List<Routes>> getRoute(dynamic origin, dynamic destination,
+      dynamic mode, TravelMode transitMode) async {
+    String _transitMode = '';
+    if (transitMode == TravelMode.Driving) {
+      _transitMode = 'bus';
+    } else if (transitMode == TravelMode.Train) {
+      _transitMode = 'train';
+    } else if (transitMode == TravelMode.Driving) {
+      _transitMode = 'driving';
+    }
+
     final response = await httpClient.get(
-        '${Constants.baseUrl}/api/directions/json?origin=$origin&destination=$destination&mode=$mode&alternatives=true&key=${Constants.apiKey}');
+        '${Constants.baseUrl}/api/directions/json?origin=$origin&destination=$destination&mode=$mode&transit_mode=$_transitMode&alternatives=true&key=${Constants.apiKey}');
 
     List<Routes> _routes = [];
 
@@ -19,7 +28,7 @@ class RouteApiClient {
       dynamic _direction = json.decode(response.body)['routes'];
 
       for (var i = 0; i < _direction.length; i++) {
-        var route = Routes.fromJson(_direction[i]);
+        var route = Routes.fromJson(_direction[i], transitMode);
         _routes.add(route);
       }
     }

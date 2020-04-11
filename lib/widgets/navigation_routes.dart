@@ -8,7 +8,7 @@ class NavigationRoutes {
         return MaterialPageRoute(builder: (_) => Home());
       case '$map':
         var route = settings.arguments as String;
-        return MaterialPageRoute(builder: (_) => GMap(route));
+        return MaterialPageRoute(builder: (_) => GMap(route: route));
       case '$directions':
         var route = settings.arguments as String;
         return MaterialPageRoute(

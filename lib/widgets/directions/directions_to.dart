@@ -30,15 +30,18 @@ class _DirectionsTo extends State<DirectionsTo> {
     // TODO: implement initState
     super.initState();
     placeAutoSuggestBloc = PlaceAutoSuggestBloc();
-    placeAutoSuggestBloc.listen((state) {
-      if (state is PlaceAutoSuggestLoaded) {
-        setState(
-          () {
-            list.addAll(state.autoSuggestions);
-          },
-        );
-      }
-    });
+    if (mounted) {
+      placeAutoSuggestBloc.listen((state) {
+        if (state is PlaceAutoSuggestLoaded) {
+          setState(
+            () {
+              list.clear();
+              list.addAll(state.autoSuggestions);
+            },
+          );
+        }
+      });
+    }
   }
 
   @override
@@ -110,7 +113,7 @@ class _DirectionsTo extends State<DirectionsTo> {
                           _placeSingleton.selectedDestination = DirectionPlace(
                               location: 'place_id:${list[index].placeId}',
                               showName: list[index].placeFormatting.mainText);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => BlocProvider<RouteBloc>(

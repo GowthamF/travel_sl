@@ -54,6 +54,15 @@ class _DirectionView extends State<DirectionView> {
       child: Scaffold(
           appBar: AppBar(
             title: Text('Directions'),
+            actions: <Widget>[
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => GMap()));
+                },
+                child: Text('Map'),
+              )
+            ],
           ),
           body: Container(
             padding: EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -83,7 +92,7 @@ class _DirectionView extends State<DirectionView> {
                             tooltip: 'Edit',
                             icon: Icon(Icons.edit),
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => MultiBlocProvider(
@@ -137,10 +146,12 @@ class _DirectionView extends State<DirectionView> {
                             tooltip: 'Edit',
                             icon: Icon(Icons.edit),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DirectionsTo()));
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DirectionsTo(),
+                                ),
+                              );
                             },
                             padding: EdgeInsets.only(top: 20),
                           )
@@ -158,7 +169,8 @@ class _DirectionView extends State<DirectionView> {
                       if (state is RouteLoaded) {
                         return DirectionsMenu(
                           drivingRoutes: state.drivingRoutes,
-                          transitRoutes: state.transitRoutes,
+                          busRoutes: state.busRoutes,
+                          trainRoutes: state.trainRoutes,
                         );
                       }
                       return Center(

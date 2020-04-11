@@ -14,9 +14,10 @@ class RouteLoading extends RouteState {}
 
 class RouteLoaded extends RouteState {
   final List<Routes> drivingRoutes;
-  final List<Routes> transitRoutes;
+  final List<Routes> busRoutes;
+  final List<Routes> trainRoutes;
 
-  const RouteLoaded({this.drivingRoutes, this.transitRoutes})
+  const RouteLoaded({this.drivingRoutes, this.busRoutes, this.trainRoutes})
       : assert(drivingRoutes != null);
 
   @override

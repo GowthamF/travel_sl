@@ -3,13 +3,14 @@ import 'package:travel_sl/models/models.dart';
 class Routes {
   final List<Legs> legs;
   final PolyLine polyLine;
+  final TravelMode travelMode;
 
-  Routes({this.legs, this.polyLine});
+  Routes({this.legs, this.polyLine, this.travelMode});
 
   List<Legs> get getLegs => legs;
   PolyLine get getPolyLines => polyLine;
 
-  factory Routes.fromJson(Map<String, dynamic> json) {
+  factory Routes.fromJson(Map<String, dynamic> json, TravelMode travelMode) {
     dynamic _legs = json['legs'];
     dynamic _polyLine = json['overview_polyline'];
     List<Legs> legs = [];
@@ -20,6 +21,6 @@ class Routes {
 
     PolyLine polyLine = PolyLine.fromJson(_polyLine);
 
-    return Routes(legs: legs, polyLine: polyLine);
+    return Routes(legs: legs, polyLine: polyLine, travelMode: travelMode);
   }
 }

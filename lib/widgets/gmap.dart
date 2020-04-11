@@ -14,7 +14,7 @@ class GMap extends StatefulWidget {
   //   ),
   // );
 
-  GMap(this.route);
+  GMap({this.route});
 
   @override
   State<StatefulWidget> createState() {
@@ -66,7 +66,6 @@ class _GMap extends State<GMap> {
           onPressed: () async {
             await Navigator.pushNamed(context, NavigationRoutes.directions,
                 arguments: NavigationRoutes.map);
-            _routeSingleTon.addLocation();
           },
         ),
       ),

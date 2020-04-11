@@ -27,6 +27,8 @@ class _DirectionsFrom extends State<DirectionsFrom> {
     ),
   ];
 
+  FocusNode _focusNode = FocusNode();
+
   PlaceAutoSuggestBloc placeAutoSuggestBloc;
   singleton.Location _location = singleton.Location.getInstance();
   singleton.PlacesSingleTon _placeSingleton =
@@ -165,7 +167,7 @@ class _DirectionsFrom extends State<DirectionsFrom> {
                                 }
 
                                 if (widget.isEditMode) {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>

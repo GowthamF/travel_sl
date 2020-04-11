@@ -26,7 +26,8 @@ class AutoSuggestPlace {
         placeFormatting: PlaceFormatting.fromJson(
           json['structured_formatting'],
         ),
-        placeIcon: Icon(Icons.location_on));
+        placeIcon: Icon(Icons.location_on),
+        isCurrentLocation: false);
   }
 }
 

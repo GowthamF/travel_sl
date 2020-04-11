@@ -3,9 +3,10 @@ import 'package:travel_sl/models/models.dart';
 
 class DirectionsMenu extends StatefulWidget {
   final List<Routes> drivingRoutes;
-  final List<Routes> transitRoutes;
+  final List<Routes> busRoutes;
+  final List<Routes> trainRoutes;
 
-  DirectionsMenu({this.drivingRoutes, this.transitRoutes});
+  DirectionsMenu({this.drivingRoutes, this.busRoutes, this.trainRoutes});
 
   @override
   State<StatefulWidget> createState() {
@@ -27,8 +28,8 @@ class _DirectionsMenu extends State<DirectionsMenu> {
     // TODO: implement initState
     super.initState();
 
-    if (widget.transitRoutes.isNotEmpty) {
-      widget.transitRoutes.forEach(
+    if (widget.busRoutes.isNotEmpty) {
+      widget.busRoutes.forEach(
         (r) => r.getLegs.forEach(
           (l) => l.getSteps.forEach(
             (s) => {
@@ -39,7 +40,18 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                   busDistance = '${l.getDistance.getText}',
                   busDuration = '${l.getDurations.getText}',
                 }
-              else if (s.transitDetails.vehicleType == VehicleType.Train &&
+            },
+          ),
+        ),
+      );
+    }
+
+    if (widget.trainRoutes.isNotEmpty) {
+      widget.trainRoutes.forEach(
+        (r) => r.getLegs.forEach(
+          (l) => l.getSteps.forEach(
+            (s) => {
+              if (s.transitDetails.vehicleType == VehicleType.Train &&
                   trainDistance.isEmpty &&
                   trainDuration.isEmpty)
                 {
@@ -104,7 +116,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                             left: 5, right: 10, top: 20, bottom: 10),
                         child: Text(
                           busDuration,
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -113,7 +125,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           busDistance,
-                          style: TextStyle(fontSize: 25, color: Colors.black45),
+                          style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
                     ],
@@ -157,7 +169,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                             left: 5, right: 10, top: 20, bottom: 10),
                         child: Text(
                           trainDuration,
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -166,7 +178,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           trainDistance,
-                          style: TextStyle(fontSize: 25, color: Colors.black45),
+                          style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
                     ],
@@ -210,7 +222,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                             left: 5, right: 10, top: 20, bottom: 10),
                         child: Text(
                           driveDuration,
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -219,7 +231,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           driveDistance,
-                          style: TextStyle(fontSize: 25, color: Colors.black45),
+                          style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
                     ],
@@ -263,7 +275,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                             left: 5, right: 10, top: 20, bottom: 10),
                         child: Text(
                           driveDuration,
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -272,7 +284,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           driveDistance,
-                          style: TextStyle(fontSize: 25, color: Colors.black45),
+                          style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
                     ],
