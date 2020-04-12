@@ -21,3 +21,6 @@ export 'directions/directions_from.dart';
 export 'autocompletetextfield.dart';
 
 export 'buses/bus_view.dart';
+
+export 'direction_paints/directions_circle.dart';
+export 'direction_paints/path_template.dart';

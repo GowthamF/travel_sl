@@ -35,10 +35,7 @@ class _DirectionView extends State<DirectionView> {
     // TODO: implement initState
     super.initState();
     routeBloc = BlocProvider.of<RouteBloc>(context);
-
-    _routesSingleTon.busRoutes.clear();
-    _routesSingleTon.trainRoutes.clear();
-    _routesSingleTon.drivingRoutes.clear();
+    clearRoutes();
     _routesSingleTon.addCurrentLocation = addCurrentLocation;
     getDirections(_placesSingleTon.selectedOrigin.location,
         _placesSingleTon.selectedDestination.location);
@@ -171,6 +168,9 @@ class _DirectionView extends State<DirectionView> {
                   child: BlocBuilder<RouteBloc, RouteState>(
                     builder: (context, state) {
                       if (state is RouteLoaded) {
+                        _routesSingleTon.busRoutes = state.busRoutes;
+                        _routesSingleTon.drivingRoutes = state.drivingRoutes;
+                        _routesSingleTon.trainRoutes = state.trainRoutes;
                         return DirectionsMenu(
                           drivingRoutes: state.drivingRoutes,
                           busRoutes: state.busRoutes,
