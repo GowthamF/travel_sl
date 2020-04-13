@@ -21,6 +21,18 @@ class _BusView extends State<BusView> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Bus'),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.map),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GMap(
+                                routeMode: TravelMode.Bus,
+                              )));
+                })
+          ],
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -122,6 +134,21 @@ class _BusView extends State<BusView> {
                     time: l.getSteps[i].transitDetails.destinationStopTime.text,
                   ),
                 ),
+                if (i == l.getSteps.length - 1)
+                  {
+                    showingLocationName = l.getEndAddress.split(','),
+                    _paths.add(
+                      PathTemplate(
+                        arrivalStopName: showingLocationName.first,
+                        isLastIndex: true,
+                        locationName: showingLocationName.first,
+                        subLocationName: showingLocationName[1],
+                        showingIcon: null,
+                        arrivalStopTime: l.destinationArrivalTime.text,
+                        time: l.destinationArrivalTime.text,
+                      ),
+                    ),
+                  }
               }
           },
       },

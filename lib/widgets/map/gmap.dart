@@ -148,24 +148,85 @@ class _GMap extends State<GMap> {
 
     List<PointLatLng> results = [];
 
-    for (var i = 0; i < routes.length; i++) {
-      Color _color = i == 0 ? Colors.blue : Colors.red;
-      results = polylinePoints.decodePolyline(routes[i].getPolyLines.points);
-      PolylineId _polyLineId = PolylineId('route_$i');
-      Polyline polyline = Polyline(
-          consumeTapEvents: true,
-          onTap: () {
-            removeSelectedPolyline(_polyLineId);
+    if (widget.routeMode == TravelMode.Driving) {
+      for (var i = 0; i < routes.length; i++) {
+        Color _color = i == 0 ? Colors.blue : Colors.black38;
+        results = polylinePoints.decodePolyline(routes[i].getPolyLines.points);
+
+        PolylineId _polyLineId = PolylineId('route_$i');
+        Polyline polyline = Polyline(
+            consumeTapEvents: true,
+            onTap: () {
+              removeSelectedPolyline(_polyLineId);
+            },
+            zIndex: i == 0 ? 1 : 0,
+            polylineId: _polyLineId,
+            color: _color,
+            points: _convertToLatLng(results));
+        setState(
+          () {
+            _polylines.add(polyline);
           },
-          zIndex: i == 0 ? 5 : 0,
-          polylineId: _polyLineId,
-          color: _color,
-          points: _convertToLatLng(results));
-      setState(
-        () {
-          _polylines.add(polyline);
-        },
-      );
+        );
+      }
+    }
+
+    if (widget.routeMode == TravelMode.Bus ||
+        widget.routeMode == TravelMode.Train) {
+      for (var i = 0; i < routes.length; i++) {
+        Color _colorWalk = i == 0 ? Colors.blue : Colors.black12;
+
+        for (var j = 0; j < routes[i].getLegs.length; j++) {
+          for (var k = 0; k < routes[i].getLegs[j].getSteps.length; k++) {
+            if (routes[i].getLegs[j].getSteps[k].travelMode ==
+                TravelMode.Walking) {
+              results = polylinePoints.decodePolyline(
+                  routes[i].getLegs[j].getSteps[k].polyLine.getPoints);
+
+              PolylineId _polyLineId = PolylineId('step_$k');
+              Polyline polyline = Polyline(
+                  patterns: [PatternItem.dot],
+                  jointType: JointType.round,
+                  consumeTapEvents: true,
+                  zIndex: 5,
+                  polylineId: _polyLineId,
+                  color: _colorWalk,
+                  points: _convertToLatLng(results));
+              setState(
+                () {
+                  _polylines.add(polyline);
+                },
+              );
+            } else if (routes[i].getLegs[j].getSteps[k].travelMode ==
+                TravelMode.Transit) {
+              results = polylinePoints.decodePolyline(
+                  routes[i].getLegs[j].getSteps[k].polyLine.getPoints);
+              PolylineId _polyLineId = PolylineId('step_$k');
+              var colorValue = routes[i]
+                  .getLegs[j]
+                  .getSteps[k]
+                  .transitDetails
+                  .color
+                  .replaceAll('#', '0xFF');
+              var _colorRoute = Color(int.parse(colorValue));
+              Polyline polyline = Polyline(
+                  jointType: JointType.round,
+                  consumeTapEvents: true,
+                  zIndex: 5,
+                  polylineId: _polyLineId,
+                  color: _colorRoute,
+                  points: _convertToLatLng(results));
+              setState(
+                () {
+                  _polylines.add(polyline);
+                },
+              );
+            }
+          }
+          break;
+        }
+        break;
+      }
     }
 
     _kGooglePlex = CameraPosition(
@@ -199,7 +260,7 @@ class _GMap extends State<GMap> {
         .map((f) => Polyline(
             polylineId: f.polylineId,
             consumeTapEvents: true,
-            color: Colors.red,
+            color: Colors.black38,
             points: f.points,
             onTap: f.onTap,
             zIndex: 0))
@@ -290,23 +351,11 @@ class _GMap extends State<GMap> {
       }
     } else if (widget.routeMode == TravelMode.Bus) {
       if (_routesSingleTon.busRoutes.isNotEmpty) {
-        _routesSingleTon.busRoutes
-            .forEach((b) => b.getLegs.forEach((l) => l.getSteps.forEach((s) => {
-                  if (s.transitDetails.vehicleType == VehicleType.Bus)
-                    {
-                      getPolyLines(_routesSingleTon.busRoutes),
-                    }
-                })));
-      } else if (widget.routeMode == TravelMode.Train) {
-        if (_routesSingleTon.trainRoutes.isNotEmpty) {
-          _routesSingleTon.trainRoutes.forEach(
-              (b) => b.getLegs.forEach((l) => l.getSteps.forEach((s) => {
-                    if (s.transitDetails.vehicleType == VehicleType.Train)
-                      {
-                        getPolyLines(_routesSingleTon.trainRoutes),
-                      }
-                  })));
-        }
+        getPolyLines(_routesSingleTon.busRoutes);
+      }
+    } else if (widget.routeMode == TravelMode.Train) {
+      if (_routesSingleTon.trainRoutes.isNotEmpty) {
+        getPolyLines(_routesSingleTon.trainRoutes);
       }
     }
 

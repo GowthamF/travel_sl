@@ -35,7 +35,6 @@ class _DirectionView extends State<DirectionView> {
     // TODO: implement initState
     super.initState();
     routeBloc = BlocProvider.of<RouteBloc>(context);
-    clearRoutes();
     _routesSingleTon.addCurrentLocation = addCurrentLocation;
     getDirections(_placesSingleTon.selectedOrigin.location,
         _placesSingleTon.selectedDestination.location);
@@ -56,7 +55,11 @@ class _DirectionView extends State<DirectionView> {
               RaisedButton(
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => GMap()));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GMap(
+                                routeMode: TravelMode.Driving,
+                              )));
                 },
                 child: Text('Map'),
               )

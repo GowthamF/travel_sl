@@ -21,6 +21,18 @@ class _TrainView extends State<TrainView> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Train'),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.map),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GMap(
+                                routeMode: TravelMode.Train,
+                              )));
+                })
+          ],
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -110,6 +122,7 @@ class _TrainView extends State<TrainView> {
                 _paths.add(
                   PathTemplate(
                     isWalking: false,
+                    isLastIndex: false,
                     locationName: l.getSteps[i].transitDetails.depatureStopName,
                     instruction:
                         '${l.getSteps[i].transitDetails.transitModeNumber} ${l.getSteps[i].transitDetails.transitModeName}',
@@ -125,6 +138,21 @@ class _TrainView extends State<TrainView> {
                     time: l.getSteps[i].transitDetails.destinationStopTime.text,
                   ),
                 ),
+                if (i == l.getSteps.length - 1)
+                  {
+                    showingLocationName = l.getEndAddress.split(','),
+                    _paths.add(
+                      PathTemplate(
+                        arrivalStopName: showingLocationName.first,
+                        isLastIndex: true,
+                        locationName: showingLocationName.first,
+                        subLocationName: showingLocationName[1],
+                        showingIcon: null,
+                        arrivalStopTime: l.destinationArrivalTime.text,
+                        time: l.destinationArrivalTime.text,
+                      ),
+                    ),
+                  }
               }
           },
       },
