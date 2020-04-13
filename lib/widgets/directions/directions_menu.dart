@@ -135,7 +135,12 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                 color: Color(0xFFe0f2f1),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
-              onPressed: hasTrainRoute ? () {} : null,
+              onPressed: hasTrainRoute
+                  ? () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => TrainView()));
+                    }
+                  : null,
               child: Wrap(
                 children: <Widget>[
                   Column(
