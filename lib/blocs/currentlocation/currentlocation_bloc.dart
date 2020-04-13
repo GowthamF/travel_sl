@@ -19,7 +19,8 @@ class CurrentLocationBloc
       try {
         final Position position = await locationRepository.getCurrentLocation();
         yield CurrentLocationLoaded(position: position);
-      } catch (_) {
+      } catch (ex) {
+        print(ex);
         yield CurrentLocationError();
       }
     }

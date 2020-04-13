@@ -45,7 +45,7 @@ class DirectionsCircle extends StatelessWidget {
                 height: height,
                 child: CustomPaint(
                   // size: MediaQuery.of(context).size,
-                  painter: isWalking ? DrawCircles() : DrawLines(),
+                  painter: isWalking ? DrawCircles() : DrawLines(color: color),
                 ));
           }),
           direction: Axis.vertical,
@@ -89,11 +89,14 @@ class DrawLargeCircles extends CustomPainter {
 }
 
 class DrawLines extends CustomPainter {
+  final Color color;
+
+  DrawLines({this.color});
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
       ..strokeWidth = 10
-      ..color = Colors.greenAccent;
+      ..color = color;
 
     canvas.drawLine(Offset(100, -5), Offset(100, 25), paint);
   }

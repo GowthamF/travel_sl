@@ -23,6 +23,7 @@ class CurrentAddressBloc
             await routeRepository.getLocationAddress(event.coordinates);
         yield CurrentAddressLoaded(address: address);
       } catch (ex) {
+        print(ex);
         yield CurrentAddressError();
       }
     }

@@ -9,6 +9,9 @@ class TransitDetails {
   final String depatureStopName;
   final int numStops;
   final VehicleType vehicleType;
+  final String color;
+  final TravelTime arrivalStopTime;
+  final TravelTime destinationStopTime;
 
   TransitDetails(
       {this.arrivalStop,
@@ -18,7 +21,10 @@ class TransitDetails {
       this.arrivalStopName,
       this.depatureStopName,
       this.numStops,
-      this.vehicleType});
+      this.vehicleType,
+      this.color,
+      this.arrivalStopTime,
+      this.destinationStopTime});
 
   factory TransitDetails.fromJson(Map<String, dynamic> json) {
     return TransitDetails(
@@ -34,6 +40,11 @@ class TransitDetails {
           : json['line']['vehicle']['name'] == 'Train'
               ? VehicleType.Train
               : VehicleType.Driving,
+      color: json['line']['color'],
+      arrivalStopTime: TravelTime.fromJson(json['arrival_time']),
+      destinationStopTime: TravelTime.fromJson(
+        json['departure_time'],
+      ),
     );
   }
 }

@@ -25,7 +25,8 @@ class PlaceAutoSuggestBloc
 
         yield PlaceAutoSuggestLoaded(
             autoSuggestions: autoSuggestions, isOrigin: event.isOrigin);
-      } catch (_) {
+      } catch (ex) {
+        print(ex);
         yield PlaceAutoSuggestError();
       }
     }

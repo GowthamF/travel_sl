@@ -8,6 +8,8 @@ class Legs {
   final String startaddress;
   final Location startlocation;
   final List<Steps> steps;
+  final TravelTime destinationArrivalTime;
+  final TravelTime originDepatureTime;
 
   Legs(
       {this.distance,
@@ -16,7 +18,9 @@ class Legs {
       this.endlocation,
       this.startlocation,
       this.startaddress,
-      this.steps});
+      this.steps,
+      this.destinationArrivalTime,
+      this.originDepatureTime});
 
   Distance get getDistance => distance;
   Durations get getDurations => durations;
@@ -47,6 +51,12 @@ class Legs {
         startaddress: json['start_address'],
         endlocation: Location.fromJson(json['end_location']),
         startlocation: Location.fromJson(json['start_location']),
+        destinationArrivalTime: json['arrival_time'] != null
+            ? TravelTime.fromJson(json['arrival_time'])
+            : TravelTime(),
+        originDepatureTime: json['departure_time'] != null
+            ? TravelTime.fromJson(json['departure_time'])
+            : TravelTime(),
         steps: _steps);
   }
 }

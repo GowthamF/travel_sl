@@ -26,31 +26,43 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
         var _trainRoutes = await routeRepository.getRoutes(
             event.origin, event.destination, event.mode, TravelMode.Train);
 
-        _busRoutes.forEach(
-          (r) => r.getLegs.forEach(
-            (l) => l.getSteps.forEach(
-              (s) => {
-                if (s.transitDetails.vehicleType == VehicleType.Bus)
-                  {
-                    busRoute.addAll(_busRoutes),
-                  }
-              },
-            ),
-          ),
-        );
+        for (var i = 0; i < _busRoutes.length; i++) {
+          for (var j = 0; j < _busRoutes[i].getLegs.length; j++) {
+            for (var k = 0; k < _busRoutes[i].getLegs[j].getSteps.length; k++) {
+              if (_busRoutes[i]
+                      .getLegs[j]
+                      .getSteps[k]
+                      .transitDetails
+                      .vehicleType ==
+                  VehicleType.Bus) {
+                busRoute.addAll(_busRoutes);
+                break;
+              }
+            }
+            break;
+          }
+          break;
+        }
 
-        _trainRoutes.forEach(
-          (r) => r.getLegs.forEach(
-            (l) => l.getSteps.forEach(
-              (s) => {
-                if (s.transitDetails.vehicleType == VehicleType.Train)
-                  {
-                    trainRoutes.addAll(_trainRoutes),
-                  }
-              },
-            ),
-          ),
-        );
+        for (var i = 0; i < _trainRoutes.length; i++) {
+          for (var j = 0; j < _trainRoutes[i].getLegs.length; j++) {
+            for (var k = 0;
+                k < _trainRoutes[i].getLegs[j].getSteps.length;
+                k++) {
+              if (_trainRoutes[i]
+                      .getLegs[i]
+                      .getSteps[k]
+                      .transitDetails
+                      .vehicleType ==
+                  VehicleType.Train) {
+                trainRoutes.addAll(_trainRoutes);
+                break;
+              }
+            }
+            break;
+          }
+          break;
+        }
 
         yield RouteLoaded(
             drivingRoutes: drivingRoutes,

@@ -10,6 +10,9 @@ class PathTemplate extends StatelessWidget {
   final String subInstruction;
   final String arrivalStopName;
   final Icon showingIcon;
+  final Color color;
+  final String time;
+  final String arrivalStopTime;
 
   PathTemplate(
       {this.isLastIndex = false,
@@ -19,7 +22,10 @@ class PathTemplate extends StatelessWidget {
       this.subInstruction = '',
       this.subLocationName = '',
       this.arrivalStopName = '',
-      this.showingIcon});
+      this.showingIcon,
+      this.color,
+      this.time = '',
+      this.arrivalStopTime = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +40,18 @@ class PathTemplate extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 15,
-          child: Text('8.35 PM'),
-        ),
-        Positioned(
-            child: Column(children: [
-          DirectionsCircle(
-            height: 25,
-            count: isLastIndex ? 8 : 7,
-            isLastIndex: isLastIndex,
-            isWalking: isWalking,
+          child: Column(
+            children: [
+              DirectionsCircle(
+                height: 25,
+                count: isLastIndex ? 8 : 7,
+                isLastIndex: isLastIndex,
+                isWalking: isWalking,
+                color: color,
+              ),
+            ],
           ),
-        ])),
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -134,7 +140,24 @@ class PathTemplate extends StatelessWidget {
                   )
                 : Container(),
           ],
-        )
+        ),
+        isLastIndex
+            ? Positioned(
+                left: 15,
+                child: Column(
+                  children: <Widget>[Text(arrivalStopTime)],
+                ),
+              )
+            : Positioned(
+                left: 15,
+                child: Column(
+                  children: <Widget>[Text(time)],
+                ),
+              ),
+        isLastIndex
+            ? Container(
+                margin: EdgeInsets.only(top: 175, left: 15), child: Text(time))
+            : Container(),
       ],
     );
   }

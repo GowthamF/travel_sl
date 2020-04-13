@@ -43,6 +43,7 @@ class _BusView extends State<BusView> {
     List<Widget> _paths = [];
     List<String> showingLocationName = [];
     Steps previousStep;
+    String color;
 
     _routesSingleTon.busRoutes.first.getLegs.forEach(
       (l) => {
@@ -61,6 +62,7 @@ class _BusView extends State<BusView> {
                         locationName: showingLocationName.first,
                         subLocationName: showingLocationName[1],
                         showingIcon: Icon(Icons.directions_walk),
+                        time: l.originDepatureTime.text,
                       ),
                     )
                   },
@@ -79,8 +81,13 @@ class _BusView extends State<BusView> {
                         locationName: showingLocationName.first,
                         subLocationName: showingLocationName[1],
                         showingIcon: Icon(Icons.directions_walk),
+                        arrivalStopTime: previousStep.travelMode ==
+                                TravelMode.Transit
+                            ? previousStep.transitDetails.arrivalStopTime.text
+                            : '',
+                        time: l.destinationArrivalTime.text,
                       ),
-                    )
+                    ),
                   }
                 else if (previousStep.travelMode == TravelMode.Transit)
                   {
@@ -91,12 +98,15 @@ class _BusView extends State<BusView> {
                         locationName:
                             previousStep.transitDetails.arrivalStopName,
                         instruction: 'Walk ${l.getSteps[i].distance.getText}',
+                        time: previousStep.transitDetails.arrivalStopTime.text,
                       ),
                     )
                   }
               }
             else if (l.getSteps[i].travelMode == TravelMode.Transit)
               {
+                color =
+                    l.getSteps[i].transitDetails.color.replaceAll('#', '0xFF'),
                 _paths.add(
                   PathTemplate(
                     isWalking: false,
@@ -106,6 +116,10 @@ class _BusView extends State<BusView> {
                     subInstruction:
                         '${l.getSteps[i].durations.getText} (${l.getSteps[i].transitDetails.numStops} Stops)',
                     showingIcon: Icon(Icons.directions_bus),
+                    color: Color(
+                      int.parse(color),
+                    ),
+                    time: l.getSteps[i].transitDetails.destinationStopTime.text,
                   ),
                 ),
               }
