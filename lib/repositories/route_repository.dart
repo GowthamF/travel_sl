@@ -24,6 +24,7 @@ class RouteRepository {
         Coordinates(coordinates.latitude, coordinates.longitude));
     List<MarkerAddress> _markerAddress = _address
         .map((f) => MarkerAddress(
+            displayName: '${f.featureName} ${f.thoroughfare}',
             addressLine: f.addressLine,
             locationLatLng:
                 LatLng(f.coordinates.latitude, f.coordinates.longitude)))

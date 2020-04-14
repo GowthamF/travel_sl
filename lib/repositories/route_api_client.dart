@@ -11,7 +11,7 @@ class RouteApiClient {
   Future<List<Routes>> getRoute(dynamic origin, dynamic destination,
       dynamic mode, TravelMode transitMode) async {
     String _transitMode = '';
-    if (transitMode == TravelMode.Driving) {
+    if (transitMode == TravelMode.Bus) {
       _transitMode = 'bus';
     } else if (transitMode == TravelMode.Train) {
       _transitMode = 'train';

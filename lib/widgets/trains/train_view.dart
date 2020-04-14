@@ -38,6 +38,67 @@ class _TrainView extends State<TrainView> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox(
+              height: 25,
+            ),
+            SizedBox(
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      RaisedButton(
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          onPressed: () {},
+                          child: Wrap(
+                            direction: Axis.vertical,
+                            children: <Widget>[
+                              Text('29 Min'),
+                              Text('LKR 20'),
+                            ],
+                          )),
+                      Text('Fastest')
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      RaisedButton(
+                          onPressed: () {},
+                          child: Wrap(
+                            direction: Axis.vertical,
+                            children: <Widget>[
+                              Text('29 Min'),
+                              Text('LKR 20'),
+                            ],
+                          )),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      RaisedButton(
+                          onPressed: () {},
+                          child: Wrap(
+                            direction: Axis.vertical,
+                            children: <Widget>[
+                              Text('29 Min'),
+                              Text('LKR 20'),
+                            ],
+                          )),
+                      Text('Shortest')
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'This trip will take 29 min and cost LKR 20',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            SizedBox(
               height: 50,
             ),
             Flexible(

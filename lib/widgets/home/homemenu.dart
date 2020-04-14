@@ -103,16 +103,14 @@ class _HomeMenu extends State<HomeMenu> {
                           border:
                               Border.all(color: Colors.black12, width: 0.5)),
                       child: FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, NavigationRoutes.places);
-                        },
+                        onPressed: null,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Icon(Icons.business),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
-                              child: Text('Malls'),
+                              child: Text('Taxi'),
                             )
                           ],
                         ),

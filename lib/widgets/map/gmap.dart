@@ -7,9 +7,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_sl/blocs/blocs.dart';
 import 'package:travel_sl/models/models.dart';
-import 'package:travel_sl/singletons/singletons.dart';
+import 'package:travel_sl/singletons/singletons.dart' as singleton;
 import 'package:travel_sl/widgets/places/placesview.dart';
-import 'package:travel_sl/widgets/widgets.dart';
 
 class GMap extends StatefulWidget {
   final String route;
@@ -35,7 +34,9 @@ class _GMap extends State<GMap> {
   // static Position _currentPosition;
   static String address = 'adadadas';
   StreamSubscription<Position> positionStream;
-  RoutesSingleTon _routesSingleTon = RoutesSingleTon.getInstance();
+  singleton.RoutesSingleTon _routesSingleTon =
+      singleton.RoutesSingleTon.getInstance();
+  singleton.Location _location = singleton.Location.getInstance();
 
   // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
 
@@ -84,7 +85,7 @@ class _GMap extends State<GMap> {
           listener: (context, state) {
             if (state is CurrentAddressLoaded) {
               addLocationMarker(state.props.first.locationLatLng,
-                  state.props.first.addressLine);
+                  state.props.first.addressLine, state.props.first.displayName);
             }
           },
         ),
@@ -93,11 +94,13 @@ class _GMap extends State<GMap> {
         myLocationEnabled: true,
         trafficEnabled: true,
         onTap: (latlng) {
-          currentAddressBloc.add(
-            GetAddressInfo(
-              coordinates: Coordinates(latlng.latitude, latlng.longitude),
-            ),
-          );
+          if (widget.routeMode == null) {
+            currentAddressBloc.add(
+              GetAddressInfo(
+                coordinates: Coordinates(latlng.latitude, latlng.longitude),
+              ),
+            );
+          }
         },
         markers: _markers,
         polylines: _polylines,
@@ -115,7 +118,8 @@ class _GMap extends State<GMap> {
     );
   }
 
-  void addLocationMarker(LatLng selectedPosition, String address) {
+  void addLocationMarker(
+      LatLng selectedPosition, String address, String displayName) {
     setState(() {
       var marker = _markers.first;
       _markers.clear();
@@ -129,6 +133,7 @@ class _GMap extends State<GMap> {
               MaterialPageRoute(
                 builder: (context) => PlacesView(
                   selectedLocation: selectedPosition,
+                  address: displayName,
                 ),
               ),
             );
@@ -324,6 +329,7 @@ class _GMap extends State<GMap> {
         desiredAccuracy: LocationAccuracy.medium,
       ).then((position) {
         if (mounted) {
+          _location.currentLocation = position;
           setState(
             () {
               _kGooglePlex = CameraPosition(
@@ -344,18 +350,21 @@ class _GMap extends State<GMap> {
       });
   }
 
-  addDirection() {
+  void addDirection() {
     if (widget.routeMode == TravelMode.Driving) {
       if (_routesSingleTon.drivingRoutes.isNotEmpty) {
         getPolyLines(_routesSingleTon.drivingRoutes);
+        addRoutesMarker(_routesSingleTon.drivingRoutes);
       }
     } else if (widget.routeMode == TravelMode.Bus) {
       if (_routesSingleTon.busRoutes.isNotEmpty) {
         getPolyLines(_routesSingleTon.busRoutes);
+        addRoutesMarker(_routesSingleTon.busRoutes);
       }
     } else if (widget.routeMode == TravelMode.Train) {
       if (_routesSingleTon.trainRoutes.isNotEmpty) {
         getPolyLines(_routesSingleTon.trainRoutes);
+        addRoutesMarker(_routesSingleTon.trainRoutes);
       }
     }
 
@@ -365,5 +374,23 @@ class _GMap extends State<GMap> {
         _initCurrentLocation();
       });
     }
+  }
+
+  void addRoutesMarker(List<Routes> routes) {
+    routes.forEach((r) {
+      r.getLegs.forEach((l) {
+        _markers.add(Marker(
+          markerId: MarkerId(l.startaddress),
+          position: LatLng(l.startlocation.lat, l.startlocation.lng),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        ));
+        _markers.add(Marker(
+          markerId: MarkerId(l.endaddress),
+          position: LatLng(l.endlocation.lat, l.endlocation.lng),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
+        ));
+      });
+    });
   }
 }

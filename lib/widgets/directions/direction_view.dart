@@ -15,7 +15,6 @@ class DirectionView extends StatefulWidget {
 }
 
 class _DirectionView extends State<DirectionView> {
-  singleton.Location _location = singleton.Location.getInstance();
   singleton.RoutesSingleTon _routesSingleTon =
       singleton.RoutesSingleTon.getInstance();
   singleton.PlacesSingleTon _placesSingleTon =
@@ -165,9 +164,23 @@ class _DirectionView extends State<DirectionView> {
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 0,
                 ),
-                Expanded(
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Container(
+                    child: Wrap(
+                      children: <Widget>[
+                        FlatButton(onPressed: null, child: Text('Leaving Now')),
+                        FlatButton(
+                            onPressed: null, child: Text('Avoid Expressways')),
+                        FlatButton(
+                            onPressed: null, child: Text('Reverse Trip')),
+                      ],
+                    ),
+                  ),
+                ),
+                Flexible(
                   child: BlocBuilder<RouteBloc, RouteState>(
                     builder: (context, state) {
                       if (state is RouteLoaded) {
