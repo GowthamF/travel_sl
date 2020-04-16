@@ -16,3 +16,6 @@ export 'places/place.dart';
 export 'places/markeraddress.dart';
 
 export 'autosuggestplace/autosuggestplace.dart';
+
+export 'translator/availableLanguages.dart';
+export 'translator/translated_text.dart';

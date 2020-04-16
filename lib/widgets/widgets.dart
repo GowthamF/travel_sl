@@ -26,3 +26,5 @@ export 'trains/train_view.dart';
 
 export 'direction_paints/directions_circle.dart';
 export 'direction_paints/path_template.dart';
+
+export 'translator/translator_view.dart';

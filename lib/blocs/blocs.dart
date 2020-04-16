@@ -13,3 +13,7 @@ export 'currentaddress/currentaddress_state.dart';
 export 'placesautosuggest/place_autosuggest_bloc.dart';
 export 'placesautosuggest/place_autosuggest_event.dart';
 export 'placesautosuggest/place_autosuggest_state.dart';
+
+export 'translator/translator_bloc.dart';
+export 'translator/translator_event.dart';
+export 'translator/translator_state.dart';
