@@ -8,6 +8,10 @@ class Translator extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return SafeArea(
+        child: GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
           appBar: AppBar(
             title: Text('Translator'),
@@ -16,6 +20,6 @@ class Translator extends StatelessWidget {
             create: (context) => TranslatorBloc(),
             child: TranslatorView(),
           )),
-    );
+    ));
   }
 }
