@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:travel_sl/models/models.dart';
 
 abstract class TranslatorState extends Equatable {
   @override
@@ -11,7 +12,7 @@ class TranslatorEmpty extends TranslatorState {}
 class TranslatorLoading extends TranslatorState {}
 
 class TranslatorLoaded extends TranslatorState {
-  final String translatedText;
+  final List<TranslatedText> translatedText;
 
   TranslatorLoaded({this.translatedText});
 

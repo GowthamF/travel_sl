@@ -8,10 +8,12 @@ abstract class TranslatorEvent extends Equatable {
 class GetTranslationText extends TranslatorEvent {
   final List<String> translateTexts;
   final String target;
+  final String source;
 
-  const GetTranslationText({@required this.translateTexts, this.target});
+  const GetTranslationText(
+      {@required this.translateTexts, this.target, this.source});
 
   @override
   // TODO: implement props
-  List<Object> get props => [translateTexts, target];
+  List<Object> get props => [translateTexts, target, source];
 }

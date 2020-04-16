@@ -11,8 +11,17 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
 
   @override
   Stream<TranslatorState> mapEventToState(TranslatorEvent event) async* {
-    if (event is GetTranslationText) yield TranslatorLoading();
+    if (event is GetTranslationText) {
+      yield TranslatorLoading();
 
-    try {} catch (e) {}
+      try {
+        var translatedText = await translatorRepository.getTranslatedText(
+            event.translateTexts, event.source, event.target);
+        yield TranslatorLoaded(translatedText: translatedText);
+      } catch (e) {
+        print(e);
+        yield TranslatorError();
+      }
+    }
   }
 }

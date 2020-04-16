@@ -6,10 +6,10 @@ import 'package:travel_sl/repositories/repositories.dart';
 
 class TranslatorApiClient {
   final http.Client httpClient = http.Client();
-  final List<TranslatedText> _translatedTexts = [];
 
   Future<List<TranslatedText>> getTranslated(List<String> inputText,
       String sourceLanguage, String targetLanguage) async {
+    final List<TranslatedText> _translatedTexts = [];
     Map<String, dynamic> requestBody = {
       'q': inputText,
       'target': targetLanguage,
@@ -27,7 +27,6 @@ class TranslatorApiClient {
         _translatedTexts.add(
             TranslatedText(translatedText: jsonResponse[i]['translatedText']));
       }
-      print(_translatedTexts.first.translatedText);
     }
     return _translatedTexts;
   }
