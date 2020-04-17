@@ -21,10 +21,6 @@ class _DirectionView extends State<DirectionView> {
       singleton.PlacesSingleTon.getInstance();
   RouteBloc routeBloc;
   List<AutoSuggestPlace> autoSuggestPlaces = [];
-  GlobalKey<AutoCompleteTextFieldState<AutoSuggestPlace>> originKey =
-      GlobalKey();
-  GlobalKey<AutoCompleteTextFieldState<AutoSuggestPlace>> destinationKey =
-      GlobalKey();
   String originPlaceId = '';
   String destinationPlaceId = '';
   static bool isCurrentLocationAvailable = false;

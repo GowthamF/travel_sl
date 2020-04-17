@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -34,6 +35,8 @@ class _GMap extends State<GMap> {
   singleton.RoutesSingleTon _routesSingleTon =
       singleton.RoutesSingleTon.getInstance();
   singleton.Location _location = singleton.Location.getInstance();
+  final databaseReference = Firestore.instance;
+  GeoPoint currentBusLocation;
 
   // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
 
@@ -57,6 +60,19 @@ class _GMap extends State<GMap> {
     _markers.add(Marker(markerId: MarkerId('SelectedLocation')));
     _initCurrentLocation();
     currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
+    // if (widget.routeMode == TravelMode.Bus) {
+    databaseReference
+        .collection('busLocation')
+        .document('currentLocation')
+        .snapshots()
+        .listen((data) {
+      if (data.data != null) {
+        currentBusLocation = data.data['location'];
+        addBusLocationMarker(
+            LatLng(currentBusLocation.latitude, currentBusLocation.longitude));
+      }
+    });
+    // }
     addDirection();
   }
 
@@ -138,6 +154,21 @@ class _GMap extends State<GMap> {
         icon: isOriginAdded
             ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue)
             : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
+      ));
+    });
+  }
+
+  void addBusLocationMarker(LatLng location) async {
+    final bitmapIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(15, 15)), 'assets/images/aaaa.png');
+    setState(() {
+      _markers.removeWhere(
+        (f) => f.markerId == MarkerId('BusLocation'),
+      );
+      _markers.add(Marker(
+        markerId: MarkerId('BusLocation'),
+        position: location,
+        icon: bitmapIcon,
       ));
     });
   }

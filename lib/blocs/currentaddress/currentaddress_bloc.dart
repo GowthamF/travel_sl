@@ -14,7 +14,7 @@ class CurrentAddressBloc
   Stream<CurrentAddressState> mapEventToState(
       CurrentAddressEvent event) async* {
     if (event is GetAddressInfo) {
-      yield CurrentAddressEmpty();
+      yield CurrentAddressLoading();
 
       try {
         final List<MarkerAddress> address =

@@ -18,8 +18,6 @@ export 'directions/directions_menu.dart';
 export 'directions/directions_to.dart';
 export 'directions/directions_from.dart';
 
-export 'autocompletetextfield.dart';
-
 export 'buses/bus_view.dart';
 
 export 'trains/train_view.dart';
