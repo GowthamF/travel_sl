@@ -6,7 +6,6 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
   final TranslatorRepository translatorRepository = TranslatorRepository();
 
   @override
-  // TODO: implement initialState
   TranslatorState get initialState => TranslatorEmpty();
 
   @override

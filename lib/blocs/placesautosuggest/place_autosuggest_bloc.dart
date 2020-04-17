@@ -9,7 +9,6 @@ class PlaceAutoSuggestBloc
   final AutoSuggestRepository autoSuggestRepository = AutoSuggestRepository();
 
   @override
-  // TODO: implement initialState
   PlaceAutoSuggestState get initialState => PlaceAutoSuggestEmpty();
 
   @override

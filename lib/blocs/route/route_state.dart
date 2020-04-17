@@ -21,7 +21,6 @@ class RouteLoaded extends RouteState {
       : assert(drivingRoutes != null);
 
   @override
-  // TODO: implement props
   List<Object> get props => [drivingRoutes];
 }
 

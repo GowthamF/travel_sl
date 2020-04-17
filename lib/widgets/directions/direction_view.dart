@@ -31,7 +31,6 @@ class _DirectionView extends State<DirectionView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     routeBloc = BlocProvider.of<RouteBloc>(context);
     _routesSingleTon.addCurrentLocation = addCurrentLocation;

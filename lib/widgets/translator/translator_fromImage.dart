@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 class TranslatorFromImage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _TranslatorFromImage();
   }
 }
@@ -100,7 +99,6 @@ class _TranslatorFromImage extends State<TranslatorFromImage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: const Text('Picture Scanner'),

@@ -5,7 +5,6 @@ abstract class PlaceAutoSuggestState extends Equatable {
   const PlaceAutoSuggestState();
 
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 
@@ -20,7 +19,6 @@ class PlaceAutoSuggestLoaded extends PlaceAutoSuggestState {
   const PlaceAutoSuggestLoaded({this.autoSuggestions, this.isOrigin});
 
   @override
-  // TODO: implement props
   List<Object> get props => [autoSuggestions, isOrigin];
 }
 

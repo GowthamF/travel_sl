@@ -7,7 +7,6 @@ import 'package:travel_sl/widgets/widgets.dart';
 class TranslatorView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _TranslatorView();
   }
 }
@@ -38,7 +37,6 @@ class _TranslatorView extends State<TranslatorView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _fromLanguageController = TextEditingController();
     _toLanguageController = TextEditingController();
@@ -56,7 +54,6 @@ class _TranslatorView extends State<TranslatorView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SingleChildScrollView(
       padding: EdgeInsets.only(top: 25),
       physics: AlwaysScrollableScrollPhysics(),

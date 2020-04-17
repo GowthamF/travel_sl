@@ -11,7 +11,6 @@ class DirectionsMenu extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _DirectionsMenu();
   }
 }
@@ -29,7 +28,6 @@ class _DirectionsMenu extends State<DirectionsMenu> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (widget.busRoutes.isNotEmpty) {

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:travel_sl/blocs/blocs.dart';
 import 'package:travel_sl/models/models.dart';
 import 'package:travel_sl/repositories/repositories.dart';
@@ -9,7 +8,6 @@ class CurrentAddressBloc
   final RouteRepository routeRepository = RouteRepository();
 
   @override
-  // TODO: implement initialState
   CurrentAddressState get initialState => CurrentAddressEmpty();
 
   @override

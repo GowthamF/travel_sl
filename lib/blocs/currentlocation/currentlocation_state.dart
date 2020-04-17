@@ -5,7 +5,6 @@ abstract class CurrentLocationState extends Equatable {
   const CurrentLocationState();
 
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 

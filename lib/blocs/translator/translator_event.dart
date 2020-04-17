@@ -14,6 +14,5 @@ class GetTranslationText extends TranslatorEvent {
       {@required this.translateTexts, this.target, this.source});
 
   @override
-  // TODO: implement props
   List<Object> get props => [translateTexts, target, source];
 }

@@ -8,6 +8,5 @@ class GetCurrentLocation extends CurrentLocationEvent {
   const GetCurrentLocation();
 
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }

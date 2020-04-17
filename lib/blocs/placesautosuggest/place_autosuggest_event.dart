@@ -11,6 +11,5 @@ class GetAutoSuggestions extends PlaceAutoSuggestEvent {
   const GetAutoSuggestions({this.input, this.location, this.isOrigin});
 
   @override
-  // TODO: implement props
   List<Object> get props => [input, location, isOrigin];
 }

@@ -2,13 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:travel_sl/blocs/blocs.dart';
 import 'package:travel_sl/models/models.dart';
 import 'package:travel_sl/repositories/repositories.dart';
-import 'package:meta/meta.dart';
 
 class RouteBloc extends Bloc<RouteEvent, RouteState> {
   final RouteRepository routeRepository = RouteRepository();
 
   @override
-  // TODO: implement initialState
   RouteState get initialState => RouteEmpty();
 
   @override

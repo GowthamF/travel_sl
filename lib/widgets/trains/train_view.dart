@@ -6,7 +6,6 @@ import 'package:travel_sl/widgets/widgets.dart';
 class TrainView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _TrainView();
   }
 }
@@ -16,7 +15,6 @@ class _TrainView extends State<TrainView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

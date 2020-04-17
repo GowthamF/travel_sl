@@ -18,7 +18,6 @@ class GMap extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _GMap();
   }
 }
@@ -29,11 +28,9 @@ class _GMap extends State<GMap> {
   final Set<Marker> _markers = {};
   bool isOriginAdded = true;
   final Set<Polyline> _polylines = {};
-  RouteBloc routeBloc;
   CurrentAddressBloc currentAddressBloc;
   // static Position _currentPosition;
   static String address = 'adadadas';
-  StreamSubscription<Position> positionStream;
   singleton.RoutesSingleTon _routesSingleTon =
       singleton.RoutesSingleTon.getInstance();
   singleton.Location _location = singleton.Location.getInstance();
@@ -51,7 +48,6 @@ class _GMap extends State<GMap> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -60,7 +56,6 @@ class _GMap extends State<GMap> {
     super.initState();
     _markers.add(Marker(markerId: MarkerId('SelectedLocation')));
     _initCurrentLocation();
-    routeBloc = BlocProvider.of<RouteBloc>(context);
     currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
     addDirection();
   }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 import 'package:travel_sl/models/models.dart';
 import 'package:travel_sl/repositories/repositories.dart';
 

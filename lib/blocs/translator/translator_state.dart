@@ -3,7 +3,6 @@ import 'package:travel_sl/models/models.dart';
 
 abstract class TranslatorState extends Equatable {
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 
@@ -17,7 +16,6 @@ class TranslatorLoaded extends TranslatorState {
   TranslatorLoaded({this.translatedText});
 
   @override
-  // TODO: implement props
   List<Object> get props => [translatedText];
 }
 

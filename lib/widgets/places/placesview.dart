@@ -15,7 +15,6 @@ class PlacesView extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _PlaceView();
   }
 }
@@ -26,7 +25,6 @@ class _PlaceView extends State<PlacesView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     imageUrl =
         '${Constants.baseUrl}/api/staticmap?center=${widget.selectedLocation.latitude},${widget.selectedLocation.longitude}&zoom=18&size=9000x400&key=${Constants.apiKey}&maptype=roadmap&markers=color:black|label:Se|${widget.selectedLocation.latitude},${widget.selectedLocation.longitude}';
@@ -34,7 +32,6 @@ class _PlaceView extends State<PlacesView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

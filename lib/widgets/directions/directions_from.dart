@@ -12,7 +12,6 @@ class DirectionsFrom extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _DirectionsFrom();
   }
 }
@@ -27,8 +26,6 @@ class _DirectionsFrom extends State<DirectionsFrom> {
     ),
   ];
 
-  FocusNode _focusNode = FocusNode();
-
   PlaceAutoSuggestBloc placeAutoSuggestBloc;
   singleton.Location _location = singleton.Location.getInstance();
   singleton.PlacesSingleTon _placeSingleton =
@@ -37,7 +34,6 @@ class _DirectionsFrom extends State<DirectionsFrom> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     placeAutoSuggestBloc = BlocProvider.of<PlaceAutoSuggestBloc>(context);
     currentLocationBloc = BlocProvider.of<CurrentLocationBloc>(context);
@@ -46,7 +42,6 @@ class _DirectionsFrom extends State<DirectionsFrom> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(

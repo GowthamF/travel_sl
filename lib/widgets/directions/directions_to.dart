@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_sl/blocs/blocs.dart';
@@ -12,7 +10,6 @@ class DirectionsTo extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _DirectionsTo();
   }
 }
@@ -27,14 +24,12 @@ class _DirectionsTo extends State<DirectionsTo> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     placeAutoSuggestBloc = BlocProvider.of<PlaceAutoSuggestBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(

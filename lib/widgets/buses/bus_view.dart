@@ -6,7 +6,6 @@ import 'package:travel_sl/widgets/widgets.dart';
 class BusView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _BusView();
   }
 }
@@ -16,7 +15,6 @@ class _BusView extends State<BusView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
