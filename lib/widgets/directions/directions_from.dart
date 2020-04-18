@@ -102,23 +102,23 @@ class _DirectionsFrom extends State<DirectionsFrom> {
 
                     return ListView.separated(
                       separatorBuilder: (context, index) {
-                        if (index == 0) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Divider(
-                                thickness: 0.5,
-                              ),
-                              Text(
-                                'Recent Searches',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Divider(
-                                thickness: 0.5,
-                              ),
-                            ],
-                          );
-                        }
+                        // if (index == 0) {
+                        //   return Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: <Widget>[
+                        //       Divider(
+                        //         thickness: 0.5,
+                        //       ),
+                        //       Text(
+                        //         'Recent Searches',
+                        //         style: TextStyle(fontSize: 20),
+                        //       ),
+                        //       Divider(
+                        //         thickness: 0.5,
+                        //       ),
+                        //     ],
+                        //   );
+                        // }
                         return Divider();
                       },
                       itemCount: list.length,

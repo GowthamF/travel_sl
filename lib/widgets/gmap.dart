@@ -45,6 +45,9 @@ class _GMap extends State<GMap> {
             BlocProvider(
               create: (context) => CurrentAddressBloc(),
             ),
+            BlocProvider(
+              create: (context) => GetBusCurrentLocationBloc(),
+            ),
           ],
           child: common.GMap(
             widget.route,

@@ -35,8 +35,8 @@ class _GMap extends State<GMap> {
   singleton.RoutesSingleTon _routesSingleTon =
       singleton.RoutesSingleTon.getInstance();
   singleton.Location _location = singleton.Location.getInstance();
-  final databaseReference = Firestore.instance;
   GeoPoint currentBusLocation;
+  GetBusCurrentLocationBloc getBusCurrentLocationBloc;
 
   // final BitmapDescriptor busMarker = BitmapDescriptor.fromAssetImage(configuration, assetName)
 
@@ -60,19 +60,11 @@ class _GMap extends State<GMap> {
     _markers.add(Marker(markerId: MarkerId('SelectedLocation')));
     _initCurrentLocation();
     currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
+    getBusCurrentLocationBloc =
+        BlocProvider.of<GetBusCurrentLocationBloc>(context);
     // if (widget.routeMode == TravelMode.Bus) {
-    databaseReference
-        .collection('busLocation')
-        .document('currentLocation')
-        .snapshots()
-        .listen((data) {
-      if (data.data != null) {
-        currentBusLocation = data.data['location'];
-        addBusLocationMarker(
-            LatLng(currentBusLocation.latitude, currentBusLocation.longitude));
-      }
-    });
     // }
+    getBusCurrentLocationBloc.add(StartGetBusCurrentLocation());
     addDirection();
   }
 
@@ -100,6 +92,15 @@ class _GMap extends State<GMap> {
             }
           },
         ),
+        BlocListener<GetBusCurrentLocationBloc, GetBusCurrentLocationState>(
+          listener: (context, state) {
+            if (state is GetBusCurrentLocationLoaded) {
+              LatLng currentBusLocation =
+                  LatLng(state.geoPoint.latitude, state.geoPoint.longitude);
+              addBusLocationMarker(currentBusLocation);
+            }
+          },
+        )
       ],
       child: GoogleMap(
         myLocationEnabled: true,
