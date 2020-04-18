@@ -62,9 +62,10 @@ class _GMap extends State<GMap> {
     currentAddressBloc = BlocProvider.of<CurrentAddressBloc>(context);
     getBusCurrentLocationBloc =
         BlocProvider.of<GetBusCurrentLocationBloc>(context);
-    // if (widget.routeMode == TravelMode.Bus) {
-    // }
-    getBusCurrentLocationBloc.add(StartGetBusCurrentLocation());
+    if (widget.routeMode == TravelMode.Bus) {
+      getBusCurrentLocationBloc.add(StartGetBusCurrentLocation());
+    }
+
     addDirection();
   }
 
@@ -103,6 +104,8 @@ class _GMap extends State<GMap> {
         )
       ],
       child: GoogleMap(
+        buildingsEnabled: true,
+        myLocationButtonEnabled: true,
         myLocationEnabled: true,
         trafficEnabled: true,
         onTap: (latlng) {
@@ -134,7 +137,9 @@ class _GMap extends State<GMap> {
       LatLng selectedPosition, String address, String displayName) {
     setState(() {
       var marker = _markers.first;
-      _markers.clear();
+      _markers.removeWhere(
+        (f) => f.markerId == marker.markerId,
+      );
       _markers.add(Marker(
         markerId: marker.markerId,
         position: selectedPosition,

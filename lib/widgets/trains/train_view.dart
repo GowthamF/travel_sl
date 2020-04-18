@@ -20,8 +20,7 @@ class _TrainView extends State<TrainView> {
         appBar: AppBar(
           title: Text('Train'),
           actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.map),
+            FlatButton(
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -29,7 +28,10 @@ class _TrainView extends State<TrainView> {
                           builder: (context) => GMap(
                                 routeMode: TravelMode.Train,
                               )));
-                })
+                },
+                child: Row(
+                  children: <Widget>[Text('Map'), Icon(Icons.arrow_forward)],
+                ))
           ],
         ),
         body: Column(

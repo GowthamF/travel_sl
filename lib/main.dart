@@ -22,7 +22,10 @@ class Main extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xFFE57373),
+        accentColor: Color(0xFFffcdd2),
+        buttonColor: Color(0xFFffa4a2),
+        brightness: Brightness.dark,
       ),
       home: BlocProvider(
         create: (context) => RouteBloc(),

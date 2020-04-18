@@ -71,7 +71,10 @@ class _DirectionsTo extends State<DirectionsTo> {
                     BlocConsumer<PlaceAutoSuggestBloc, PlaceAutoSuggestState>(
                         builder: (c, s) {
               if (s is PlaceAutoSuggestEmpty) {
-                return Container();
+                return Container(
+                    child: Center(
+                  child: Text('Enter Something'),
+                ));
               }
 
               if (s is PlaceAutoSuggestLoaded) {

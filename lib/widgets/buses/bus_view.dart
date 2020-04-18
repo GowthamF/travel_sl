@@ -20,8 +20,7 @@ class _BusView extends State<BusView> {
         appBar: AppBar(
           title: Text('Bus'),
           actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.map),
+            FlatButton(
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -29,7 +28,10 @@ class _BusView extends State<BusView> {
                           builder: (context) => GMap(
                                 routeMode: TravelMode.Bus,
                               )));
-                })
+                },
+                child: Row(
+                  children: <Widget>[Text('Map'), Icon(Icons.arrow_forward)],
+                ))
           ],
         ),
         body: Column(

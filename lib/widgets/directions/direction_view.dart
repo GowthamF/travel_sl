@@ -45,19 +45,6 @@ class _DirectionView extends State<DirectionView> {
       child: Scaffold(
           appBar: AppBar(
             title: Text('Directions'),
-            actions: <Widget>[
-              RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GMap(
-                                routeMode: TravelMode.Driving,
-                              )));
-                },
-                child: Text('Map'),
-              )
-            ],
           ),
           body: Container(
             padding: EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -67,9 +54,10 @@ class _DirectionView extends State<DirectionView> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      shape: BoxShape.rectangle,
-                      border: Border.all(color: Colors.blue)),
+                    borderRadius: BorderRadius.circular(12),
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: Color(0xFFffa4a2)),
+                  ),
                   child: Wrap(
                     children: <Widget>[
                       Row(
@@ -120,9 +108,10 @@ class _DirectionView extends State<DirectionView> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      shape: BoxShape.rectangle,
-                      border: Border.all(color: Colors.blue)),
+                    borderRadius: BorderRadius.circular(12),
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: Color(0xFFffa4a2)),
+                  ),
                   child: Wrap(
                     children: <Widget>[
                       Row(

@@ -72,7 +72,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFe0f2f1),
+                color: Color(0xFFaf4448),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
               onPressed: hasBusRoute
@@ -117,7 +117,6 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           busDistance,
-                          style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
                     ],
@@ -130,7 +129,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFe0f2f1),
+                color: Color(0xFFaf4448),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
               onPressed: hasTrainRoute
@@ -175,7 +174,6 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           trainDistance,
-                          style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
                     ],
@@ -188,7 +186,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFe0f2f1),
+                color: Color(0xFFaf4448),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
               onPressed: null,
@@ -228,7 +226,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           '0 Km',
-                          style: TextStyle(fontSize: 15, color: Colors.black45),
+                          style: TextStyle(fontSize: 15),
                         ),
                       )
                     ],
@@ -241,10 +239,19 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFe0f2f1),
+                color: Color(0xFFaf4448),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
-              onPressed: hasDrivingRoute ? () {} : null,
+              onPressed: hasDrivingRoute
+                  ? () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GMap(
+                                    routeMode: TravelMode.Driving,
+                                  )));
+                    }
+                  : null,
               child: Wrap(
                 children: <Widget>[
                   Column(
@@ -281,7 +288,6 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           driveDistance,
-                          style: TextStyle(fontSize: 15, color: Colors.black45),
                         ),
                       )
                     ],

@@ -36,32 +36,36 @@ class _PlaceView extends State<PlacesView> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Place View'),
+          actions: <Widget>[
+            FlatButton.icon(
+                onPressed: null,
+                icon: Icon(Icons.home),
+                label: Text('Set As Home'))
+          ],
         ),
+        floatingActionButton: FloatingActionButton(
+            key: UniqueKey(),
+            tooltip: 'Directions',
+            onPressed: () {
+              _placesSingleTon.selectedOrigin = DirectionPlace(
+                  location:
+                      '${widget.selectedLocation.latitude},${widget.selectedLocation.longitude}',
+                  showName: widget.address);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider<PlaceAutoSuggestBloc>(
+                    create: (context) => PlaceAutoSuggestBloc(),
+                    child: DirectionsTo(),
+                  ),
+                ),
+              );
+            },
+            child: Icon(Icons.directions)),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Image.network(imageUrl),
-            RaisedButton(
-              onPressed: () {},
-              child: Text('Set as Home'),
-            ),
-            RaisedButton(
-                onPressed: () {
-                  _placesSingleTon.selectedOrigin = DirectionPlace(
-                      location:
-                          '${widget.selectedLocation.latitude},${widget.selectedLocation.longitude}',
-                      showName: widget.address);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BlocProvider<PlaceAutoSuggestBloc>(
-                        create: (context) => PlaceAutoSuggestBloc(),
-                        child: DirectionsTo(),
-                      ),
-                    ),
-                  );
-                },
-                child: Text('Directions'))
           ],
         ),
       ),

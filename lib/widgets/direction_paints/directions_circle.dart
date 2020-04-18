@@ -73,7 +73,7 @@ class DrawLargeCircles extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = Colors.black
+      ..color = Colors.white
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 

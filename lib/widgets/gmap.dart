@@ -25,8 +25,10 @@ class _GMap extends State<GMap> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
       child: Scaffold(
         appBar: AppBar(
+          brightness: Brightness.dark,
           title: Text('Map'),
           leading: IconButton(
               icon: Icon(Icons.arrow_back),

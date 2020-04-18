@@ -49,13 +49,12 @@ class _Home extends State<Home> {
                           alignment: Alignment.center,
                           child: Text(
                             'travelSL',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                         bottom: HomeSearchBar(
                           focusNode: _focusNode,
                         ),
-                        backgroundColor: Colors.white,
                         floating: true,
                         pinned: true,
                         snap: false,

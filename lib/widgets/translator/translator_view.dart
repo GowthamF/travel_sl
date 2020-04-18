@@ -77,13 +77,17 @@ class _TranslatorView extends State<TranslatorView> {
               alignment: WrapAlignment.start,
               children: <Widget>[
                 IconButton(
-                    icon: Icon(Icons.attachment),
+                    tooltip: 'Select Image',
+                    icon: Icon(Icons.image),
                     onPressed: () async {
                       final results = await Navigator.of(context).push(
                           MaterialPageRoute(
                               builder: (context) => TranslatorFromImage()));
                       _fromLanguageController.text = results;
                     }),
+                SizedBox(
+                  width: 25,
+                ),
                 DropdownButton<AvailableLanguage>(
                   value: _fromSelectedLanguage,
                   iconSize: 24,

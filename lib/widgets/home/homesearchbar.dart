@@ -18,12 +18,11 @@ class HomeSearchBar extends StatelessWidget implements PreferredSizeWidget {
             style: TextStyle(fontSize: 15),
             autovalidate: true,
             decoration: InputDecoration(
-              focusColor: Colors.blue[500],
-              fillColor: Colors.blue[800],
               prefixIcon: Icon(Icons.search),
-              hintStyle: TextStyle(fontSize: 15),
+              hintStyle: TextStyle(fontSize: 15, color: Colors.white),
               hintText: 'Search',
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white)),
               contentPadding:
                   EdgeInsets.only(top: 0, bottom: 10, left: 10, right: 10),
             ),
