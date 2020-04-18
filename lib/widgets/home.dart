@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travel_sl/repositories/repositories.dart';
 import 'package:travel_sl/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
-  final RouteRepository routeRepository;
-
-  Home({this.routeRepository});
+  Home();
 
   @override
   State<StatefulWidget> createState() {
@@ -78,9 +75,7 @@ class _Home extends State<Home> {
                   child: Column(
                     children: <Widget>[
                       HomePagePhoto(),
-                      HomeMenu(
-                        routeRepository: widget.routeRepository,
-                      ),
+                      HomeMenu(),
                     ],
                   ),
                 ),

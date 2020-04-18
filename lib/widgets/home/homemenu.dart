@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travel_sl/repositories/repositories.dart';
 import 'package:travel_sl/widgets/widgets.dart';
 
 class HomeMenu extends StatefulWidget {
-  final RouteRepository routeRepository;
-
-  HomeMenu({this.routeRepository});
+  HomeMenu();
   @override
   State<StatefulWidget> createState() {
     return _HomeMenu();
