@@ -48,14 +48,13 @@ class _BusView extends State<BusView> {
                   Column(
                     children: <Widget>[
                       RaisedButton(
-                          color: Colors.blue,
                           textColor: Colors.white,
-                          onPressed: () {},
+                          onPressed: null,
                           child: Wrap(
                             direction: Axis.vertical,
                             children: <Widget>[
-                              Text('29 Min'),
-                              Text('LKR 20'),
+                              Text('20 Min'),
+                              Text('LKR 45'),
                             ],
                           )),
                       Text('Fastest')
@@ -64,12 +63,12 @@ class _BusView extends State<BusView> {
                   Column(
                     children: <Widget>[
                       RaisedButton(
-                          onPressed: () {},
+                          onPressed: null,
                           child: Wrap(
                             direction: Axis.vertical,
                             children: <Widget>[
-                              Text('29 Min'),
-                              Text('LKR 20'),
+                              Text('30 Min'),
+                              Text('LKR 70'),
                             ],
                           )),
                     ],
@@ -77,12 +76,12 @@ class _BusView extends State<BusView> {
                   Column(
                     children: <Widget>[
                       RaisedButton(
-                          onPressed: () {},
+                          onPressed: null,
                           child: Wrap(
                             direction: Axis.vertical,
                             children: <Widget>[
-                              Text('29 Min'),
-                              Text('LKR 20'),
+                              Text('40 Min'),
+                              Text('LKR 100'),
                             ],
                           )),
                       Text('Shortest')
@@ -94,7 +93,7 @@ class _BusView extends State<BusView> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'This trip will take 29 min and cost LKR 20',
+                'This trip will take 20 min and cost LKR 45',
                 style: TextStyle(fontSize: 20),
               ),
             ),

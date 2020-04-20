@@ -103,7 +103,7 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.business),
+                            Icon(Icons.local_taxi),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Taxi'),

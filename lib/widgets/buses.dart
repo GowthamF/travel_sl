@@ -4,13 +4,17 @@ import 'package:travel_sl/widgets/widgets.dart';
 class Buses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Buses'),
-        ),
-        body: BusRoute(),
-      ),
-    );
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text('Buses'),
+            ),
+            body: BusRoute(),
+          ),
+        ));
   }
 }

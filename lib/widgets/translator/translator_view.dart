@@ -76,15 +76,6 @@ class _TranslatorView extends State<TranslatorView> {
             child: Wrap(
               alignment: WrapAlignment.start,
               children: <Widget>[
-                IconButton(
-                    tooltip: 'Select Image',
-                    icon: Icon(Icons.image),
-                    onPressed: () async {
-                      final results = await Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => TranslatorFromImage()));
-                      _fromLanguageController.text = results;
-                    }),
                 SizedBox(
                   width: 25,
                 ),
@@ -179,19 +170,35 @@ class _TranslatorView extends State<TranslatorView> {
             ]),
           ),
           Align(
-            alignment: Alignment.topRight,
-            child: FlatButton(
-              onPressed: () async {
-                var typedText =
-                    _fromLanguageController.text.toString().split('\n');
+              alignment: Alignment.topRight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  IconButton(
+                      tooltip: 'Select An Image',
+                      icon: Icon(Icons.image),
+                      onPressed: () async {
+                        final results = await Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => TranslatorFromImage()));
+                        _fromLanguageController.text = results;
+                      }),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  FlatButton(
+                    onPressed: () async {
+                      var typedText =
+                          _fromLanguageController.text.toString().split('\n');
 
-                _translatorBloc.add(GetTranslationText(
-                    translateTexts: typedText,
-                    target: _toSelectedLanguage.languageShortName));
-              },
-              child: Text('Translate'),
-            ),
-          )
+                      _translatorBloc.add(GetTranslationText(
+                          translateTexts: typedText,
+                          target: _toSelectedLanguage.languageShortName));
+                    },
+                    child: Text('Translate'),
+                  ),
+                ],
+              ))
         ],
       ),
     );
