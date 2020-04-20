@@ -19,8 +19,12 @@ export 'directions/directions_to.dart';
 export 'directions/directions_from.dart';
 
 export 'buses/bus_view.dart';
+export 'buses/bus_route.dart';
+export 'buses/bus_route_view.dart';
 
 export 'trains/train_view.dart';
+export 'trains/train_route.dart';
+export 'trains/train_route_view.dart';
 
 export 'direction_paints/directions_circle.dart';
 export 'direction_paints/path_template.dart';

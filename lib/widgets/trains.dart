@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_sl/widgets/widgets.dart';
 
 class Trains extends StatelessWidget {
   @override
@@ -8,6 +9,7 @@ class Trains extends StatelessWidget {
         appBar: AppBar(
           title: Text('Trains'),
         ),
+        body: TrainRoute(),
       ),
     );
   }
