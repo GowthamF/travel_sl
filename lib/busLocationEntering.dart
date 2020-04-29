@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BusLocationEntering extends StatefulWidget {
   @override
@@ -9,116 +13,91 @@ class BusLocationEntering extends StatefulWidget {
 }
 
 class _BusLocationEntering extends State<BusLocationEntering> {
-  static List<BusLocations> _currentBusLocation = [];
-  TextEditingController _lateditingController;
-  TextEditingController _longeditingController;
   final databaseReference = Firestore.instance;
-
+  final geolocator = Geolocator();
+  static CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(6.9345573, 79.8512368),
+    zoom: 15,
+  );
+  Completer<GoogleMapController> _controller = Completer();
   @override
   void initState() {
     super.initState();
-    _lateditingController = TextEditingController();
-    _longeditingController = TextEditingController();
+    _initCurrentLocation();
+
+    var locationOptions =
+        LocationOptions(accuracy: LocationAccuracy.medium, distanceFilter: 10);
+    geolocator.getPositionStream(locationOptions).listen((position) {
+      addToDB(position);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Bus Location Entering'),
-        ),
-        body: ListView.builder(
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text('$index'),
-              title: Text(
-                  '${_currentBusLocation[index].geoPoint.latitude}, ${_currentBusLocation[index].geoPoint.longitude}'),
-            );
-          },
-          itemCount: _currentBusLocation.length,
-        ),
-        persistentFooterButtons: <Widget>[
-          FlatButton(
-            onPressed: () {
-              try {
-                databaseReference
-                    .collection('busLocation')
-                    .document('currentLocation')
-                    .updateData(
-                        {'location': _currentBusLocation.last.geoPoint});
-              } catch (e) {
-                print(e.toString());
+          appBar: AppBar(
+            title: Text('Bus Location Entering'),
+          ),
+          body: GoogleMap(
+            myLocationButtonEnabled: true,
+            myLocationEnabled: true,
+            trafficEnabled: true,
+            initialCameraPosition: _kGooglePlex,
+            mapType: MapType.normal,
+            onMapCreated: (GoogleMapController controller) async {
+              if (!_controller.isCompleted) {
+                _controller.complete(controller);
+                controller.animateCamera(
+                  CameraUpdate.newCameraPosition(_kGooglePlex),
+                );
               }
             },
-            child: Text('UPDATE LOCATION'),
-          )
-        ],
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return SimpleDialog(
-                  title: Text('Adding Bus Location'),
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(left: 25, right: 25),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: _lateditingController,
-                        decoration: InputDecoration(hintText: 'Enter Latitude'),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 25, right: 25),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration:
-                            InputDecoration(hintText: 'Enter Longitude'),
-                        controller: _longeditingController,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(left: 100),
-                        child: FlatButton(
-                          onPressed: () {
-                            setState(() {
-                              _currentBusLocation.add(BusLocations(
-                                  geoPoint: GeoPoint(6.948930, 79.856841),
-                                  isSelected: false));
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('ADD BUS LOCATION'),
-                        ))
-                  ],
-                );
-              },
-            );
-          },
-          child: Icon(Icons.add),
-        ),
-      ),
+          )),
     );
+  }
+
+  void _initCurrentLocation() {
+    geolocator
+      ..getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium,
+      ).then((position) {
+        if (mounted) {
+          addToDB(position);
+          setState(
+            () {
+              _kGooglePlex = CameraPosition(
+                  target: LatLng(position.latitude, position.longitude),
+                  zoom: 15);
+
+              _controller.future.then(
+                (onValue) {
+                  onValue
+                      .moveCamera(CameraUpdate.newCameraPosition(_kGooglePlex));
+                },
+              );
+            },
+          );
+        }
+      }).catchError((e) {
+        print(e);
+      });
+  }
+
+  void addToDB(Position position) {
+    try {
+      databaseReference
+          .collection('busLocation')
+          .document('currentLocation')
+          .updateData(
+              {'location': GeoPoint(position.latitude, position.longitude)});
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   void dispose() {
-    _lateditingController.dispose();
     super.dispose();
   }
-}
-
-class BusLocations {
-  final GeoPoint geoPoint;
-  bool isSelected;
-
-  BusLocations({this.geoPoint, this.isSelected});
 }
