@@ -158,6 +158,26 @@ class _HomeMenu extends State<HomeMenu> {
                       ),
                     ),
                   ),
+                  GridTile(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: Colors.black12, width: 0.5)),
+                      child: FlatButton(
+                        onPressed: null,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(Icons.airline_seat_recline_normal),
+                            Padding(
+                              padding: EdgeInsets.only(top: 25),
+                              child: Text('Seat Booking'),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

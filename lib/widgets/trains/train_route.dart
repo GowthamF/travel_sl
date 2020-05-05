@@ -33,9 +33,13 @@ class _TrainRoute extends State<TrainRoute> {
               if (value.isNotEmpty) {
                 setState(() {
                   _trainList = _trainViewData.trainData
-                      .where((f) => f.routeName
-                          .toUpperCase()
-                          .contains(value.trim().toUpperCase()))
+                      .where((f) =>
+                          f.routeName
+                              .toUpperCase()
+                              .contains(value.trim().toUpperCase()) ||
+                          f.route
+                              .toUpperCase()
+                              .contains(value.trim().toUpperCase()))
                       .toList();
                 });
               } else {

@@ -37,7 +37,8 @@ class _BusRoute extends State<BusRoute> {
                           f.routeName
                               .toUpperCase()
                               .contains(value.trim().toUpperCase()) ||
-                          f.busNumber.contains(value.trim()))
+                          f.busNumber.contains(value.trim()) ||
+                          f.route.contains(value.trim()))
                       .toList();
                 });
               } else {

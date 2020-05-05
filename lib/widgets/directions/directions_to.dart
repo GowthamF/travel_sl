@@ -33,7 +33,7 @@ class _DirectionsTo extends State<DirectionsTo> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text('Leave To'),
+        title: Text('Destination'),
       ),
       body: GestureDetector(
         onTap: () {
@@ -59,7 +59,7 @@ class _DirectionsTo extends State<DirectionsTo> {
                   fillColor: Colors.blue[800],
                   prefixIcon: Icon(Icons.search),
                   hintStyle: TextStyle(fontSize: 15),
-                  hintText: 'Leave To',
+                  hintText: 'Destination',
                   border: OutlineInputBorder(),
                   contentPadding:
                       EdgeInsets.only(top: 0, bottom: 10, left: 10, right: 10),

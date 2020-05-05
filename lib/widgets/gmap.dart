@@ -25,46 +25,49 @@ class _GMap extends State<GMap> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: false,
-      child: Scaffold(
-        appBar: AppBar(
-          brightness: Brightness.dark,
-          title: Text('Map'),
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => Home()),
-                    (Route<dynamic> route) => false);
-              }),
-        ),
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => RouteBloc(),
-            ),
-            BlocProvider(
-              create: (context) => CurrentAddressBloc(),
-            ),
-            BlocProvider(
-              create: (context) => GetBusCurrentLocationBloc(),
-            ),
-          ],
-          child: common.GMap(
-            widget.route,
-            routeMode: widget.routeMode,
+        top: false,
+        child: Scaffold(
+          appBar: AppBar(
+            brightness: Brightness.dark,
+            title: Text('Map'),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                      (Route<dynamic> route) => false);
+                }),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.directions),
-          tooltip: 'Directions',
-          onPressed: () async {
-            await Navigator.pushNamed(context, NavigationRoutes.directions,
-                arguments: NavigationRoutes.map);
-          },
-        ),
-      ),
-    );
+          body: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => RouteBloc(),
+              ),
+              BlocProvider(
+                create: (context) => CurrentAddressBloc(),
+              ),
+              BlocProvider(
+                create: (context) => GetBusCurrentLocationBloc(),
+              ),
+            ],
+            child: common.GMap(
+              widget.route,
+              routeMode: widget.routeMode,
+            ),
+          ),
+          floatingActionButton: Container(
+            margin: EdgeInsets.all(50),
+            alignment: Alignment.bottomLeft,
+            child: FloatingActionButton(
+              child: Icon(Icons.directions),
+              tooltip: 'Directions',
+              onPressed: () async {
+                await Navigator.pushNamed(context, NavigationRoutes.directions,
+                    arguments: NavigationRoutes.map);
+              },
+            ),
+          ),
+        ));
   }
 }

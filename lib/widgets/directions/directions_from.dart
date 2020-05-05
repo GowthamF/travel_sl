@@ -45,7 +45,7 @@ class _DirectionsFrom extends State<DirectionsFrom> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Leave From'),
+            title: Text('Start Location'),
           ),
           body: BlocListener<CurrentLocationBloc, CurrentLocationState>(
               listener: (context, state) {
@@ -83,7 +83,7 @@ class _DirectionsFrom extends State<DirectionsFrom> {
                         fillColor: Colors.blue[800],
                         prefixIcon: Icon(Icons.search),
                         hintStyle: TextStyle(fontSize: 15),
-                        hintText: 'Leave From',
+                        hintText: 'Start Location',
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.only(
                             top: 0, bottom: 10, left: 10, right: 10),

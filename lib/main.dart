@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_sl/blocs/blocs.dart';
+import 'package:travel_sl/busLocationEntering.dart';
 import 'package:travel_sl/simple_bloc_delegate.dart';
 
 import 'widgets/widgets.dart';
@@ -29,7 +30,7 @@ class Main extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (context) => RouteBloc(),
-        child: Home(),
+        child: BusLocationEntering(),
       ),
     );
   }

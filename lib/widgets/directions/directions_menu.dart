@@ -118,6 +118,14 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         child: Text(
                           busDistance,
                         ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                        child: Text(
+                          "45",
+                        ),
                       )
                     ],
                   )
@@ -174,6 +182,14 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         ),
                         child: Text(
                           trainDistance,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                        child: Text(
+                          "20",
                         ),
                       )
                     ],

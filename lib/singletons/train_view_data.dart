@@ -8,12 +8,12 @@ class TrainViewData {
   List<TrainData> trainData = [
     TrainData(
         id: 1,
-        route: 'Gampaha Veyangoda Meerigama Rambukkana Kandy',
+        route: 'Gampaha - Veyangoda - Meerigama - Rambukkana - Kandy',
         routeName: 'Colombo - Kandy'),
     TrainData(
         id: 2,
         route:
-            'Mount Panadura Kalutura Aluthgama Ambalangoda Hikkaduwa Galle Mirissa Matara',
+            'Mount - Panadura - Kalutura - Aluthgama - Ambalangoda - Hikkaduwa - Galle - Mirissa - Matara',
         routeName: 'Colombo - Matara'),
   ];
 }

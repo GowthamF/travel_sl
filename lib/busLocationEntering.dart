@@ -20,16 +20,12 @@ class _BusLocationEntering extends State<BusLocationEntering> {
     zoom: 15,
   );
   Completer<GoogleMapController> _controller = Completer();
+  LocationOptions locationOptions =
+      LocationOptions(accuracy: LocationAccuracy.medium, distanceFilter: 10);
   @override
   void initState() {
     super.initState();
     _initCurrentLocation();
-
-    var locationOptions =
-        LocationOptions(accuracy: LocationAccuracy.medium, distanceFilter: 10);
-    geolocator.getPositionStream(locationOptions).listen((position) {
-      addToDB(position);
-    });
   }
 
   @override
@@ -78,6 +74,10 @@ class _BusLocationEntering extends State<BusLocationEntering> {
               );
             },
           );
+
+          geolocator.getPositionStream(locationOptions).listen((position) {
+            addToDB(position);
+          });
         }
       }).catchError((e) {
         print(e);

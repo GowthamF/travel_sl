@@ -55,7 +55,7 @@ class _TrainView extends State<TrainView> {
                             direction: Axis.vertical,
                             children: <Widget>[
                               Text('20 Min'),
-                              Text('LKR 45'),
+                              Text('LKR 30'),
                             ],
                           )),
                       Text('Fastest')
@@ -69,7 +69,7 @@ class _TrainView extends State<TrainView> {
                             direction: Axis.vertical,
                             children: <Widget>[
                               Text('30 Min'),
-                              Text('LKR 70'),
+                              Text('LKR 50'),
                             ],
                           )),
                     ],
@@ -82,7 +82,7 @@ class _TrainView extends State<TrainView> {
                             direction: Axis.vertical,
                             children: <Widget>[
                               Text('40 Min'),
-                              Text('LKR 100'),
+                              Text('LKR 70'),
                             ],
                           )),
                       Text('Shortest')
