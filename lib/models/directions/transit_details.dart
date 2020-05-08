@@ -40,7 +40,9 @@ class TransitDetails {
           : json['line']['vehicle']['name'] == 'Train'
               ? VehicleType.Train
               : VehicleType.Driving,
-      color: json['line']['color'],
+      color: json['line']['vehicle']['name'] == 'Bus'
+          ? "#7e57c2"
+          : json['line']['color'],
       arrivalStopTime: TravelTime.fromJson(json['arrival_time']),
       destinationStopTime: TravelTime.fromJson(
         json['departure_time'],

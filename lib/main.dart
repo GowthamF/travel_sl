@@ -26,11 +26,10 @@ class Main extends StatelessWidget {
         primaryColor: Color(0xFFE57373),
         accentColor: Color(0xFFffcdd2),
         buttonColor: Color(0xFFffa4a2),
-        brightness: Brightness.dark,
       ),
       home: BlocProvider(
         create: (context) => RouteBloc(),
-        child: BusLocationEntering(),
+        child: Home(),
       ),
     );
   }

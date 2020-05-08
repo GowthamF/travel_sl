@@ -85,7 +85,7 @@ class _TrainView extends State<TrainView> {
                               Text('LKR 70'),
                             ],
                           )),
-                      Text('Shortest')
+                      Text('Slowest')
                     ],
                   ),
                 ],
@@ -94,7 +94,7 @@ class _TrainView extends State<TrainView> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'This trip will take 20 min and cost LKR 45',
+                'This trip will take 20 min and cost LKR 30',
                 style: TextStyle(fontSize: 20),
               ),
             ),

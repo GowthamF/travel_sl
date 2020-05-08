@@ -38,7 +38,10 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.map),
+                            Icon(
+                              Icons.map,
+                              color: Color(0xFFF9A825),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Map'),
@@ -61,7 +64,10 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.directions),
+                            Icon(
+                              Icons.directions,
+                              color: Color(0xFF00c853),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Directions'),
@@ -83,7 +89,10 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.directions_bus),
+                            Icon(
+                              Icons.directions_bus,
+                              color: Color(0xFF80deea),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Buses'),
@@ -103,7 +112,10 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.local_taxi),
+                            Icon(
+                              Icons.local_taxi,
+                              color: Color(0xFF80deea),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Taxi'),
@@ -125,7 +137,10 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.directions_railway),
+                            Icon(
+                              Icons.directions_railway,
+                              color: Color(0xFFbf360c),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Trains'),
@@ -148,7 +163,10 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.g_translate),
+                            Icon(
+                              Icons.g_translate,
+                              color: Color(0xFF2196f3),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Translator'),
@@ -168,7 +186,10 @@ class _HomeMenu extends State<HomeMenu> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Icon(Icons.airline_seat_recline_normal),
+                            Icon(
+                              Icons.airline_seat_recline_normal,
+                              color: Color(0xFF9c27b0),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(top: 25),
                               child: Text('Seat Booking'),

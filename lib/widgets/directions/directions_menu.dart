@@ -72,7 +72,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFaf4448),
+                color: Color(0xFFeeeeee),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
               onPressed: hasBusRoute
@@ -92,6 +92,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         children: <Widget>[
                           Icon(
                             Icons.directions_bus,
+                            color: Color(0xFF80deea),
                             size: 40,
                           ),
                           SizedBox(
@@ -99,16 +100,24 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                           ),
                           Text(
                             'Bus',
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(
+                                fontSize: 25, color: Color(0xFF80deea)),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                        child: Text(
+                          busDistance.isNotEmpty ? "LKR 45" : "",
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
                             left: 5, right: 10, top: 20, bottom: 10),
                         child: Text(
                           busDuration,
-                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -119,14 +128,6 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                           busDistance,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5,
-                        ),
-                        child: Text(
-                          "45",
-                        ),
-                      )
                     ],
                   )
                 ],
@@ -137,7 +138,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFaf4448),
+                color: Color(0xFFeeeeee),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
               onPressed: hasTrainRoute
@@ -157,6 +158,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                         children: <Widget>[
                           Icon(
                             Icons.directions_railway,
+                            color: Color(0xFFe91e63),
                             size: 40,
                           ),
                           SizedBox(
@@ -164,16 +166,26 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                           ),
                           Text(
                             'Train',
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Color(0xFFe91e63),
+                            ),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                        child: Text(
+                          trainDistance.isNotEmpty ? "LKR 20" : "",
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
                             left: 5, right: 10, top: 20, bottom: 10),
                         child: Text(
                           trainDuration,
-                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Padding(
@@ -184,14 +196,6 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                           trainDistance,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5,
-                        ),
-                        child: Text(
-                          "20",
-                        ),
-                      )
                     ],
                   )
                 ],
@@ -202,7 +206,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFaf4448),
+                color: Color(0xFFeeeeee),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
               onPressed: null,
@@ -218,13 +222,15 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                           Icon(
                             Icons.local_taxi,
                             size: 40,
+                            color: Color(0xFFff7043),
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
                             'Taxi',
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(
+                                fontSize: 25, color: Color(0xFFff7043)),
                           ),
                         ],
                       ),
@@ -255,7 +261,7 @@ class _DirectionsMenu extends State<DirectionsMenu> {
         GridTile(
           child: Container(
             decoration: BoxDecoration(
-                color: Color(0xFFaf4448),
+                color: Color(0xFFeeeeee),
                 border: Border.all(color: Colors.black45, width: 0.5)),
             child: FlatButton(
               onPressed: hasDrivingRoute
@@ -280,13 +286,17 @@ class _DirectionsMenu extends State<DirectionsMenu> {
                           Icon(
                             Icons.directions_car,
                             size: 40,
+                            color: Color(0xFF3949ab),
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
                             'Drive',
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Color(0xFF3949ab),
+                            ),
                           ),
                         ],
                       ),

@@ -84,7 +84,7 @@ class _BusView extends State<BusView> {
                               Text('LKR 100'),
                             ],
                           )),
-                      Text('Shortest')
+                      Text('Slowest')
                     ],
                   ),
                 ],
